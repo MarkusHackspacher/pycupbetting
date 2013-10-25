@@ -1,0 +1,4 @@
+pycupbetting
+============
+
+cup betting software
