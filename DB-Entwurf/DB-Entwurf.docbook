@@ -58,16 +58,7 @@
             <row>
               <entry role="feature-detail">public</entry>
               <entry role="feature-detail"/>
-              <entry role="feature-detail">ID</entry>
-            </row>
-            <row>
-              <entry role="comment"/>
-              <entry namest="c2" nameend="c3" role="comment"/>
-            </row>
-            <row>
-              <entry role="feature-detail">public</entry>
-              <entry role="feature-detail"/>
-              <entry role="feature-detail">nickname</entry>
+              <entry role="feature-detail">id</entry>
             </row>
             <row>
               <entry role="comment"/>
@@ -77,6 +68,15 @@
               <entry role="feature-detail">public</entry>
               <entry role="feature-detail"/>
               <entry role="feature-detail">name</entry>
+            </row>
+            <row>
+              <entry role="comment"/>
+              <entry namest="c2" nameend="c3" role="comment"/>
+            </row>
+            <row>
+              <entry role="feature-detail">public</entry>
+              <entry role="feature-detail"/>
+              <entry role="feature-detail">fullname</entry>
             </row>
             <row>
               <entry role="comment"/>
@@ -154,7 +154,7 @@
             <row>
               <entry role="feature-detail">public</entry>
               <entry role="feature-detail"/>
-              <entry role="feature-detail">ID</entry>
+              <entry role="feature-detail">id</entry>
             </row>
             <row>
               <entry role="comment"/>
@@ -163,7 +163,7 @@
             <row>
               <entry role="feature-detail">public</entry>
               <entry role="feature-detail"/>
-              <entry role="feature-detail">competitionID</entry>
+              <entry role="feature-detail">competition_id</entry>
             </row>
             <row>
               <entry role="comment"/>
@@ -172,7 +172,7 @@
             <row>
               <entry role="feature-detail">public</entry>
               <entry role="feature-detail"/>
-              <entry role="feature-detail">team_A_ID</entry>
+              <entry role="feature-detail">team_a_id</entry>
             </row>
             <row>
               <entry role="comment"/>
@@ -181,7 +181,7 @@
             <row>
               <entry role="feature-detail">public</entry>
               <entry role="feature-detail"/>
-              <entry role="feature-detail">team_B_ID</entry>
+              <entry role="feature-detail">team_b_id</entry>
             </row>
             <row>
               <entry role="comment"/>
@@ -190,7 +190,7 @@
             <row>
               <entry role="feature-detail">public</entry>
               <entry role="feature-detail"/>
-              <entry role="feature-detail">result_A</entry>
+              <entry role="feature-detail">result_a</entry>
             </row>
             <row>
               <entry role="comment"/>
@@ -199,7 +199,7 @@
             <row>
               <entry role="feature-detail">public</entry>
               <entry role="feature-detail"/>
-              <entry role="feature-detail">result_B</entry>
+              <entry role="feature-detail">result_b</entry>
             </row>
             <row>
               <entry role="comment"/>
@@ -258,7 +258,7 @@
             <row>
               <entry role="feature-detail">public</entry>
               <entry role="feature-detail"/>
-              <entry role="feature-detail">ID</entry>
+              <entry role="feature-detail">id</entry>
             </row>
             <row>
               <entry role="comment"/>
@@ -267,7 +267,7 @@
             <row>
               <entry role="feature-detail">public</entry>
               <entry role="feature-detail"/>
-              <entry role="feature-detail">userID</entry>
+              <entry role="feature-detail">user_id</entry>
             </row>
             <row>
               <entry role="comment"/>
@@ -276,7 +276,7 @@
             <row>
               <entry role="feature-detail">public</entry>
               <entry role="feature-detail"/>
-              <entry role="feature-detail">gamesID</entry>
+              <entry role="feature-detail">games_id</entry>
             </row>
             <row>
               <entry role="comment"/>
@@ -285,7 +285,7 @@
             <row>
               <entry role="feature-detail">public</entry>
               <entry role="feature-detail"/>
-              <entry role="feature-detail">bet_A</entry>
+              <entry role="feature-detail">bet_a</entry>
             </row>
             <row>
               <entry role="comment"/>
@@ -294,7 +294,7 @@
             <row>
               <entry role="feature-detail">public</entry>
               <entry role="feature-detail"/>
-              <entry role="feature-detail">bet_B</entry>
+              <entry role="feature-detail">bet_b</entry>
             </row>
             <row>
               <entry role="comment"/>
@@ -354,7 +354,7 @@
             <row>
               <entry role="feature-detail">public</entry>
               <entry role="feature-detail"/>
-              <entry role="feature-detail">ID</entry>
+              <entry role="feature-detail">id</entry>
             </row>
             <row>
               <entry role="comment"/>
@@ -363,7 +363,7 @@
             <row>
               <entry role="feature-detail">public</entry>
               <entry role="feature-detail"/>
-              <entry role="feature-detail">Name</entry>
+              <entry role="feature-detail">name</entry>
             </row>
             <row>
               <entry role="comment"/>
@@ -466,7 +466,7 @@
             <row>
               <entry role="feature-detail">public</entry>
               <entry role="feature-detail"/>
-              <entry role="feature-detail">ID</entry>
+              <entry role="feature-detail">id</entry>
             </row>
             <row>
               <entry role="comment"/>
@@ -575,7 +575,7 @@
             <row>
               <entry role="feature-detail">public</entry>
               <entry role="feature-detail"/>
-              <entry role="feature-detail">ID</entry>
+              <entry role="feature-detail">id</entry>
             </row>
             <row>
               <entry role="comment"/>
@@ -584,7 +584,7 @@
             <row>
               <entry role="feature-detail">public</entry>
               <entry role="feature-detail"/>
-              <entry role="feature-detail">user_ID</entry>
+              <entry role="feature-detail">user_id</entry>
             </row>
             <row>
               <entry role="comment"/>
@@ -593,7 +593,7 @@
             <row>
               <entry role="feature-detail">public</entry>
               <entry role="feature-detail"/>
-              <entry role="feature-detail">competitionID</entry>
+              <entry role="feature-detail">competition_id</entry>
             </row>
             <row>
               <entry role="comment"/>
@@ -602,7 +602,7 @@
             <row>
               <entry role="feature-detail">public</entry>
               <entry role="feature-detail"/>
-              <entry role="feature-detail">teamID</entry>
+              <entry role="feature-detail">team_id</entry>
             </row>
             <row>
               <entry role="comment"/>
