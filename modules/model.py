@@ -7,6 +7,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
+
 class User(Base):
     __tablename__ = 'user'
     id = Column(Integer, primary_key=True)
@@ -15,10 +16,12 @@ class User(Base):
     email = Column(String)
     password_hash = Column(String)
 
+
 class Team(Base):
     __tablename__ = 'team'
     id = Column(Integer, primary_key=True)
     name = Column(String)
+
 
 class Competition(Base):
     __tablename__ = 'competition'
@@ -30,12 +33,14 @@ class Competition(Base):
     rule_right_result = Column(Integer)
     rule_cup_winner = Column(Integer)
 
+
 class Cup_winner_bet(Base):
     __tablename__ = 'cup_winner_bet'
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('user.id'))
     competition_id = Column(Integer, ForeignKey('competition.id'))
     team_id = Column(Integer, ForeignKey('team.id'))
+
 
 class Game(Base):
     __tablename__ = 'game'
@@ -46,6 +51,7 @@ class Game(Base):
     result_a = Column(Integer)
     result_b = Column(Integer)
     start_date = Column(Date)
+
 
 class Game_bet(Base):
     __tablename__ = 'game_bet'
