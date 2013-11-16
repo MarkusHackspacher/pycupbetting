@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from sqlalchemy import Column, Integer, String, Date, ForeignKey
 
 # http://docs.sqlalchemy.org/en/rel_0_9/orm/tutorial.html
