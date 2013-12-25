@@ -1,7 +1,6 @@
 pycupbetting
 ============
 
-Habe vor für die WM 2014 ein Tippspiel Programm zu schreiben. 
 Die Idee ist die Vorrunde und den Sieger zu Tippen.
 Das möchte ich mit der Programmiersprache Python realisieren. 
 
@@ -16,9 +15,13 @@ Ganze möchte im ersten Schritt ohne GUI realisiert, die Eingaben sollen in der
 Kommandozeile gemacht werden. Die Daten werden in einer Datenbank, 
 vorzugsweise SQlite, gespeichert. 
 
-DB-Entwurf
-----------
-der DB-Entwurf.xmi kann mit dem Programm bearbeitet werden:
+license
+-------
+GNU GPL
+
+database draw
+-------------
+the file DB-Entwurf.xmi is make by:
 
 Umbrello UML-Modeller
 © 2001 Paul Hensgen, © 2002–2006 Umbrello UML-Modeller-Autoren
