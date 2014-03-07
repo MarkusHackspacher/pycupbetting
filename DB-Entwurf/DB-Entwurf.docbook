@@ -172,7 +172,7 @@
             <row>
               <entry role="feature-detail">public</entry>
               <entry role="feature-detail">teams</entry>
-              <entry role="feature-detail">team_a_id</entry>
+              <entry role="feature-detail">team_home_id</entry>
             </row>
             <row>
               <entry role="comment"/>
@@ -181,7 +181,7 @@
             <row>
               <entry role="feature-detail">public</entry>
               <entry role="feature-detail">teams</entry>
-              <entry role="feature-detail">team_b_id</entry>
+              <entry role="feature-detail">team_away_id</entry>
             </row>
             <row>
               <entry role="comment"/>
