@@ -36,7 +36,7 @@ class Competition(Base):
     __tablename__ = 'competition'
     id = Column(Integer, primary_key=True)
     name = Column(String)
-    cup_winner = Column(Integer, ForeignKey('teams.id'))
+    cup_winner_id = Column(Integer, ForeignKey('teams.id'))
     rule_right_winner = Column(Integer)
     rule_right_goaldif = Column(Integer)
     rule_right_result = Column(Integer)

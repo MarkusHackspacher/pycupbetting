@@ -19,7 +19,7 @@
   <section id="classes">
     <title>Classes</title>
     <section>
-      <title>user</title>
+      <title>users</title>
       <table frame="all">
         <title/>
         <tgroup cols="3" align="left" colsep="1" rowsep="1">
@@ -29,7 +29,7 @@
           <thead>
             <row>
               <entry role="class-title">Class</entry>
-              <entry role="class-name" namest="c2" nameend="c3">user</entry>
+              <entry role="class-name" namest="c2" nameend="c3">users</entry>
             </row>
           </thead>
           <tbody>
@@ -162,7 +162,7 @@
             </row>
             <row>
               <entry role="feature-detail">public</entry>
-              <entry role="feature-detail"/>
+              <entry role="feature-detail">competition</entry>
               <entry role="feature-detail">competition_id</entry>
             </row>
             <row>
@@ -171,7 +171,7 @@
             </row>
             <row>
               <entry role="feature-detail">public</entry>
-              <entry role="feature-detail"/>
+              <entry role="feature-detail">teams</entry>
               <entry role="feature-detail">team_a_id</entry>
             </row>
             <row>
@@ -180,7 +180,7 @@
             </row>
             <row>
               <entry role="feature-detail">public</entry>
-              <entry role="feature-detail"/>
+              <entry role="feature-detail">teams</entry>
               <entry role="feature-detail">team_b_id</entry>
             </row>
             <row>
@@ -266,7 +266,7 @@
             </row>
             <row>
               <entry role="feature-detail">public</entry>
-              <entry role="feature-detail"/>
+              <entry role="feature-detail">users</entry>
               <entry role="feature-detail">user_id</entry>
             </row>
             <row>
@@ -275,7 +275,7 @@
             </row>
             <row>
               <entry role="feature-detail">public</entry>
-              <entry role="feature-detail"/>
+              <entry role="feature-detail">game</entry>
               <entry role="feature-detail">games_id</entry>
             </row>
             <row>
@@ -305,7 +305,7 @@
       </table>
     </section>
     <section>
-      <title>team</title>
+      <title>teams</title>
       <table frame="all">
         <title/>
         <tgroup cols="3" align="left" colsep="1" rowsep="1">
@@ -315,7 +315,7 @@
           <thead>
             <row>
               <entry role="class-title">Class</entry>
-              <entry role="class-name" namest="c2" nameend="c3">team</entry>
+              <entry role="class-name" namest="c2" nameend="c3">teams</entry>
             </row>
           </thead>
           <tbody>
@@ -483,8 +483,8 @@
             </row>
             <row>
               <entry role="feature-detail">public</entry>
-              <entry role="feature-detail"/>
-              <entry role="feature-detail">cup_winner</entry>
+              <entry role="feature-detail">teams</entry>
+              <entry role="feature-detail">cup_winner_id</entry>
             </row>
             <row>
               <entry role="comment"/>
@@ -531,7 +531,7 @@
       </table>
     </section>
     <section>
-      <title>cup_winner_bet</title>
+      <title>cup_winner_bets</title>
       <table frame="all">
         <title/>
         <tgroup cols="3" align="left" colsep="1" rowsep="1">
@@ -541,7 +541,7 @@
           <thead>
             <row>
               <entry role="class-title">Class</entry>
-              <entry role="class-name" namest="c2" nameend="c3">cup_winner_bet</entry>
+              <entry role="class-name" namest="c2" nameend="c3">cup_winner_bets</entry>
             </row>
           </thead>
           <tbody>
@@ -583,7 +583,7 @@
             </row>
             <row>
               <entry role="feature-detail">public</entry>
-              <entry role="feature-detail"/>
+              <entry role="feature-detail">users</entry>
               <entry role="feature-detail">user_id</entry>
             </row>
             <row>
@@ -592,7 +592,7 @@
             </row>
             <row>
               <entry role="feature-detail">public</entry>
-              <entry role="feature-detail"/>
+              <entry role="feature-detail">competition</entry>
               <entry role="feature-detail">competition_id</entry>
             </row>
             <row>
@@ -601,7 +601,7 @@
             </row>
             <row>
               <entry role="feature-detail">public</entry>
-              <entry role="feature-detail"/>
+              <entry role="feature-detail">teams</entry>
               <entry role="feature-detail">team_id</entry>
             </row>
             <row>
