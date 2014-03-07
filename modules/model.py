@@ -18,6 +18,7 @@ class User(Base):
     password_hash = Column(String)
 
     cup_winner_bets = relationship("Cup_winner_bet", order_by="Cup_winner_bet.id", backref="users")
+    game_bets = relationship("Game_bet", order_by="Game_bet.id", backref="users")
 
     def __repr__(self):
         return "<User(name='%s', fullname='%s', email='%s')>" % (
@@ -28,17 +29,20 @@ class Team(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String)
 
+    cup_winner_bets = relationship("Cup_winner_bet", order_by="Cup_winner_bet.id", backref="teams")    
+    #games = relationship("Game", order_by="Game.id", backref="teams")    
 
 class Competition(Base):
     __tablename__ = 'competition'
     id = Column(Integer, primary_key=True)
     name = Column(String)
-    cup_winner = Column(Integer)
+    cup_winner = Column(Integer, ForeignKey('teams.id'))
     rule_right_winner = Column(Integer)
     rule_right_goaldif = Column(Integer)
     rule_right_result = Column(Integer)
     rule_cup_winner = Column(Integer)
 
+    cup_winner_bets = relationship("Cup_winner_bet", order_by="Cup_winner_bet.id", backref="competition")    
 
 class Cup_winner_bet(Base):
     __tablename__ = 'cup_winner_bet'
@@ -47,10 +51,9 @@ class Cup_winner_bet(Base):
     competition_id = Column(Integer, ForeignKey('competition.id'))
     team_id = Column(Integer, ForeignKey('teams.id'))
 
-    user = relationship("User", backref=backref('cup_winner_bet', order_by=id))
-    user = relationship("Competition", backref=backref('cup_winner_bet', order_by=id))
-    user = relationship("Team", backref=backref('cup_winner_bet', order_by=id))
-
+    def __repr__(self):
+        return "<Cup_winner_bet(Username='%s', competition='%s', team='%s')>" % (
+                                self.users.name, self.competition.name, self.teams.name)
 class Game(Base):
     __tablename__ = 'games'
     id = Column(Integer, primary_key=True)
