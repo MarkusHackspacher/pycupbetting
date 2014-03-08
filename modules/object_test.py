@@ -18,14 +18,16 @@ session = orm.scoped_session(sm)
 ed_user = model.User(name='ed', fullname='Ed Jones', email='ed@mail')
 session.add(ed_user)
 
-testteam = model.Team(name='Germany')
-session.add(testteam)
+teamlist = ['Germany', 'Brasil', 'Italy', 'Spain']
+for te in teamlist:
+    session.add(model.Team(name=te))
 
-testcompetition = model.Competition(name='World Cup 2014')
+testcompetition = model.Competition(name='World Cup 2014', cup_winner_id=2,rule_right_goaldif=2)
 session.add(testcompetition)
 
 ed_winner = model.Cup_winner_bet(competition_id= 1, team_id=1, user_id=1)
 session.add(ed_winner)
+
 session.commit()
 
 our_user = session.query(model.User).filter_by(name='ed').first() 
@@ -33,4 +35,20 @@ print our_user
 print our_user.cup_winner_bets
 our_winner = session.query(model.Cup_winner_bet).filter_by(user_id=our_user.id).first() 
 print our_winner
+teams = session.query(model.Team).all()
+print teams
+
+gametest = model.Game(competition_id=1, team_home_id=2, team_away_id=3,
+                      result_home=2, result_away=2)
+session.add(gametest)
+gamebettest = model.Game_bet(user_id=1, game_id=1, bet_home=1, bet_away=1)
+session.add(gamebettest)
+session.commit()
+our_user = session.query(model.User).filter_by(name='ed').first() 
+print our_user
+print our_user.game_bets
+our_bet = session.query(model.Game_bet).first() 
+print our_bet
+print our_bet.point
+
 
