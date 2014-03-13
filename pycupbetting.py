@@ -59,22 +59,6 @@ sm = orm.sessionmaker(bind=engine, autoflush=True, autocommit=True,
     expire_on_commit=True)
 session = orm.scoped_session(sm)
 
-#
-# Create some little demo functions that does not have any sensefull
-# functionality but printing some stuff.
-#
-
-
-def make_some_foo_func(s):
-    def func():
-        print(s)
-    return func
-
-hello, python, nothing, special = list(make_some_foo_func(s) for s in
-        ("Hello World!", "Python rocks!", "Nothing to do yet...",
-         "Wow! So special we must put it into a subsubmenu...")
-    )
-
 
 def info():
     print('''pycupbetting Programminfos
@@ -84,19 +68,16 @@ def info():
 
 def edit_user(user):
     default = user.name
-    try:
-        user.name = input("Benuzername [{}]:".format(default))
-    except SyntaxError:
+    user.name = input("Benuzername [{}]:".format(default))
+    if user.name == '':
         user.name = default
     default = user.fullname
-    try:
-        user.fullname = input("Voller Name [{}]:".format(default))
-    except SyntaxError:
+    user.fullname = input("Voller Name [{}]:".format(default))
+    if user.fullname == '':
         user.fullname = default
     default = user.email
-    try:
-        user.email = input("Email [{}]:".format(default))
-    except SyntaxError:
+    user.email = input("Email [{}]:".format(default))
+    if user.email == '':
         user.email = default
     return user
 
@@ -104,12 +85,34 @@ def edit_user(user):
 def new_user():
     session.add(edit_user(model.User()))
 
+def select_user():
+    userid = []
+    for all_user in session.query(model.User).all():
+        print ("User Nummer: {} Name: {}, Vollername: {}, ".
+            format(all_user.id, all_user.name, all_user.fullname))
+        userid.append(all_user.id)
+    select_id = input('User Nummer:')
+    if not (int(select_id) in userid):
+        return
+    user = session.query(model.User).filter_by(id=select_id).first()
+
+    def editor_user():
+        edit_user(user)
+
+    def info_user():
+        print ("Username: {} Vollername: {} Email: {}".
+           format(user.name, user.fullname, user.email, ))
+
+    userselect = Menu("Usereditormenü")
+    userselect.append("Usernamen ändern", editor_user)
+    userselect.append("Userinfo", info_user)
+    userselect.finish()
+    userselect.run()
 
 def edit_team(team):
     default = team.name
-    try:
-        team.name = input("Team Name [{}]:".format(default))
-    except SyntaxError:
+    team.name = input("Team Name [{}]:".format(default))
+    if team.name == '':
         team.name = default
     return team
 
@@ -117,14 +120,14 @@ def edit_team(team):
 def new_team():
     session.add(edit_team(model.Team()))
 
-
 def select_team():
     teamid = []
     for all_teams in session.query(model.Team).all():
-        print ("Team Nummer: {} Name: {}".format(all_teams.id, all_teams.name))
+        print ("Team Nummer: {} Name: {}".
+            format(all_teams.id, all_teams.name))
         teamid.append(all_teams.id)
-    select_teamid = input('Team Nummer:')
-    if not select_teamid in teamid:
+    select_id = input('Team Nummer:')
+    if not (int(select_id) in teamid):
         return
     team = session.query(model.Team).filter_by(id=select_teamid).first()
 
@@ -132,7 +135,8 @@ def select_team():
         edit_team(team)
 
     def info_team():
-        print ("Teamname: {}", format(team.name))
+        print ("Teamname: {}".format(team.name))
+
     teamselect = Menu("Teameditormenü")
     teamselect.append("Teamnamen ändern", editor_team)
     teamselect.append("Teaminfo", info_team)
@@ -270,26 +274,14 @@ def main():
 
     usersub = Menu("Usermenü")
     usersub.append("User hinzufügen", new_user)
-    #usersub.append("User auswählen", nothing)
+    usersub.append("User auswählen", select_user)
 
-    #sub = Menu("Submenü")
-    #sub.append("Action", nothing)
-
-    # ... or to create menu objects that we can later on
-    #subsub = Menu("Subsubmenü")
-    #subsub.append("Special", special)
-    # ... easily add to another menu as submenu
-    #sub.append_submenu(subsub)
-
-    #another_sub = Menu("Another Submenü")
-    #another_sub.append("Noch mehr Action", nothing)
-    # wait a second, we do not need that... we have `menu.finish()`!
-    #another_sub.append("Back", menu)
+    #competitionsub = Menu("Wettbewerb")
+    #competitionsub.append("Wettbewerb hinzufügen", new_competition)
+    #competitionsub.append("Wettbewerb auswählen", select_competition)
 
     menu.append_submenu(teamsub)
     menu.append_submenu(usersub)
-    #menu.append_submenu(sub)
-    #menu.append_submenu(another_sub)
 
     # create 'Exit'-entries automatically - nice to have this :-)
     # saves a lot of typing... :-)))
