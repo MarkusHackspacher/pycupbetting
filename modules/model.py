@@ -65,11 +65,11 @@ class Cup_winner_bet(Base):
 
     @property
     def point(self):
+        """Cup_winner_bet: right cup_winner"""
         points = 0
         if self.competition.cup_winner_id == self.team_id:
                 points =  self.games.competition.rule_cup_winner
-                print ("Cup_winner_bet: right cup_winner")
-	return points
+        return points
 
 class Game(Base):
     __tablename__ = 'games'
@@ -108,19 +108,18 @@ class Game_bet(Base):
 
     @property
     def point(self):
+        """Game_bet right result, right goaldif and right winner
+        """
         points = 0
         if (self.games.result_home ==  self.bet_home and
             self.games.result_away ==  self.bet_away):
                 points =  self.games.competition.rule_right_result
-                print ("Game_bet: right result")
         elif (self.games.result_home - self.games.result_away ==
             self.bet_home - self.bet_away):
                 points =  self.games.competition.rule_right_goaldif        
-                print ("Game_bet: right goaldif")
         elif ((self.games.result_home > self.games.result_away and
             self.bet_home > self.bet_away) or
             (self.games.result_home < self.games.result_away and
             self.bet_home < self.bet_away)):
                 points =  self.games.competition.rule_right_winner        
-                print ("Game_bet: right winner")
         return points
