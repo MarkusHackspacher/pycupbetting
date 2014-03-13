@@ -21,24 +21,24 @@
     ~~~~~~~~~~~~~
     classymenu.py
     ~~~~~~~~~~~~~
-    
+
     The most advanced module to create and handle menus with basic Python
     kwnoledges.
-    
+
     This time we use a class to represent and handle our menu tasks.
-    
+
     It might be understandable even for newbies, but you should have been
     familiar to classes in Python.
-    
+
     Of course the core ideas do not differ from the other, structure and
     function based approaches within this folder. As you can see a class is
     often the more comfortable way to handle deeply nested data structures.
-    
-    Our latest approach in `metamenu.py` handles tuples in a dictionary 
+
+    Our latest approach in `metamenu.py` handles tuples in a dictionary
     in a dictionary... that ist not very comfortable to deal with. You can
     get confused by indexes and perhaps keys. It feels less clumsy to deal
     with attributes of a class.
-    
+
     .. moduleauthor:: Christian Hausknecht <christian.hausknecht@gmx.de>
 """
 
@@ -52,7 +52,7 @@ from sqlalchemy import create_engine
 # Create an engine and create all the tables we need
 engine = create_engine('sqlite:///dbcupbetting.sqlite', echo=False)
 model.Base.metadata.bind = engine
-model.Base.metadata.create_all(engine) 
+model.Base.metadata.create_all(engine)
 
 # Set up the session
 sm = orm.sessionmaker(bind=engine, autoflush=True, autocommit=True,
@@ -60,48 +60,63 @@ sm = orm.sessionmaker(bind=engine, autoflush=True, autocommit=True,
 session = orm.scoped_session(sm)
 
 #
-# Create some little demo functions that does not have any sensefull 
+# Create some little demo functions that does not have any sensefull
 # functionality but printing some stuff.
 #
+
 
 def make_some_foo_func(s):
     def func():
         print(s)
     return func
-    
-hello, python, nothing, special  = list(make_some_foo_func(s) for s in 
+
+hello, python, nothing, special = list(make_some_foo_func(s) for s in
         ("Hello World!", "Python rocks!", "Nothing to do yet...",
          "Wow! So special we must put it into a subsubmenu...")
     )
+
 
 def info():
     print('''pycupbetting Programminfos
         Datenbankstruktur von Markus Hackspacher
         Menü von Christian Hausknecht ''')
 
+
 def edit_user(user):
     default = user.name
-    try: user.name = input("Benuzername [{}]:".format(default))
-    except SyntaxError: user.name = default
+    try:
+        user.name = input("Benuzername [{}]:".format(default))
+    except SyntaxError:
+        user.name = default
     default = user.fullname
-    try: user.fullname = input("Voller Name [{}]:".format(default))
-    except SyntaxError: user.fullname = default
+    try:
+        user.fullname = input("Voller Name [{}]:".format(default))
+    except SyntaxError:
+        user.fullname = default
     default = user.email
-    try: user.email = input("Email [{}]:".format(default))
-    except SyntaxError: user.email = default
+    try:
+        user.email = input("Email [{}]:".format(default))
+    except SyntaxError:
+        user.email = default
     return user
+
 
 def new_user():
     session.add(edit_user(model.User()))
 
+
 def edit_team(team):
     default = team.name
-    try: team.name = input("Team Name [{}]:".format(default))
-    except SyntaxError: team.name = default
+    try:
+        team.name = input("Team Name [{}]:".format(default))
+    except SyntaxError:
+        team.name = default
     return team
+
 
 def new_team():
     session.add(edit_team(model.Team()))
+
 
 def select_team():
     teamid = []
@@ -112,8 +127,10 @@ def select_team():
     if not select_teamid in teamid:
         return
     team = session.query(model.Team).filter_by(id=select_teamid).first()
+
     def editor_team():
         edit_team(team)
+
     def info_team():
         print ("Teamname: {}", format(team.name))
     teamselect = Menu("Teameditormenü")
@@ -122,41 +139,42 @@ def select_team():
     teamselect.finish()
     teamselect.run()
 
+
 class Menu:
     """
     Class that represents and handles a complete menu system all in once.
-    
+
     Each menu class can...
-    
+
         ... print out the (current) menu
         ... handle the user input
         ... run in an event-loop, that handles the complete menu based
             workflow.
-    
+
     It provides the `finish`-method, which adds automatically all needed
     'Exit'-entries to each (sub)menu, so building up a menu is not so much
     typing.
-    
+
     To avoid recursion, we use the `context`-attribute of the Menu-class. The
     current menu-object is always bound to this attribute. As we can combine
     arbitrary menu objects (via the `append_submenu`-method) we must keep
     the current working menu accessible to operate only in one object, the
     'root'-object.
     """
-    
+
     def __init__(self, title):
         self.title = title
         self.items = []
         self.context = self
-    
+
     def __repr__(self):
         return "Menu({})".format(self.title)
-    
+
     def __str__(self):
-        head = ("", "-"*len(self.title), "{}".format(self.title),
-                "-"*len(self.title))
+        head = ("", "-" * len(self.title), "{}".format(self.title),
+                "-" * len(self.title))
         entries = ("{} {} {}".format(
-                        index, "+" if isinstance(entry[1], Menu) else " ", 
+                        index, "+" if isinstance(entry[1], Menu) else " ",
                         entry[0]
                     )
                     for index, entry in enumerate(self, 1)
@@ -170,35 +188,35 @@ class Menu:
         `for` :-)
         """
         return self.items[key]
-    
+
     def append(self, text, func):
         """
         Appends a menu entry to `self.items`.
-        
+
         :param text: string with entry description
         :param func: callable that will be called if chosen
         """
         self.items.append((text, func))
-    
+
     def append_submenu(self, other):
         """
         Appends a submenu entry to the menu. That can be a complex branch
         of menu-objects.
-        
+
         :param other: Menu object, that represents a complete submenu-branch.
         """
         self.items.append((other.title, other))
-        
+
     def finish(self, text="Exit"):
         """
         Nice helper method that computes all needed 'Exit'-items for each
         submenu and the 'final' 'Exit'-item at the main-menu, which is simply
         any string.
-        
+
         All other exit-items are menu objects of the corresponding parent-menu.
-        
+
         The algorithm implements a breadth-first search for handling this task.
-        
+
         :param text: string with the text of the 'Exit'-item.
         """
         self.items.append((text, "#exit"))
@@ -239,17 +257,16 @@ class Menu:
             else:
                 command()
 
-    
+
 def main():
     # We build up some demonstration menu as in the other menu systems.
     # Now we can use classes to create menu objects...
     menu = Menu("Hauptmenü")
     menu.append("Info", info)
-    
+
     teamsub = Menu("Teammenü")
     teamsub.append("Team hinzufügen", new_team)
     teamsub.append("Team auswählen", select_team)
-    
 
     usersub = Menu("Usermenü")
     usersub.append("User hinzufügen", new_user)
@@ -273,11 +290,11 @@ def main():
     menu.append_submenu(usersub)
     #menu.append_submenu(sub)
     #menu.append_submenu(another_sub)
-    
+
     # create 'Exit'-entries automatically - nice to have this :-)
     # saves a lot of typing... :-)))
     menu.finish()
-    
+
     # shake it!
     menu.run()
 
