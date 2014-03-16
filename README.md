@@ -29,6 +29,14 @@ Ganze möchte im ersten Schritt ohne GUI realisiert, die Eingaben sollen in der
 Kommandozeile gemacht werden. Die Daten werden in einer Datenbank,
 vorzugsweise SQlite, gespeichert.
 
+translation
+-----------
+For the translation use fro make a messages.pot file
+```pygettext3 pycupbetting.py```
+rename the file in messages.po and translate it.
+To make a computer use file:
+```msgfmt messages.po -o locale/de/LC_MESSAGES/pycupbetting.mo```
+
 license
 -------
 GNU GPL

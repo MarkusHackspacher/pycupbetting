@@ -1,0 +1,180 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2014-03-16 22:55+CET\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: ENCODING\n"
+"Generated-By: pygettext.py 1.5\n"
+
+
+#: pycupbetting.py:50
+msgid "selection"
+msgstr ""
+
+#: pycupbetting.py:54
+msgid "back"
+msgstr ""
+
+#: pycupbetting.py:65
+msgid ""
+"pycupbetting\n"
+"        databasestruktur from Markus Hackspacher\n"
+"        Menu from Christian Hausknecht "
+msgstr ""
+
+#: pycupbetting.py:78
+msgid "short user name"
+msgstr ""
+
+#: pycupbetting.py:79
+msgid "full name"
+msgstr ""
+
+#: pycupbetting.py:80
+msgid "email"
+msgstr ""
+
+#: pycupbetting.py:98
+msgid "user: {} full name: {} email: {}"
+msgstr ""
+
+#: pycupbetting.py:101
+msgid "user editor"
+msgstr ""
+
+#: pycupbetting.py:102
+msgid "change user name"
+msgstr ""
+
+#: pycupbetting.py:103
+msgid "user info"
+msgstr ""
+
+#: pycupbetting.py:109
+msgid "name of the team"
+msgstr ""
+
+#: pycupbetting.py:127
+msgid "name of the team: {}"
+msgstr ""
+
+#: pycupbetting.py:129
+msgid "team editor {}"
+msgstr ""
+
+#: pycupbetting.py:130
+msgid "change team name"
+msgstr ""
+
+#: pycupbetting.py:131
+msgid "team info"
+msgstr ""
+
+#: pycupbetting.py:137
+msgid "name of competition"
+msgstr ""
+
+#: pycupbetting.py:139
+msgid "points for right winner"
+msgstr ""
+
+#: pycupbetting.py:141
+msgid "points for right goaldif"
+msgstr ""
+
+#: pycupbetting.py:143
+msgid "points for right result"
+msgstr ""
+
+#: pycupbetting.py:145
+msgid "point for right cup winner"
+msgstr ""
+
+#: pycupbetting.py:146
+msgid "cup winner selection"
+msgstr ""
+
+#: pycupbetting.py:168
+msgid "competition: {}"
+msgstr ""
+
+#: pycupbetting.py:170
+msgid "competition edit menu {}"
+msgstr ""
+
+#: pycupbetting.py:171
+msgid "competition name change"
+msgstr ""
+
+#: pycupbetting.py:172
+msgid "competition info"
+msgstr ""
+
+#: pycupbetting.py:178
+msgid "mainmenu"
+msgstr ""
+
+#: pycupbetting.py:179
+msgid "info"
+msgstr ""
+
+#: pycupbetting.py:181
+msgid "team menu"
+msgstr ""
+
+#: pycupbetting.py:182
+msgid "add team"
+msgstr ""
+
+#: pycupbetting.py:183
+msgid "team selection"
+msgstr ""
+
+#: pycupbetting.py:185
+msgid "user menu"
+msgstr ""
+
+#: pycupbetting.py:186
+msgid "add user"
+msgstr ""
+
+#: pycupbetting.py:187
+msgid "user selection"
+msgstr ""
+
+#: pycupbetting.py:189
+msgid "competition menu"
+msgstr ""
+
+#: pycupbetting.py:190
+msgid "add competition"
+msgstr ""
+
+#: pycupbetting.py:191
+msgid "competition selection"
+msgstr ""
+
+#: pycupbetting.py:193
+msgid "game"
+msgstr ""
+
+#: pycupbetting.py:196
+msgid "game bet"
+msgstr ""
+
+#: pycupbetting.py:199
+msgid "cup winner bet"
+msgstr ""
+
+#: pycupbetting.py:213
+msgid "exit"
+msgstr ""
+

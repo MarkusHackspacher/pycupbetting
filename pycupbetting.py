@@ -29,6 +29,10 @@ import functools
 
 from classymenu import Menu
 
+import gettext
+trans = gettext.translation("pycupbetting", "locale", languages=['de']) 
+trans.install()
+
 # Create an engine and create all the tables we need
 engine = create_engine('sqlite:///dbcupbetting.sqlite', echo=False)
 model.Base.metadata.bind = engine
@@ -43,11 +47,11 @@ session = orm.scoped_session(sm)
 class selection_menu():
     def __init__(self, datatable):
         self.selection_id = 0
-        select = Menu("Auswahlmenü")
+        select = Menu(_("selection"))
         for entry in datatable:
             get_id = functools.partial(self.get_id, entry.id)
             select.append(entry.name, get_id)
-        select.finish(text="Zurück")
+        select.finish(text=_("back"))
         select.run(once=True)
 
     def __int__(self):
@@ -58,24 +62,22 @@ class selection_menu():
 
 
 def info():
-    print('''pycupbetting Programminfos
-        Datenbankstruktur von Markus Hackspacher
-        Menü von Christian Hausknecht ''')
+    print(_('''pycupbetting
+        databasestruktur from Markus Hackspacher
+        Menu from Christian Hausknecht '''))
+
+
+def inputpro(in_valve, text):
+    out_valve = input("{} [{}]:".format(text, in_valve))
+    if out_valve == '':
+        out_valve = in_valve
+    return out_valve
 
 
 def edit_user(user):
-    default = user.name
-    user.name = input("Benuzername [{}]:".format(default))
-    if user.name == '':
-        user.name = default
-    default = user.fullname
-    user.fullname = input("Voller Name [{}]:".format(default))
-    if user.fullname == '':
-        user.fullname = default
-    default = user.email
-    user.email = input("Email [{}]:".format(default))
-    if user.email == '':
-        user.email = default
+    user.name = inputpro(user.name, _('short user name'))
+    user.fullname = inputpro(user.fullname, _('full name'))
+    user.email = inputpro(user.email, _('email'))
     return user
 
 
@@ -93,21 +95,18 @@ def select_user():
         edit_user(user)
 
     def info_user():
-        print ("Username: {} Vollername: {} Email: {}".
+        print (_("user: {} full name: {} email: {}").
            format(user.name, user.fullname, user.email, ))
 
-    userselect = Menu("Usereditormenü")
-    userselect.append("Usernamen ändern", editor_user)
-    userselect.append("Userinfo", info_user)
+    userselect = Menu(_("user editor"))
+    userselect.append(_("change user name"), editor_user)
+    userselect.append(_("user info"), info_user)
     userselect.finish()
     userselect.run()
 
 
 def edit_team(team):
-    default = team.name
-    team.name = input("Team Name [{}]:".format(default))
-    if team.name == '':
-        team.name = default
+    team.name = inputpro(team.name, _('name of the team'))
     return team
 
 
@@ -125,37 +124,93 @@ def select_team():
         edit_team(team)
 
     def info_team():
-        print ("Teamname: {}".format(team.name))
+        print (_("name of the team: {}").format(team.name))
 
-    teamselect = Menu("Teameditormenü {}".format(team.name))
-    teamselect.append("Teamnamen ändern", editor_team)
-    teamselect.append("Teaminfo", info_team)
+    teamselect = Menu(_("team editor {}").format(team.name))
+    teamselect.append(_("change team name"), editor_team)
+    teamselect.append(_("team info"), info_team)
+    teamselect.finish()
+    teamselect.run()
+
+
+def edit_competition(competition):
+    competition.name = inputpro(competition.name, _('name of competition'))
+    competition.rule_right_winner = int(inputpro(
+        competition.rule_right_winner, _('points for right winner')))
+    competition.rule_right_goaldif = int(inputpro(
+        competition.rule_right_goaldif, _('points for right goaldif')))
+    competition.rule_right_result = int(inputpro(
+        competition.rule_right_result, _('points for right result')))
+    competition.rule_cup_winner = int(inputpro(
+        competition.rule_cup_winner, _('point for right cup winner')))
+    print(_('cup winner selection'))
+    competition.cup_winner_id = int(selection_menu(
+        session.query(model.Team).all()))
+    return competition
+
+
+def new_competition():
+    session.add(edit_competition(model.Competition()))
+
+
+def select_competition():
+    competitionid = int(selection_menu(session.query(
+        model.Competition).all()))
+    if competitionid == 0:
+        return
+    competition = session.query(model.Competition).filter_by(
+        id=competitionid).first()
+
+    def editor_competition():
+        edit_competition(competition)
+
+    def info_competition():
+        print (_("competition: {}").format(competition.name))
+
+    teamselect = Menu(_("competition edit menu {}").format(competition.name))
+    teamselect.append(_("competition name change"), editor_competition)
+    teamselect.append(_("competition info"), info_competition)
     teamselect.finish()
     teamselect.run()
 
 
 def main():
-    menu = Menu("Hauptmenü")
-    menu.append("Info", info)
+    menu = Menu(_("mainmenu"))
+    menu.append(_("info"), info)
 
-    teamsub = Menu("Teammenü")
-    teamsub.append("Team hinzufügen", new_team)
-    teamsub.append("Team auswählen", select_team)
+    teamsub = Menu(_("team menu"))
+    teamsub.append(_("add team"), new_team)
+    teamsub.append(_("team selection"), select_team)
 
-    usersub = Menu("Usermenü")
-    usersub.append("User hinzufügen", new_user)
-    usersub.append("User auswählen", select_user)
+    usersub = Menu(_("user menu"))
+    usersub.append(_("add user"), new_user)
+    usersub.append(_("user selection"), select_user)
 
-    #competitionsub = Menu("Wettbewerb")
-    #competitionsub.append("Wettbewerb hinzufügen", new_competition)
-    #competitionsub.append("Wettbewerb auswählen", select_competition)
+    competitionsub = Menu(_("competition menu"))
+    competitionsub.append(_("add competition"), new_competition)
+    competitionsub.append(_("competition selection"), select_competition)
 
+    gamesub = Menu(_("game"))
+    #gamesub.append(_("add game"), new_game)
+    #gamesub.append(_("game selection"), select_game)
+    game_betsub = Menu(_("game bet"))
+    #game_betsub.append(_("add game bet"), new_game_betsub)
+    #game_betsub.append(_("game bet selection"), select_game_betsub)
+    cup_winner_betsub = Menu(_("cup winner bet"))
+    #cup_winner_betsub.append(_("add cup winner bet"),
+    # new_cup_winner_betsub)
+    #cup_winner_betsub.append(_("cup winner bet selection"),
+    # select_cup_winner_betsub)
     menu.append_submenu(teamsub)
     menu.append_submenu(usersub)
+    menu.append_submenu(competitionsub)
+    menu.append_submenu(gamesub)
+    menu.append_submenu(game_betsub)
+    menu.append_submenu(cup_winner_betsub)
 
     # create 'Exit'-entries automatically - nice to have this :-)
     # saves a lot of typing... :-)))
-    menu.finish()
+    menu.finish(text=_("exit"))
 
     # shake it!
     menu.run()
