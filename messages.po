@@ -32,6 +32,18 @@ msgstr ""
 "        Datenbankstruktur von Markus Hackspacher\n"
 "        Menü von Christian Hausknecht "
 
+#: pycupbetting.py:108
+msgid ""
+"competition: {} cupwinner: {}\r\n"
+"\r\n"
+msgstr ""
+"Wettbewerb: {} Pokalsieger: {}\r\n"
+"\r\n"
+
+#: pycupbetting.py:109
+msgid "competition: {} cupwinner: {}"
+msgstr "Wettbewerb: {} Pokalsieger: {}"
+
 #: pycupbetting.py:78
 msgid "short user name"
 msgstr "Benutzerkürzel"
@@ -46,7 +58,7 @@ msgstr "Email"
 
 #: pycupbetting.py:98
 msgid "user: {} full name: {} email: {}"
-msgstr "Username: {} Vollername: {} Email: {}"
+msgstr "Username: {} Voller Name: {} Email: {}"
 
 #: pycupbetting.py:101
 msgid "user editor"
@@ -54,11 +66,27 @@ msgstr "Usereditormenü"
 
 #: pycupbetting.py:102
 msgid "change user name"
-msgstr "Usernamen andern"
+msgstr "Usernamen ändern"
 
 #: pycupbetting.py:103
 msgid "user info"
 msgstr "Userinfo"
+
+#: pycupbetting.py:166
+msgid "add new cup winner bet"
+msgstr "Hinzufügen einer Pokalsieger Wette"
+
+#: pycupbetting.py:167
+msgid "cup winner bet selection"
+msgstr "Auswahl einer Pokalsieger Wette"
+
+#: pycupbetting.py:168
+msgid "add new game bet"
+msgstr "Hinzufügen einer Spiel Wette"
+
+#: pycupbetting.py:169
+msgid "cup game bet selection"
+msgstr "Auswahl einer Spiel Wette"
 
 #: pycupbetting.py:109
 msgid "name of the team"
@@ -98,11 +126,11 @@ msgstr "Punkte für richtige Ergebniss"
 
 #: pycupbetting.py:145
 msgid "point for right cup winner"
-msgstr "Punkte für den richtigen Cup-Sieger"
+msgstr "Punkte für den richtigen Pokalsieger"
 
 #: pycupbetting.py:146
 msgid "cup winner selection"
-msgstr "Wettbewerbsgewinner"
+msgstr "Pokalsieger Auswahl"
 
 #: pycupbetting.py:168
 msgid "competition: {}"
@@ -146,7 +174,7 @@ msgstr "Usermenü"
 
 #: pycupbetting.py:186
 msgid "add user"
-msgstr "User hinzufägen"
+msgstr "User hinzufügen"
 
 #: pycupbetting.py:187
 msgid "user selection"
@@ -174,7 +202,11 @@ msgstr "Spiel Tip"
 
 #: pycupbetting.py:199
 msgid "cup winner bet"
-msgstr "Wettbewerb Gewinner Tip"
+msgstr "Pokalsieger Tip"
+
+#: pycupbetting.py:477
+msgid "all_betting"
+msgstr "Alle Tipps"
 
 #: pycupbetting.py:213
 msgid "exit"

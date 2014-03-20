@@ -1,5 +1,26 @@
 # -*- coding: utf-8 -*-
 
+"""
+pycupbetting
+
+Copyright (C) <2014> Markus Hackspacher
+
+This file is part of pycupbetting.
+
+pyLottoverwaltung is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+pycupbetting is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with pycupbetting.  If not, see <http://www.gnu.org/licenses/>.
+"""
+
 from sqlalchemy import Column, Integer, String, Date, ForeignKey
 from sqlalchemy.orm import relationship, backref
 
@@ -69,8 +90,13 @@ class Cup_winner_bet(Base):
     team_id = Column(Integer, ForeignKey('teams.id'))
 
     def __repr__(self):
-        return "<Cup_winner_bet(Username='{}', competition='{}', team='{}')>" \
-            .format(self.users.name, self.competition.name, self.teams.name)
+        return "<Cup_winner_bet(Username='{}', competition='{}', team='{}')>".\
+            format(self.users.name, self.competition.name, self.teams.name)
+
+    @property
+    def name(self):
+        return "{} {} {}". \
+            format(self.users.name, self.competition.name, self.teams.name)
 
     @property
     def point(self):
@@ -105,6 +131,12 @@ class Game(Base):
                    self.team_away.name, self.result_home, self.result_away,
                    self.game_bets)
 
+    @property
+    def name(self):
+        return "{}: {}:{} {}:{}". \
+            format(self.competition.name, self.team_home.name,
+                   self.team_away.name, self.result_home, self.result_away)
+
 
 class Game_bet(Base):
     __tablename__ = 'game_bet'
@@ -120,6 +152,13 @@ class Game_bet(Base):
              format(self.users.name, self.games.competition.name,
              self.games.team_home.name, self.games.team_away.name,
              self.games.result_home, self.games.result_away,
+             self.bet_home, self.bet_away)
+
+    @property
+    def name(self):
+        return "{}:{} {}:{}". \
+             format(
+             self.games.team_home.name, self.games.team_away.name,
              self.bet_home, self.bet_away)
 
     @property

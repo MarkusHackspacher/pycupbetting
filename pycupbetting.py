@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-pycupbetting, load module lotto
+pycupbetting
 
 Copyright (C) <2014> Markus Hackspacher
 
@@ -30,8 +30,7 @@ import functools
 from classymenu import Menu
 
 import gettext
-trans = gettext.translation("pycupbetting", "locale", languages=['de']) 
-trans.install()
+_ = gettext.gettext
 
 # Create an engine and create all the tables we need
 engine = create_engine('sqlite:///dbcupbetting.sqlite', echo=False)
@@ -45,6 +44,9 @@ session = orm.scoped_session(sm)
 
 
 class selection_menu():
+    """
+    show the selection menu and return the id of table
+    """
     def __init__(self, datatable):
         self.selection_id = 0
         select = Menu(_("selection"))
@@ -61,6 +63,16 @@ class selection_menu():
         self.selection_id = number
 
 
+def translation_de():
+    """
+    set the language
+    are more language could be a in parameter
+    """
+    global _
+    lang = gettext.translation("pycupbetting", "locale", languages=['de'])
+    _ = lang.gettext
+
+
 def info():
     print(_('''pycupbetting
         databasestruktur from Markus Hackspacher
@@ -68,13 +80,72 @@ def info():
 
 
 def inputpro(in_valve, text):
+    """
+    Input prozedure
+    """
     out_valve = input("{} [{}]:".format(text, in_valve))
     if out_valve == '':
         out_valve = in_valve
     return out_valve
 
 
+def all_betting(user_id=None, competition_id=None, export=False):
+    """
+    print all games of competition
+    """
+    if not user_id:
+        user_id = int(selection_menu(session.query(
+            model.User).all()))
+    if user_id == 0:
+        return
+    if not competition_id:
+        competition_id = int(selection_menu(session.query(
+            model.Competition).all()))
+    if competition_id == 0:
+        return
+    comp = session.query(model.Competition).filter_by(
+        id=competition_id).one()
+    points = 0
+    if export:
+        f = open('games.txt', 'w')
+        f.write(_("competition: {} cupwinner: {}\r\n\r\n").format(
+            comp.name, comp.teams.name))
+    print (_("competition: {} cupwinner: {}").format(
+        comp.name, comp.teams.name))
+    for cup_winner in comp.cup_winner_bets:
+        points += cup_winner.point
+        each_cup_winner = (_('your cup winner: {} point:{}').format(
+            cup_winner.teams.name, cup_winner.point))
+        print (each_cup_winner)
+        if export:
+            f.write(each_cup_winner + '\r\n')
+    for game in comp.games:
+        each_game = (_('game {}').format(game.name))
+        print (each_game)
+        if export:
+            f.write(each_game + '\r\n')
+        for bet in game.game_bets:
+            if bet.user_id == user_id:
+                points += bet.point
+                each_bet = (_('bet: {} point:{}').format(bet.name, bet.point))
+                print (each_bet)
+                if export:
+                    f.write(each_bet + '\r\n')
+    text = (_('points:{}').format(points))
+    print (text)
+    if export:
+        f.write(text + '\r\n')
+
+    if export:
+        f.close()
+
+
 def edit_user(user):
+    """
+    change of data of table user
+
+    :param user: data
+    """
     user.name = inputpro(user.name, _('short user name'))
     user.fullname = inputpro(user.fullname, _('full name'))
     user.email = inputpro(user.email, _('email'))
@@ -90,9 +161,13 @@ def select_user():
     if userid == 0:
         return
     user = session.query(model.User).filter_by(id=userid).first()
-
-    def editor_user():
-        edit_user(user)
+    editor_user = functools.partial(edit_user, user)
+    new_cup_winner_bet_user = functools.partial(new_cup_winner_bet,
+                                                user_id=user.id)
+    select_cup_winner_bet_user = functools.partial(select_cup_winner_bet,
+                                                   user_id=user.id)
+    new_game_bet_user = functools.partial(new_game_bet, user_id=user.id)
+    select_game_bet_user = functools.partial(select_game_bet, user_id=user.id)
 
     def info_user():
         print (_("user: {} full name: {} email: {}").
@@ -101,11 +176,21 @@ def select_user():
     userselect = Menu(_("user editor"))
     userselect.append(_("change user name"), editor_user)
     userselect.append(_("user info"), info_user)
+    userselect.append(_("add new cup winner bet"), new_cup_winner_bet_user)
+    userselect.append(_("cup winner bet selection"),
+                        select_cup_winner_bet_user)
+    userselect.append(_("add new game bet"), new_game_bet_user)
+    userselect.append(_("cup game bet selection"), select_game_bet_user)
     userselect.finish()
     userselect.run()
 
 
 def edit_team(team):
+    """
+    change of data of table team
+
+    :param team: data
+    """
     team.name = inputpro(team.name, _('name of the team'))
     return team
 
@@ -119,9 +204,7 @@ def select_team():
     if teamid == 0:
         return
     team = session.query(model.Team).filter_by(id=teamid).first()
-
-    def editor_team():
-        edit_team(team)
+    editor_team = functools.partial(edit_team, team)
 
     def info_team():
         print (_("name of the team: {}").format(team.name))
@@ -134,6 +217,11 @@ def select_team():
 
 
 def edit_competition(competition):
+    """
+    change of data of table competition
+
+    :param competition: data
+    """
     competition.name = inputpro(competition.name, _('name of competition'))
     competition.rule_right_winner = int(inputpro(
         competition.rule_right_winner, _('points for right winner')))
@@ -153,6 +241,23 @@ def new_competition():
     session.add(edit_competition(model.Competition()))
 
 
+def all_games_competition(competition, export):
+    """
+    print all games of competition
+    """
+    if export:
+        f = open('games.txt', 'w')
+        f.write(_("competition: {}\r\n\r\n").format(competition.name))
+    print (_("competition: {}").format(competition.name))
+    for game in competition.games:
+        each_game = ('{}:{}'.format(game.team_home.name, game.team_away.name))
+        print (each_game)
+        if export:
+            f.write(each_game + '\r\n')
+    if export:
+        f.close()
+
+
 def select_competition():
     competitionid = int(selection_menu(session.query(
         model.Competition).all()))
@@ -160,21 +265,200 @@ def select_competition():
         return
     competition = session.query(model.Competition).filter_by(
         id=competitionid).first()
-
-    def editor_competition():
-        edit_competition(competition)
+    editor_competition = functools.partial(edit_competition, competition)
+    new_game_competition = functools.partial(new_game, competition.id)
+    select_game_competition = functools.partial(select_game, competition.id)
+    print_all_games_competition = functools.partial(all_games_competition,
+                                                    competition, False)
+    export_all_games_competition = functools.partial(all_games_competition,
+                                                     competition, True)
 
     def info_competition():
-        print (_("competition: {}").format(competition.name))
-
+        print (_("competition: {}, Points {},{},{},{}").
+               format(competition.name,
+               competition.rule_right_winner, competition.rule_right_goaldif,
+               competition.rule_right_result, competition.rule_cup_winner,))
+        try:
+            print (_("cupwinner: {}").format(competition.teams.name))
+        except AttributeError:
+            print (_("no cupwinner selected"))
     teamselect = Menu(_("competition edit menu {}").format(competition.name))
     teamselect.append(_("competition name change"), editor_competition)
     teamselect.append(_("competition info"), info_competition)
+    teamselect.append(_("add game"), new_game_competition)
+    teamselect.append(_("game selection"), select_game_competition)
+    teamselect.append(_("show all games"), print_all_games_competition)
+    teamselect.append(_("export all games"), export_all_games_competition)
     teamselect.finish()
     teamselect.run()
 
 
+def edit_cup_winner_bet(cup_winner_bet):
+    """
+    change of data of table cup_winner_bet
+
+    :param cup_winner_bet: data
+    """
+    print(_('team selection'))
+    cup_winner_bet.team_id = int(selection_menu(
+        session.query(model.Team).all()))
+    return cup_winner_bet
+
+
+def new_cup_winner_bet(user_id, competition_id=None):
+    """
+    :param user_id: data:
+    :param competition_id: data
+    """
+    if not competition_id:
+        competition_id = int(selection_menu(session.query(
+            model.Competition).all()))
+    if competition_id == 0:
+        return
+    session.add(edit_cup_winner_bet(model.Cup_winner_bet(
+        user_id=user_id, competition_id=competition_id)))
+
+
+def select_cup_winner_bet(user_id, competition_id=None):
+    print (user_id)
+    if not competition_id:
+        competition_id = int(selection_menu(session.query(
+            model.Competition).all()))
+    if competition_id == 0:
+        return
+    memberid = int(selection_menu(session.query(
+            model.Cup_winner_bet).filter_by(
+            user_id=user_id).filter_by(competition_id=competition_id).all()))
+    if memberid == 0:
+        return
+    cup_winner_bet = session.query(model.Cup_winner_bet).filter_by(
+        id=memberid).first()
+    editor_cup_winner_bet = functools.partial(edit_cup_winner_bet,
+                                              cup_winner_bet)
+
+    def delete_cup_winner_bet():
+        session.delete(cup_winner_bet)
+        return
+
+    cup_winner_betselect = Menu(_("cup_winner editor {}").format(
+        cup_winner_bet.teams.name))
+    cup_winner_betselect.append(_("change team name"), editor_cup_winner_bet)
+    cup_winner_betselect.append(_("delete this bet"), delete_cup_winner_bet)
+    cup_winner_betselect.finish()
+    cup_winner_betselect.run()
+
+
+def edit_game(game):
+    """
+    change of data of table game
+
+    :param game: data
+    """
+    print(_('team home selection'))
+    game.team_home_id = int(selection_menu(
+        session.query(model.Team).all()))
+    print(_('team away selection'))
+    game.team_away_id = int(selection_menu(
+        session.query(model.Team).all()))
+    game.result_home = inputpro(game.result_home, _('result home'))
+    game.result_away = inputpro(game.result_away, _('result away'))
+    return game
+
+
+def new_game(competition_id):
+    session.add(edit_game(model.Game(competition_id=competition_id)))
+
+
+def select_game(competition_id):
+    memberid = int(selection_menu(session.query(model.Game).filter_by(
+        competition_id=competition_id).all()))
+    if memberid == 0:
+        return
+    game = session.query(model.Game).filter_by(id=memberid).first()
+    editor_game = functools.partial(edit_game, game)
+
+    def info_game():
+        print (_("name of the competition: {}").format(game.competition.name))
+        try:
+            print (_("team home: {}").format(game.team_home.name))
+        except AttributeError:
+            print (_("no team_home selected"))
+        try:
+            print (_("team away: {}").format(game.team_away.name))
+        except AttributeError:
+            print (_("no team away selected"))
+
+    gameselect = Menu(_("game editor"))
+    gameselect.append(_("change game"), editor_game)
+    gameselect.append(_("team info"), info_game)
+    gameselect.finish()
+    gameselect.run()
+
+
+def edit_game_bet(game_bet):
+    """
+    change of data of table game_bet
+
+    :param game_bet: data
+    """
+    game_bet.bet_home = inputpro(game_bet.bet_home, _('bet result home'))
+    game_bet.bet_away = inputpro(game_bet.bet_away, _('bet result away'))
+
+    return game_bet
+
+
+def new_game_bet(user_id=None, game_id=None):
+    """
+    :param user_id: data:
+    :param game_id: data
+    """
+    if not user_id:
+        user_id = int(selection_menu(session.query(
+            model.User).all()))
+    if user_id == 0:
+        return
+    if not game_id:
+        game_id = int(selection_menu(session.query(
+            model.Game).all()))
+    if game_id == 0:
+        return
+    session.add(edit_game_bet(model.Game_bet(user_id=user_id,
+                                             game_id=game_id)))
+
+
+def select_game_bet(user_id=None, game_id=None):
+    if not user_id:
+        user_id = int(selection_menu(session.query(
+            model.User).all()))
+    if user_id == 0:
+        return
+    if not game_id:
+        game_id = int(selection_menu(session.query(
+            model.Game).all()))
+    if game_id == 0:
+        return
+    memberid = int(selection_menu(session.query(model.Game_bet).filter_by(
+            user_id=user_id).filter_by(game_id=game_id).all()))
+    if memberid == 0:
+        return
+    game_bet = session.query(model.Game_bet).filter_by(id=memberid).first()
+    editor_game_bet = functools.partial(edit_game_bet, game_bet)
+
+    def info_game_bet():
+        print (_("name of the game_bet: {}").format(game_bet.name))
+
+    game_betselect = Menu(_("game_bet editor {}").format(game_bet.name))
+    game_betselect.append(_("change game_bet name"), editor_game_bet)
+    game_betselect.append(_("game_betinfo"), info_game_bet)
+    game_betselect.finish()
+    game_betselect.run()
+
+
 def main():
+    """
+    main of pycupbetting
+    show the mainmenu
+    """
     menu = Menu(_("mainmenu"))
     menu.append(_("info"), info)
 
@@ -190,23 +474,10 @@ def main():
     competitionsub.append(_("add competition"), new_competition)
     competitionsub.append(_("competition selection"), select_competition)
 
-    gamesub = Menu(_("game"))
-    #gamesub.append(_("add game"), new_game)
-    #gamesub.append(_("game selection"), select_game)
-    game_betsub = Menu(_("game bet"))
-    #game_betsub.append(_("add game bet"), new_game_betsub)
-    #game_betsub.append(_("game bet selection"), select_game_betsub)
-    cup_winner_betsub = Menu(_("cup winner bet"))
-    #cup_winner_betsub.append(_("add cup winner bet"),
-    # new_cup_winner_betsub)
-    #cup_winner_betsub.append(_("cup winner bet selection"),
-    # select_cup_winner_betsub)
+    menu.append(_("all_betting"), all_betting)
     menu.append_submenu(teamsub)
     menu.append_submenu(usersub)
     menu.append_submenu(competitionsub)
-    menu.append_submenu(gamesub)
-    menu.append_submenu(game_betsub)
-    menu.append_submenu(cup_winner_betsub)
 
     # create 'Exit'-entries automatically - nice to have this :-)
     # saves a lot of typing... :-)))
@@ -216,4 +487,8 @@ def main():
     menu.run()
 
 if __name__ == "__main__":
+    languagemenu = Menu("language")
+    languagemenu.append("Deutsch", translation_de)
+    languagemenu.finish(text="english")
+    languagemenu.run(once=True)
     main()
