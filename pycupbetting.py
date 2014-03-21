@@ -93,11 +93,6 @@ def all_betting(user_id=None, competition_id=None, export=False):
     """
     print all games of competition
     """
-    if not user_id:
-        user_id = int(selection_menu(session.query(
-            model.User).all()))
-    if user_id == 0:
-        return
     if not competition_id:
         competition_id = int(selection_menu(session.query(
             model.Competition).all()))
@@ -106,28 +101,41 @@ def all_betting(user_id=None, competition_id=None, export=False):
     comp = session.query(model.Competition).filter_by(
         id=competition_id).one()
     points = 0
+    text_winner = ''
+    if comp.cup_winner_id:
+        text_winner = _("cupwinner: {}\r\n\r\n").format(comp.teams.name)
     if export:
         f = open('games.txt', 'w')
-        f.write(_("competition: {} cupwinner: {}\r\n\r\n").format(
-            comp.name, comp.teams.name))
-    print (_("competition: {} cupwinner: {}").format(
-        comp.name, comp.teams.name))
+        f.write(_("competition: {} {}\r\n\r\n").format(
+            comp.name, text_winner))
+    print (_("competition: {} {}").format(
+        comp.name, text_winner))
     for cup_winner in comp.cup_winner_bets:
-        points += cup_winner.point
-        each_cup_winner = (_('your cup winner: {} point:{}').format(
+        each_cup_winner = (_('cup winner: {} point:{} ').format(
             cup_winner.teams.name, cup_winner.point))
-        print (each_cup_winner)
-        if export:
-            f.write(each_cup_winner + '\r\n')
+        if not user_id:
+            print (cup_winner.users.name, each_cup_winner,)
+            if export:
+                f.write(cup_winner.users.name, each_cup_winner)            
+        elif cup_winner.user_id == user_id:
+            points += cup_winner.point
+            print (each_cup_winner)
+            if export:
+                f.write(each_cup_winner + '\r\n')
     for game in comp.games:
         each_game = (_('game {}').format(game.name))
         print (each_game)
         if export:
             f.write(each_game + '\r\n')
         for bet in game.game_bets:
-            if bet.user_id == user_id:
+            each_bet = (_('bet: {}:{} point:{}').format(
+                bet.bet_home, bet.bet_away, bet.point))
+            if not user_id:
+                print (bet.users.name, each_bet)
+                if export:
+                    f.write(bet.users.name, each_bet + '\r\n')
+            elif bet.user_id == user_id :
                 points += bet.point
-                each_bet = (_('bet: {} point:{}').format(bet.name, bet.point))
                 print (each_bet)
                 if export:
                     f.write(each_bet + '\r\n')
@@ -166,8 +174,9 @@ def select_user():
                                                 user_id=user.id)
     select_cup_winner_bet_user = functools.partial(select_cup_winner_bet,
                                                    user_id=user.id)
-    new_game_bet_user = functools.partial(new_game_bet, user_id=user.id)
+    all_game_bet_user = functools.partial(all_game_bet, user_id=user.id)
     select_game_bet_user = functools.partial(select_game_bet, user_id=user.id)
+    all_betting_user = functools.partial(all_betting, user_id=user.id)
 
     def info_user():
         print (_("user: {} full name: {} email: {}").
@@ -176,11 +185,12 @@ def select_user():
     userselect = Menu(_("user editor"))
     userselect.append(_("change user name"), editor_user)
     userselect.append(_("user info"), info_user)
+    userselect.append(_("user bettings"), all_betting_user)
     userselect.append(_("add new cup winner bet"), new_cup_winner_bet_user)
     userselect.append(_("cup winner bet selection"),
                         select_cup_winner_bet_user)
-    userselect.append(_("add new game bet"), new_game_bet_user)
-    userselect.append(_("cup game bet selection"), select_game_bet_user)
+    userselect.append(_("edit all game bets"), all_game_bet_user)
+    userselect.append(_("game bet selection"), select_game_bet_user)
     userselect.finish()
     userselect.run()
 
@@ -388,9 +398,14 @@ def select_game(competition_id):
         except AttributeError:
             print (_("no team away selected"))
 
+    def delete_game():
+        session.delete(game)
+        return
+
     gameselect = Menu(_("game editor"))
     gameselect.append(_("change game"), editor_game)
     gameselect.append(_("team info"), info_game)
+    gameselect.append(_("delete this game"), delete_game)
     gameselect.finish()
     gameselect.run()
 
@@ -407,23 +422,35 @@ def edit_game_bet(game_bet):
     return game_bet
 
 
-def new_game_bet(user_id=None, game_id=None):
+def all_game_bet(user_id=None, competition_id=None):
     """
     :param user_id: data:
-    :param game_id: data
+    :param competition_id: data
     """
     if not user_id:
         user_id = int(selection_menu(session.query(
             model.User).all()))
     if user_id == 0:
         return
-    if not game_id:
-        game_id = int(selection_menu(session.query(
-            model.Game).all()))
-    if game_id == 0:
+    if not competition_id:
+        competition_id = int(selection_menu(session.query(
+            model.Competition).all()))
+    if competition_id == 0:
         return
-    session.add(edit_game_bet(model.Game_bet(user_id=user_id,
-                                             game_id=game_id)))
+    for games in session.query(model.Game).filter_by(
+            competition_id=competition_id).all():
+        print (games.name)
+        game_bets = session.query(model.Game_bet).filter_by(
+            user_id=user_id).filter_by(game_id=games.id).all()
+        if game_bets:
+            print ('you have bet')
+            for game_bet in game_bets:
+                print (game_bet.name)
+                edit_game_bet(game_bet)
+        else:
+            print ('not bet')
+            session.add(edit_game_bet(model.Game_bet(user_id=user_id,
+                                                     game_id=games.id)))
 
 
 def select_game_bet(user_id=None, game_id=None):
@@ -447,9 +474,14 @@ def select_game_bet(user_id=None, game_id=None):
     def info_game_bet():
         print (_("name of the game_bet: {}").format(game_bet.name))
 
-    game_betselect = Menu(_("game_bet editor {}").format(game_bet.name))
-    game_betselect.append(_("change game_bet name"), editor_game_bet)
-    game_betselect.append(_("game_betinfo"), info_game_bet)
+    def delete_game_bet():
+        session.delete(game_bet)
+        return
+
+    game_betselect = Menu(_("game bet editor {}").format(game_bet.name))
+    game_betselect.append(_("change game bet"), editor_game_bet)
+    game_betselect.append(_("gamebet info"), info_game_bet)
+    game_betselect.append(_("delete this bet"), delete_game_bet)
     game_betselect.finish()
     game_betselect.run()
 
