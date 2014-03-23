@@ -29,6 +29,14 @@ Ganze möchte im ersten Schritt ohne GUI realisiert, die Eingaben sollen in der
 Kommandozeile gemacht werden. Die Daten werden in einer Datenbank,
 vorzugsweise SQlite, gespeichert.
 
+installation and start
+----------------------
+The program requires [Python 3.x](http://www.python.org/download/)
+and [sqlalchemy](http://www.sqlalchemy.org/).
+Install at first Python and ```easy_install SQLAlchemy``` or 
+```pip install SQLAlchemy```
+Start ```python3 pycupbetting.py``` to run the program.
+
 translation
 -----------
 For the translation use fro make a messages.pot file

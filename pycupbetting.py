@@ -183,6 +183,8 @@ def select_user():
            format(user.name, user.fullname, user.email, ))
 
     userselect = Menu(_("user editor"))
+    userselect.textchoice = _('Your choice is ?:')
+    userselect.texterror = _('please only enter numbers between 1 and {}')
     userselect.append(_("change user name"), editor_user)
     userselect.append(_("user info"), info_user)
     userselect.append(_("user bettings"), all_betting_user)
@@ -220,6 +222,8 @@ def select_team():
         print (_("name of the team: {}").format(team.name))
 
     teamselect = Menu(_("team editor {}").format(team.name))
+    teamselect.textchoice = _('Your choice is ?:')
+    teamselect.texterror = _('please only enter numbers between 1 and {}')
     teamselect.append(_("change team name"), editor_team)
     teamselect.append(_("team info"), info_team)
     teamselect.finish()
@@ -292,15 +296,17 @@ def select_competition():
             print (_("cupwinner: {}").format(competition.teams.name))
         except AttributeError:
             print (_("no cupwinner selected"))
-    teamselect = Menu(_("competition edit menu {}").format(competition.name))
-    teamselect.append(_("competition name change"), editor_competition)
-    teamselect.append(_("competition info"), info_competition)
-    teamselect.append(_("add game"), new_game_competition)
-    teamselect.append(_("game selection"), select_game_competition)
-    teamselect.append(_("show all games"), print_all_games_competition)
-    teamselect.append(_("export all games"), export_all_games_competition)
-    teamselect.finish()
-    teamselect.run()
+    compselect = Menu(_("competition edit menu {}").format(competition.name))
+    compselect.textchoice = _('Your choice is ?:')
+    compselect.texterror = _('please only enter numbers between 1 and {}')
+    compselect.append(_("competition name change"), editor_competition)
+    compselect.append(_("competition info"), info_competition)
+    compselect.append(_("add game"), new_game_competition)
+    compselect.append(_("game selection"), select_game_competition)
+    compselect.append(_("show all games"), print_all_games_competition)
+    compselect.append(_("export all games"), export_all_games_competition)
+    compselect.finish()
+    compselect.run()
 
 
 def edit_cup_winner_bet(cup_winner_bet):
@@ -350,9 +356,12 @@ def select_cup_winner_bet(user_id, competition_id=None):
         session.delete(cup_winner_bet)
         return
 
-    cup_winner_betselect = Menu(_("cup_winner editor {}").format(
+    cup_winner_betselect = Menu(_("cup winner bet editor {}").format(
         cup_winner_bet.teams.name))
-    cup_winner_betselect.append(_("change team name"), editor_cup_winner_bet)
+    cup_winner_betselect.textchoice = _('Your choice is ?:')
+    cup_winner_betselect.texterror = _(
+        'please only enter numbers between 1 and {}')
+    cup_winner_betselect.append(_("change cup winner bet"), editor_cup_winner_bet)
     cup_winner_betselect.append(_("delete this bet"), delete_cup_winner_bet)
     cup_winner_betselect.finish()
     cup_winner_betselect.run()
@@ -392,7 +401,7 @@ def select_game(competition_id):
         try:
             print (_("team home: {}").format(game.team_home.name))
         except AttributeError:
-            print (_("no team_home selected"))
+            print (_("no team home selected"))
         try:
             print (_("team away: {}").format(game.team_away.name))
         except AttributeError:
@@ -403,6 +412,8 @@ def select_game(competition_id):
         return
 
     gameselect = Menu(_("game editor"))
+    gameselect.textchoice = _('Your choice is ?:')
+    gameselect.texterror = _('please only enter numbers between 1 and {}')
     gameselect.append(_("change game"), editor_game)
     gameselect.append(_("team info"), info_game)
     gameselect.append(_("delete this game"), delete_game)
@@ -472,13 +483,15 @@ def select_game_bet(user_id=None, game_id=None):
     editor_game_bet = functools.partial(edit_game_bet, game_bet)
 
     def info_game_bet():
-        print (_("name of the game_bet: {}").format(game_bet.name))
+        print (_("info of the game bet: {}").format(game_bet.name))
 
     def delete_game_bet():
         session.delete(game_bet)
         return
 
     game_betselect = Menu(_("game bet editor {}").format(game_bet.name))
+    game_betselect.textchoice = _('Your choice is ?:')
+    game_betselect.texterror = _('please only enter numbers between 1 and {}')
     game_betselect.append(_("change game bet"), editor_game_bet)
     game_betselect.append(_("gamebet info"), info_game_bet)
     game_betselect.append(_("delete this bet"), delete_game_bet)
@@ -492,6 +505,8 @@ def main():
     show the mainmenu
     """
     menu = Menu(_("mainmenu"))
+    menu.textchoice = _('Your choice is ?:')
+    menu.texterror = _('please only enter numbers between 1 and {}')
     menu.append(_("info"), info)
 
     teamsub = Menu(_("team menu"))
@@ -506,7 +521,7 @@ def main():
     competitionsub.append(_("add competition"), new_competition)
     competitionsub.append(_("competition selection"), select_competition)
 
-    menu.append(_("all_betting"), all_betting)
+    menu.append(_("all betting"), all_betting)
     menu.append_submenu(teamsub)
     menu.append_submenu(usersub)
     menu.append_submenu(competitionsub)

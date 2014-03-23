@@ -89,6 +89,10 @@ class Menu:
         self.title = title
         self.items = []
         self.context = self
+        
+        self.textchoice = 'Your choice is ?:'
+        # Your choice is ?: Ihre Wahl?: 
+        self.texterror = 'please only enter numbers between 1 and {}'
 
     def __repr__(self):
         return "Menu({})".format(self.title)
@@ -155,14 +159,13 @@ class Menu:
     def get_user_input(self):
         while True:
             try:
-                choice = int(input("Ihre Wahl?: ")) - 1
+                choice = int(input(self.textchoice)) - 1
                 if 0 <= choice < len(self.context.items):
                     return choice
                 else:
                     raise IndexError
             except (ValueError, IndexError):
-                print("Bitte nur Zahlen aus dem Bereich 1..{} eingeben".format(
-                                                    len(self.context.items)))
+                print(self.texterror.format(len(self.context.items)))
 
     def run(self, once=False):
         """
