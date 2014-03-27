@@ -133,9 +133,18 @@ class Game(Base):
 
     @property
     def name(self):
+        try:
+            team_home_name = self.team_home.name
+        except AttributeError:
+            team_home_name = "no team home selected"
+        try:
+            team_away_name = self.team_away.name
+        except AttributeError:
+            team_away_name = "no team away selected"
+
         return "{}: {}:{} {}:{}". \
-            format(self.competition.name, self.team_home.name,
-                   self.team_away.name, self.result_home, self.result_away)
+            format(self.competition.name, team_home_name,
+                   team_away_name, self.result_home, self.result_away)
 
 
 class Game_bet(Base):

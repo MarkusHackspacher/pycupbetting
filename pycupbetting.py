@@ -50,6 +50,8 @@ class selection_menu():
     def __init__(self, datatable):
         self.selection_id = 0
         select = Menu(_("selection"))
+        select.textchoice = _('Your choice is ?:')
+        select.texterror = _('please only enter numbers between 1 and {}')
         for entry in datatable:
             get_id = functools.partial(self.get_id, entry.id)
             select.append(entry.name, get_id)
@@ -105,7 +107,7 @@ def all_betting(user_id=None, competition_id=None, export=False):
     if comp.cup_winner_id:
         text_winner = _("cupwinner: {}\r\n\r\n").format(comp.teams.name)
     if export:
-        f = open('games.txt', 'w')
+        f = open('all.csv', 'w')
         f.write(_("competition: {} {}\r\n\r\n").format(
             comp.name, text_winner))
     print (_("competition: {} {}").format(
@@ -193,7 +195,7 @@ def select_user():
                         select_cup_winner_bet_user)
     userselect.append(_("edit all game bets"), all_game_bet_user)
     userselect.append(_("game bet selection"), select_game_bet_user)
-    userselect.finish()
+    userselect.finish(text=_("back"))
     userselect.run()
 
 
@@ -226,7 +228,7 @@ def select_team():
     teamselect.texterror = _('please only enter numbers between 1 and {}')
     teamselect.append(_("change team name"), editor_team)
     teamselect.append(_("team info"), info_team)
-    teamselect.finish()
+    teamselect.finish(text=_("back"))
     teamselect.run()
 
 
@@ -264,7 +266,16 @@ def all_games_competition(competition, export):
         f.write(_("competition: {}\r\n\r\n").format(competition.name))
     print (_("competition: {}").format(competition.name))
     for game in competition.games:
-        each_game = ('{}:{}'.format(game.team_home.name, game.team_away.name))
+        try:
+            team_home_name = game.team_home.name
+        except AttributeError:
+            team_home_name = "no team home selected"
+        try:
+            team_away_name = game.team_away.name
+        except AttributeError:
+            team_away_name = "no team away selected"
+
+        each_game = ('{} : {}'.format(team_home_name, team_away_name))
         print (each_game)
         if export:
             f.write(each_game + '\r\n')
@@ -305,7 +316,7 @@ def select_competition():
     compselect.append(_("game selection"), select_game_competition)
     compselect.append(_("show all games"), print_all_games_competition)
     compselect.append(_("export all games"), export_all_games_competition)
-    compselect.finish()
+    compselect.finish(text=_("back"))
     compselect.run()
 
 
@@ -363,7 +374,7 @@ def select_cup_winner_bet(user_id, competition_id=None):
         'please only enter numbers between 1 and {}')
     cup_winner_betselect.append(_("change cup winner bet"), editor_cup_winner_bet)
     cup_winner_betselect.append(_("delete this bet"), delete_cup_winner_bet)
-    cup_winner_betselect.finish()
+    cup_winner_betselect.finish(text=_("back"))
     cup_winner_betselect.run()
 
 
@@ -384,6 +395,36 @@ def edit_game(game):
     return game
 
 
+def edit_game_result(competition_id=None, game_id=None):
+    """
+    change of data of table game
+
+    :param game: data
+    """
+    if not competition_id and not game_id:
+        competition_id = int(selection_menu(session.query(
+            model.Competition).all()))
+    if competition_id == 0:
+        return
+    if not game_id:
+        game_id = int(selection_menu(session.query(model.Game).filter_by(
+            competition_id=competition_id).all()))
+    if game_id == 0:
+        return
+    game = session.query(model.Game).filter_by(id=game_id).first()
+    try:
+        print (_("team home: {}").format(game.team_home.name))
+    except AttributeError:
+        print (_("no team home selected"))
+    try:
+        print (_("team away: {}").format(game.team_away.name))
+    except AttributeError:
+        print (_("no team away selected"))
+    game.result_home = inputpro(game.result_home, _('result home'))
+    game.result_away = inputpro(game.result_away, _('result away'))
+    return game
+
+
 def new_game(competition_id):
     session.add(edit_game(model.Game(competition_id=competition_id)))
 
@@ -395,6 +436,7 @@ def select_game(competition_id):
         return
     game = session.query(model.Game).filter_by(id=memberid).first()
     editor_game = functools.partial(edit_game, game)
+    edit_game_result_g = functools.partial(edit_game_result, game_id=game.id)
 
     def info_game():
         print (_("name of the competition: {}").format(game.competition.name))
@@ -415,9 +457,10 @@ def select_game(competition_id):
     gameselect.textchoice = _('Your choice is ?:')
     gameselect.texterror = _('please only enter numbers between 1 and {}')
     gameselect.append(_("change game"), editor_game)
+    gameselect.append(_("game result"), edit_game_result_g)
     gameselect.append(_("team info"), info_game)
     gameselect.append(_("delete this game"), delete_game)
-    gameselect.finish()
+    gameselect.finish(text=_("back"))
     gameselect.run()
 
 
@@ -495,7 +538,7 @@ def select_game_bet(user_id=None, game_id=None):
     game_betselect.append(_("change game bet"), editor_game_bet)
     game_betselect.append(_("gamebet info"), info_game_bet)
     game_betselect.append(_("delete this bet"), delete_game_bet)
-    game_betselect.finish()
+    game_betselect.finish(text=_("back"))
     game_betselect.run()
 
 
@@ -504,6 +547,7 @@ def main():
     main of pycupbetting
     show the mainmenu
     """
+    all_betting_export = functools.partial(all_betting, export=True)
     menu = Menu(_("mainmenu"))
     menu.textchoice = _('Your choice is ?:')
     menu.texterror = _('please only enter numbers between 1 and {}')
@@ -521,7 +565,9 @@ def main():
     competitionsub.append(_("add competition"), new_competition)
     competitionsub.append(_("competition selection"), select_competition)
 
-    menu.append(_("all betting"), all_betting)
+    menu.append(_("show all betting"), all_betting)
+    menu.append(_("all betting export (csv)"), all_betting_export)
+    menu.append(_("game result"), edit_game_result)
     menu.append_submenu(teamsub)
     menu.append_submenu(usersub)
     menu.append_submenu(competitionsub)

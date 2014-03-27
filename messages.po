@@ -18,7 +18,21 @@ msgstr ""
 msgid "selection"
 msgstr "Auswahlmenü"
 
-#: pycupbetting.py:54
+#: pycupbetting.py:53 pycupbetting.py:188 pycupbetting.py:227
+#: pycupbetting.py:311 pycupbetting.py:372 pycupbetting.py:457
+#: pycupbetting.py:536 pycupbetting.py:552
+msgid "Your choice is ?:"
+msgstr "Ihre Wahl?:"
+
+#: pycupbetting.py:54 pycupbetting.py:189 pycupbetting.py:228
+#: pycupbetting.py:312 pycupbetting.py:373 pycupbetting.py:458
+#: pycupbetting.py:537 pycupbetting.py:553
+msgid "please only enter numbers between 1 and {}"
+msgstr "Bitte nur Zahlen aus dem Bereich 1..{} eingeben"
+
+#: pycupbetting.py:58 pycupbetting.py:198 pycupbetting.py:231
+#: pycupbetting.py:319 pycupbetting.py:377 pycupbetting.py:463
+#: pycupbetting.py:541
 msgid "back"
 msgstr "Zurück"
 
@@ -87,18 +101,6 @@ msgstr "Benutzerkürzel: {} Voller Name: {} Email: {}"
 #: pycupbetting.py:101
 msgid "user editor"
 msgstr "Benutzereditormenü"
-
-#: pycupbetting.py:186 pycupbetting.py:225 pycupbetting.py:300
-#: pycupbetting.py:361 pycupbetting.py:415 pycupbetting.py:493
-#: pycupbetting.py:508
-msgid "Your choice is ?:"
-msgstr "Ihre Wahl?:"
-
-#: pycupbetting.py:187 pycupbetting.py:226 pycupbetting.py:301
-#: pycupbetting.py:362 pycupbetting.py:416 pycupbetting.py:494
-#: pycupbetting.py:509
-msgid "please only enter numbers between 1 and {}"
-msgstr "Bitte nur Zahlen aus dem Bereich 1..{} eingeben"
 
 #: pycupbetting.py:102
 msgid "change user name"
@@ -228,6 +230,14 @@ msgstr "alle Spiele in Datei schreiben"
 msgid "team selection"
 msgstr "Mannschaft auswählen"
 
+#: pycupbetting.py:370
+msgid "cup winner bet editor {}"
+msgstr "Pokalsieger Tip Editor {}"
+
+#: pycupbetting.py:375
+msgid "change cup winner bet"
+msgstr "Pokalsieger Tip ändern"
+
 #: pycupbetting.py:356 pycupbetting.py:484
 msgid "delete this bet"
 msgstr "Tip löschen"
@@ -248,10 +258,6 @@ msgstr "Tore Heimteam"
 msgid "result away"
 msgstr "Tore Gastteam"
 
-#: pycupbetting.py:391
-msgid "name of the competition: {}"
-msgstr "Name des Wettbewerbs"
-
 #: pycupbetting.py:393
 msgid "team home: {}"
 msgstr "Heimteam: {}"
@@ -268,6 +274,10 @@ msgstr "Gastteam: {}"
 msgid "no team away selected"
 msgstr "kein Gastteam gewählt"
 
+#: pycupbetting.py:391
+msgid "name of the competition: {}"
+msgstr "Name des Wettbewerbs: {}"
+
 #: pycupbetting.py:405
 msgid "game editor"
 msgstr "Spiel bearbeiten"
@@ -275,6 +285,10 @@ msgstr "Spiel bearbeiten"
 #: pycupbetting.py:406
 msgid "change game"
 msgstr "Spiel ändern"
+
+#: pycupbetting.py:460 pycupbetting.py:570
+msgid "game result"
+msgstr "Spielergebniss eingeben"
 
 #: pycupbetting.py:408
 msgid "delete this game"
@@ -344,9 +358,13 @@ msgstr "Wettbewerb hinzufügen"
 msgid "competition selection"
 msgstr "Wettbewerb auswählen"
 
-#: pycupbetting.py:509
-msgid "all betting"
-msgstr "Alle Tipps"
+#: pycupbetting.py:568
+msgid "show all betting"
+msgstr "Alle Tipps anzeigen"
+
+#: pycupbetting.py:569
+msgid "all betting export (csv)"
+msgstr "Alle Tipps exportieren (csv)"
 
 #: pycupbetting.py:213
 msgid "exit"
