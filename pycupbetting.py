@@ -76,9 +76,16 @@ def translation_de():
 
 
 def info():
+    """
+    show info text
+    """
     print(_('''pycupbetting
         databasestruktur from Markus Hackspacher
-        Menu from Christian Hausknecht '''))
+        Menu from Christian Hausknecht
+
+        add teams, add competion, add game in competion
+        add user, add user bettings
+        add game results and enjoy'''))
 
 
 def inputpro(in_valve, text):
@@ -108,43 +115,51 @@ def all_betting(user_id=None, competition_id=None, export=False):
         text_winner = _("cupwinner: {}\r\n\r\n").format(comp.teams.name)
     if export:
         f = open('all.csv', 'w')
-        f.write(_("competition: {} {}\r\n\r\n").format(
-            comp.name, text_winner))
-    print (_("competition: {} {}").format(
-        comp.name, text_winner))
-    for cup_winner in comp.cup_winner_bets:
-        each_cup_winner = (_('cup winner: {} point:{} ').format(
-            cup_winner.teams.name, cup_winner.point))
-        if not user_id:
-            print (cup_winner.users.name, each_cup_winner,)
-            if export:
-                f.write(cup_winner.users.name, each_cup_winner)            
-        elif cup_winner.user_id == user_id:
-            points += cup_winner.point
-            print (each_cup_winner)
-            if export:
-                f.write(each_cup_winner + '\r\n')
     for game in comp.games:
-        each_game = (_('game {}').format(game.name))
+        each_game = (_('game {} ').format(game.name))
         print (each_game)
         if export:
-            f.write(each_game + '\r\n')
+            f.write(each_game + _(','))
         for bet in game.game_bets:
             each_bet = (_('bet: {}:{} point:{}').format(
                 bet.bet_home, bet.bet_away, bet.point))
             if not user_id:
                 print (bet.users.name, each_bet)
                 if export:
-                    f.write(bet.users.name, each_bet + '\r\n')
+                    f.write(bet.users.name + _(',') + each_bet + _(','))
             elif bet.user_id == user_id :
                 points += bet.point
                 print (each_bet)
                 if export:
                     f.write(each_bet + '\r\n')
-    text = (_('points:{}').format(points))
-    print (text)
+        if export:
+            f.write('\r\n')
+    print (_("competition: {} {}").format(
+        comp.name, text_winner))
     if export:
-        f.write(text + '\r\n')
+        f.write(text_winner + _(','))
+    for cup_winner in comp.cup_winner_bets:
+        each_cup_winner = (_('cup winner: {} point:{}').format(
+            cup_winner.teams.name, cup_winner.point) + _(','))
+        if not user_id:
+            print (cup_winner.users.name, each_cup_winner,)
+            if export:
+                f.write(cup_winner.users.name + _(',') + each_cup_winner)            
+        elif cup_winner.user_id == user_id:
+            points += cup_winner.point
+            print (each_cup_winner)
+            if export:
+                f.write(each_cup_winner + _(','))
+    if export:
+        f.write('\r\n')
+        f.write(_(','))
+    for cup_winner in comp.cup_winner_bets:
+        each_cup_winner = (_('all points:{}').format(
+            sum(x.point for x in cup_winner.users.game_bets)
+            + cup_winner.point) + _(','))
+        print (each_cup_winner)
+        if export:
+            f.write(_(',') + each_cup_winner)
 
     if export:
         f.close()
@@ -452,12 +467,18 @@ def select_game(competition_id):
     def delete_game():
         session.delete(game)
         return
+    
+    def edit_game_result_reset():
+        game.result_home = None
+        game.result_away = None
+        return
 
     gameselect = Menu(_("game editor"))
     gameselect.textchoice = _('Your choice is ?:')
     gameselect.texterror = _('please only enter numbers between 1 and {}')
     gameselect.append(_("change game"), editor_game)
     gameselect.append(_("game result"), edit_game_result_g)
+    gameselect.append(_("reset game result"), edit_game_result_reset)    
     gameselect.append(_("team info"), info_game)
     gameselect.append(_("delete this game"), delete_game)
     gameselect.finish(text=_("back"))

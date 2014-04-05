@@ -175,9 +175,10 @@ class Game_bet(Base):
         """Game_bet right result, right goaldif and right winner
         """
         points = 0
-        if (not self.games.result_home or not self.games.result_away
-                or not self.bet_home or not self.bet_away):
+        if None in (self.games.result_home, self.games.result_away,
+                self.bet_home, self.bet_away):
             return points
+
         if (self.games.result_home == self.bet_home and
             self.games.result_away == self.bet_away):
                 points = self.games.competition.rule_right_result
