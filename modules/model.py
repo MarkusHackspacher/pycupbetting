@@ -31,6 +31,7 @@ Base = declarative_base()
 
 
 class User(Base):
+    """characteristics of the user table"""
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
     name = Column(String)
@@ -48,6 +49,7 @@ class User(Base):
 
 
 class Team(Base):
+    """characteristics of the team table"""
     __tablename__ = 'teams'
     id = Column(Integer, primary_key=True)
     name = Column(String)
@@ -63,6 +65,7 @@ class Team(Base):
 
 
 class Competition(Base):
+    """characteristics of the competition table"""
     __tablename__ = 'competition'
     id = Column(Integer, primary_key=True)
     name = Column(String)
@@ -83,6 +86,7 @@ class Competition(Base):
 
 
 class Cup_winner_bet(Base):
+    """characteristics of the cup winner bet table"""
     __tablename__ = 'cup_winner_bet'
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('users.id'))
@@ -108,6 +112,7 @@ class Cup_winner_bet(Base):
 
 
 class Game(Base):
+    """characteristics of the games table"""
     __tablename__ = 'games'
     id = Column(Integer, primary_key=True)
     competition_id = Column(Integer, ForeignKey('competition.id'))
@@ -148,6 +153,7 @@ class Game(Base):
 
 
 class Game_bet(Base):
+    """characteristics of the game bet table"""
     __tablename__ = 'game_bet'
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('users.id'))
@@ -165,6 +171,7 @@ class Game_bet(Base):
 
     @property
     def name(self):
+        """return the game name and result of the game bet"""
         return "{}:{} {}:{}". \
              format(
              self.games.team_home.name, self.games.team_away.name,
@@ -172,7 +179,7 @@ class Game_bet(Base):
 
     @property
     def point(self):
-        """Game_bet right result, right goaldif and right winner
+        """Game bet right result, right goaldif and right winner
         """
         points = 0
         if None in (self.games.result_home, self.games.result_away,
