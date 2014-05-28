@@ -127,7 +127,7 @@ def all_betting(user_id=None, competition_id=None, export=False):
                 print (bet.users.name, each_bet)
                 if export:
                     f.write(bet.users.name + _(',') + each_bet + _(','))
-            elif bet.user_id == user_id :
+            elif bet.user_id == user_id:
                 points += bet.point
                 print (each_bet)
                 if export:
@@ -144,7 +144,7 @@ def all_betting(user_id=None, competition_id=None, export=False):
         if not user_id:
             print (cup_winner.users.name, each_cup_winner,)
             if export:
-                f.write(cup_winner.users.name + _(',') + each_cup_winner)            
+                f.write(cup_winner.users.name + _(',') + each_cup_winner)
         elif cup_winner.user_id == user_id:
             points += cup_winner.point
             print (each_cup_winner)
@@ -181,6 +181,11 @@ def new_user():
     session.add(edit_user(model.User()))
 
 
+def info_user(user):
+    print (_("user: {} full name: {} email: {}").
+       format(user.name, user.fullname, user.email, ))
+
+
 def select_user():
     userid = int(selection_menu(session.query(model.User).all()))
     if userid == 0:
@@ -194,16 +199,13 @@ def select_user():
     all_game_bet_user = functools.partial(all_game_bet, user_id=user.id)
     select_game_bet_user = functools.partial(select_game_bet, user_id=user.id)
     all_betting_user = functools.partial(all_betting, user_id=user.id)
-
-    def info_user():
-        print (_("user: {} full name: {} email: {}").
-           format(user.name, user.fullname, user.email, ))
+    info_user_select = functools.partial(info_user, user)
 
     userselect = Menu(_("user editor"))
     userselect.textchoice = _('Your choice is ?:')
     userselect.texterror = _('please only enter numbers between 1 and {}')
     userselect.append(_("change user name"), editor_user)
-    userselect.append(_("user info"), info_user)
+    userselect.append(_("user info"), info_user_select)
     userselect.append(_("user bettings"), all_betting_user)
     userselect.append(_("add new cup winner bet"), new_cup_winner_bet_user)
     userselect.append(_("cup winner bet selection"),
@@ -228,21 +230,23 @@ def new_team():
     session.add(edit_team(model.Team()))
 
 
+def info_team(team):
+    print (_("name of the team: {}").format(team.name))
+
+
 def select_team():
     teamid = int(selection_menu(session.query(model.Team).all()))
     if teamid == 0:
         return
     team = session.query(model.Team).filter_by(id=teamid).first()
     editor_team = functools.partial(edit_team, team)
-
-    def info_team():
-        print (_("name of the team: {}").format(team.name))
+    info_team_sel = functools.partial(info_team, team)
 
     teamselect = Menu(_("team editor {}").format(team.name))
     teamselect.textchoice = _('Your choice is ?:')
     teamselect.texterror = _('please only enter numbers between 1 and {}')
     teamselect.append(_("change team name"), editor_team)
-    teamselect.append(_("team info"), info_team)
+    teamselect.append(_("team info"), info_team_sel)
     teamselect.finish(text=_("back"))
     teamselect.run()
 
@@ -298,6 +302,17 @@ def all_games_competition(competition, export):
         f.close()
 
 
+def info_competition(competition):
+    print (_("competition: {}, Points {},{},{},{}").
+           format(competition.name,
+           competition.rule_right_winner, competition.rule_right_goaldif,
+           competition.rule_right_result, competition.rule_cup_winner,))
+    try:
+        print (_("cupwinner: {}").format(competition.teams.name))
+    except AttributeError:
+        print (_("no cupwinner selected"))
+
+
 def select_competition():
     competitionid = int(selection_menu(session.query(
         model.Competition).all()))
@@ -312,21 +327,13 @@ def select_competition():
                                                     competition, False)
     export_all_games_competition = functools.partial(all_games_competition,
                                                      competition, True)
+    info_competition_sel = functools.partial(info_competition, competition)
 
-    def info_competition():
-        print (_("competition: {}, Points {},{},{},{}").
-               format(competition.name,
-               competition.rule_right_winner, competition.rule_right_goaldif,
-               competition.rule_right_result, competition.rule_cup_winner,))
-        try:
-            print (_("cupwinner: {}").format(competition.teams.name))
-        except AttributeError:
-            print (_("no cupwinner selected"))
     compselect = Menu(_("competition edit menu {}").format(competition.name))
     compselect.textchoice = _('Your choice is ?:')
     compselect.texterror = _('please only enter numbers between 1 and {}')
     compselect.append(_("competition name change"), editor_competition)
-    compselect.append(_("competition info"), info_competition)
+    compselect.append(_("competition info"), info_competition_sel)
     compselect.append(_("add game"), new_game_competition)
     compselect.append(_("game selection"), select_game_competition)
     compselect.append(_("show all games"), print_all_games_competition)
@@ -361,6 +368,11 @@ def new_cup_winner_bet(user_id, competition_id=None):
         user_id=user_id, competition_id=competition_id)))
 
 
+def delete_cup_winner_bet(cup_winner_bet):
+    session.delete(cup_winner_bet)
+    return
+
+
 def select_cup_winner_bet(user_id, competition_id=None):
     print (user_id)
     if not competition_id:
@@ -377,18 +389,18 @@ def select_cup_winner_bet(user_id, competition_id=None):
         id=memberid).first()
     editor_cup_winner_bet = functools.partial(edit_cup_winner_bet,
                                               cup_winner_bet)
-
-    def delete_cup_winner_bet():
-        session.delete(cup_winner_bet)
-        return
+    delete_cup_winner_bet_sel = functools.partial(
+        delete_cup_winner_bet, cup_winner_bet)
 
     cup_winner_betselect = Menu(_("cup winner bet editor {}").format(
         cup_winner_bet.teams.name))
     cup_winner_betselect.textchoice = _('Your choice is ?:')
     cup_winner_betselect.texterror = _(
         'please only enter numbers between 1 and {}')
-    cup_winner_betselect.append(_("change cup winner bet"), editor_cup_winner_bet)
-    cup_winner_betselect.append(_("delete this bet"), delete_cup_winner_bet)
+    cup_winner_betselect.append(_("change cup winner bet"),
+                                  editor_cup_winner_bet)
+    cup_winner_betselect.append(_("delete this bet"),
+                                  delete_cup_winner_bet_sel)
     cup_winner_betselect.finish(text=_("back"))
     cup_winner_betselect.run()
 
@@ -467,7 +479,7 @@ def select_game(competition_id):
     def delete_game():
         session.delete(game)
         return
-    
+
     def edit_game_result_reset():
         game.result_home = None
         game.result_away = None
@@ -478,7 +490,7 @@ def select_game(competition_id):
     gameselect.texterror = _('please only enter numbers between 1 and {}')
     gameselect.append(_("change game"), editor_game)
     gameselect.append(_("game result"), edit_game_result_g)
-    gameselect.append(_("reset game result"), edit_game_result_reset)    
+    gameselect.append(_("reset game result"), edit_game_result_reset)
     gameselect.append(_("team info"), info_game)
     gameselect.append(_("delete this game"), delete_game)
     gameselect.finish(text=_("back"))
