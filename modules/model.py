@@ -7,7 +7,7 @@ Copyright (C) <2014> Markus Hackspacher
 
 This file is part of pycupbetting.
 
-pyLottoverwaltung is free software: you can redistribute it and/or modify
+pycupbetting is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
@@ -39,13 +39,14 @@ class User(Base):
     email = Column(String)
 
     cup_winner_bets = relationship("Cup_winner_bet",
-                          order_by="Cup_winner_bet.id", backref="users")
+                                   order_by="Cup_winner_bet.id",
+                                   backref="users")
     game_bets = relationship("Game_bet", order_by="Game_bet.id",
                              backref="users")
 
     def __repr__(self):
         return "<User(name='%s', fullname='%s', email='%s')>" % (
-                                self.name, self.fullname, self.email)
+            self.name, self.fullname, self.email)
 
 
 class Team(Base):
@@ -55,7 +56,8 @@ class Team(Base):
     name = Column(String)
 
     cup_winner_bets = relationship("Cup_winner_bet",
-                          order_by="Cup_winner_bet.id", backref="teams")
+                                   order_by="Cup_winner_bet.id",
+                                   backref="teams")
     competitions = relationship("Competition", order_by="Competition.id",
                                 backref="teams")
 
@@ -76,7 +78,8 @@ class Competition(Base):
     rule_cup_winner = Column(Integer)
 
     cup_winner_bets = relationship("Cup_winner_bet",
-        order_by="Cup_winner_bet.id", backref="competition")
+                                   order_by="Cup_winner_bet.id",
+                                   backref="competition")
     games = relationship("Game", order_by="Game.id", backref="competition")
 
     def __repr__(self):
@@ -125,9 +128,9 @@ class Game(Base):
     game_bets = relationship("Game_bet", order_by="Game_bet.id",
                              backref="games")
     team_home = relationship("Team",
-                primaryjoin="Team.id==Game.team_home_id")
+                             primaryjoin="Team.id==Game.team_home_id")
     team_away = relationship("Team",
-                primaryjoin="Team.id==Game.team_away_id")
+                             primaryjoin="Team.id==Game.team_away_id")
 
     def __repr__(self):
         return "<Game(competition='{}', game='{}:{}', result='{}:{}'," \
@@ -163,19 +166,22 @@ class Game_bet(Base):
 
     def __repr__(self):
         return "<Game_bet(name='{}', competition='{}', game='{}:{}'," \
-             "result='{}:{}', bet='{}:{}'". \
-             format(self.users.name, self.games.competition.name,
-             self.games.team_home.name, self.games.team_away.name,
-             self.games.result_home, self.games.result_away,
-             self.bet_home, self.bet_away)
+               "result='{}:{}', bet='{}:{}'". \
+               format(self.users.name,
+                      self.games.competition.name,
+                      self.games.team_home.name,
+                      self.games.team_away.name,
+                      self.games.result_home,
+                      self.games.result_away,
+                      self.bet_home,
+                      self.bet_away)
 
     @property
     def name(self):
         """return the game name and result of the game bet"""
-        return "{}:{} {}:{}". \
-             format(
-             self.games.team_home.name, self.games.team_away.name,
-             self.bet_home, self.bet_away)
+        return "{}:{} {}:{}". format(self.games.team_home.name,
+                                     self.games.team_away.name,
+                                     self.bet_home, self.bet_away)
 
     @property
     def point(self):
@@ -183,18 +189,18 @@ class Game_bet(Base):
         """
         points = 0
         if None in (self.games.result_home, self.games.result_away,
-                self.bet_home, self.bet_away):
+                    self.bet_home, self.bet_away):
             return points
 
         if (self.games.result_home == self.bet_home and
-            self.games.result_away == self.bet_away):
-                points = self.games.competition.rule_right_result
+                self.games.result_away == self.bet_away):
+            points = self.games.competition.rule_right_result
         elif (self.games.result_home - self.games.result_away ==
-            self.bet_home - self.bet_away):
-                points = self.games.competition.rule_right_goaldif
+              self.bet_home - self.bet_away):
+            points = self.games.competition.rule_right_goaldif
         elif ((self.games.result_home > self.games.result_away and
-            self.bet_home > self.bet_away) or
-            (self.games.result_home < self.games.result_away and
-            self.bet_home < self.bet_away)):
-                points = self.games.competition.rule_right_winner
+               self.bet_home > self.bet_away) or
+              (self.games.result_home < self.games.result_away and
+               self.bet_home < self.bet_away)):
+            points = self.games.competition.rule_right_winner
         return points

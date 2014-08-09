@@ -8,7 +8,7 @@ Copyright (C) <2014> Markus Hackspacher
 
 This file is part of pycupbetting.
 
-pyLottoverwaltung is free software: you can redistribute it and/or modify
+pycupbetting is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
@@ -38,8 +38,10 @@ model.Base.metadata.bind = engine
 model.Base.metadata.create_all(engine)
 
 # Set up the session
-sm = orm.sessionmaker(bind=engine, autoflush=True, autocommit=True,
-    expire_on_commit=True)
+sm = orm.sessionmaker(bind=engine,
+                      autoflush=True,
+                      autocommit=True,
+                      expire_on_commit=True)
 session = orm.scoped_session(sm)
 
 
@@ -182,8 +184,8 @@ def new_user():
 
 
 def info_user(user):
-    print (_("user: {} full name: {} email: {}").
-       format(user.name, user.fullname, user.email, ))
+    print(_("user: {} full name: {} email: {}").
+          format(user.name, user.fullname, user.email, ))
 
 
 def select_user():
@@ -209,7 +211,7 @@ def select_user():
     userselect.append(_("user bettings"), all_betting_user)
     userselect.append(_("add new cup winner bet"), new_cup_winner_bet_user)
     userselect.append(_("cup winner bet selection"),
-                        select_cup_winner_bet_user)
+                      select_cup_winner_bet_user)
     userselect.append(_("edit all game bets"), all_game_bet_user)
     userselect.append(_("game bet selection"), select_game_bet_user)
     userselect.finish(text=_("back"))
@@ -381,7 +383,7 @@ def select_cup_winner_bet(user_id, competition_id=None):
     if competition_id == 0:
         return
     memberid = int(selection_menu(session.query(
-            model.Cup_winner_bet).filter_by(
+        model.Cup_winner_bet).filter_by(
             user_id=user_id).filter_by(competition_id=competition_id).all()))
     if memberid == 0:
         return
@@ -398,9 +400,9 @@ def select_cup_winner_bet(user_id, competition_id=None):
     cup_winner_betselect.texterror = _(
         'please only enter numbers between 1 and {}')
     cup_winner_betselect.append(_("change cup winner bet"),
-                                  editor_cup_winner_bet)
+                                editor_cup_winner_bet)
     cup_winner_betselect.append(_("delete this bet"),
-                                  delete_cup_winner_bet_sel)
+                                delete_cup_winner_bet_sel)
     cup_winner_betselect.finish(text=_("back"))
     cup_winner_betselect.run()
 
@@ -552,7 +554,7 @@ def select_game_bet(user_id=None, game_id=None):
     if game_id == 0:
         return
     memberid = int(selection_menu(session.query(model.Game_bet).filter_by(
-            user_id=user_id).filter_by(game_id=game_id).all()))
+        user_id=user_id).filter_by(game_id=game_id).all()))
     if memberid == 0:
         return
     game_bet = session.query(model.Game_bet).filter_by(id=memberid).first()
