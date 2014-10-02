@@ -82,8 +82,8 @@ def info():
     show info text
     """
     print(_('''pycupbetting
-        databasestruktur from Markus Hackspacher
-        Menu from Christian Hausknecht
+        databasestruktur by Markus Hackspacher
+        Menu by Christian Hausknecht
 
         add teams, add competion, add game in competion
         add user, add user bettings
