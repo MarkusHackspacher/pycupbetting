@@ -23,19 +23,19 @@ msgstr ""
 #: pycupbetting.py:335 pycupbetting.py:399 pycupbetting.py:491
 #: pycupbetting.py:571 pycupbetting.py:587
 msgid "Your choice is ?:"
-msgstr ""
+msgstr "Via elekto:"
 
 #: pycupbetting.py:56 pycupbetting.py:208 pycupbetting.py:249
 #: pycupbetting.py:336 pycupbetting.py:400 pycupbetting.py:492
 #: pycupbetting.py:572 pycupbetting.py:588
 msgid "please only enter numbers between 1 and {}"
-msgstr ""
+msgstr "Nur eniri numerojn 1-{}"
 
 #: pycupbetting.py:60 pycupbetting.py:217 pycupbetting.py:252
 #: pycupbetting.py:343 pycupbetting.py:406 pycupbetting.py:498
 #: pycupbetting.py:576
 msgid "back"
-msgstr ""
+msgstr "Reen"
 
 #: pycupbetting.py:84
 msgid ""
@@ -47,326 +47,337 @@ msgid ""
 "        add user, add user bettings\n"
 "        add game results and enjoy"
 msgstr ""
+"pycupbetting\n"
+"        Datumbazo strukturo de Markus Hackspacher\n"
+"        Menuo de Christian Hausknecht\n"
+"\n"
+"        aldoni teamoj, aldoni konkuroj, aldoni ludo en konkurado\n"
+"        aldoni uzantoj, aldoni uzanton vetadoj\n"
+"        aldoni ludon rezultoj kaj havas amuzan"
 
 #: pycupbetting.py:117
 msgid ""
 "cupwinner: {}\r\n"
 "\r\n"
 msgstr ""
+"gajnano: {}\r\n"
+"\r\n"
 
 #: pycupbetting.py:121
 msgid "game {} "
-msgstr ""
+msgstr "ludo {} "
 
 #: pycupbetting.py:124 pycupbetting.py:131 pycupbetting.py:142
 #: pycupbetting.py:145 pycupbetting.py:149 pycupbetting.py:154
 #: pycupbetting.py:157 pycupbetting.py:161 pycupbetting.py:164
 msgid ","
-msgstr ""
+msgstr ","
 
 #: pycupbetting.py:126
 msgid "bet: {}:{} point:{}"
-msgstr ""
+msgstr "veto: {}:{} punkto: {}"
 
 #: pycupbetting.py:139
 msgid "competition: {} {}"
-msgstr ""
+msgstr "konkurado: {} {}"
 
 #: pycupbetting.py:144
 msgid "cup winner: {} point:{}"
-msgstr ""
+msgstr "gajnanto: {} punkto: {}"
 
 #: pycupbetting.py:159
 msgid "all points:{}"
-msgstr ""
+msgstr "ĉiuj punktoj: {}"
 
 #: pycupbetting.py:176
 msgid "short user name"
-msgstr ""
+msgstr "mallonga uzantonomo"
 
 #: pycupbetting.py:177
 msgid "full name"
-msgstr ""
+msgstr "plena nomo"
 
 #: pycupbetting.py:178
 msgid "email"
-msgstr ""
+msgstr "E-Poŝto"
 
 #: pycupbetting.py:187
 msgid "user: {} full name: {} email: {}"
-msgstr ""
+msgstr "uzantonomo: {} plena nomo: {} E-Poŝto: {}"
 
 #: pycupbetting.py:206
 msgid "user editor"
-msgstr ""
+msgstr "uzanto redaktoro"
 
 #: pycupbetting.py:209
 msgid "change user name"
-msgstr ""
+msgstr "ŝanĝo uzantonomo"
 
 #: pycupbetting.py:210
 msgid "user info"
-msgstr ""
+msgstr "informoj pri uzanto"
 
 #: pycupbetting.py:211
 msgid "user bettings"
-msgstr ""
+msgstr "vetoj de uzanto"
 
 #: pycupbetting.py:212
 msgid "add new cup winner bet"
-msgstr ""
+msgstr "aldoni novajn gajnanto vetas"
 
 #: pycupbetting.py:213
 msgid "cup winner bet selection"
-msgstr ""
+msgstr "gajnanto selektado"
 
 #: pycupbetting.py:215
 msgid "edit all game bets"
-msgstr ""
+msgstr "redakti tuta ludo vetas"
 
 #: pycupbetting.py:216
 msgid "game bet selection"
-msgstr ""
+msgstr "ludo vetas selektado"
 
 #: pycupbetting.py:227
 msgid "name of the team"
-msgstr ""
+msgstr "nomo de la teamo"
 
 #: pycupbetting.py:236
 msgid "name of the team: {}"
-msgstr ""
+msgstr "nomo de la teamo: {}"
 
 #: pycupbetting.py:247
 msgid "team editor {}"
-msgstr ""
+msgstr "teamo eldonisto {}"
 
 #: pycupbetting.py:250
 msgid "change team name"
-msgstr ""
+msgstr "ŝanĝo teamo nomon"
 
 #: pycupbetting.py:251 pycupbetting.py:496
 msgid "team info"
-msgstr ""
+msgstr "teamo informoj"
 
 #: pycupbetting.py:262
 msgid "name of competition"
-msgstr ""
+msgstr "nomo de konkurado"
 
 #: pycupbetting.py:264
 msgid "points for right winner"
-msgstr ""
+msgstr "punktoj por dekstra gajnanto"
 
 #: pycupbetting.py:266
 msgid "points for right goaldif"
-msgstr ""
+msgstr "punktoj por dekstra goldif"
 
 #: pycupbetting.py:268
 msgid "points for right result"
-msgstr ""
+msgstr "punktoj por dekstra rezulto"
 
 #: pycupbetting.py:270
 msgid "point for right cup winner"
-msgstr ""
+msgstr "punktoj por dekstra gajnanto"
 
 #: pycupbetting.py:271
 msgid "cup winner selection"
-msgstr ""
+msgstr "gajnanto selektado"
 
 #: pycupbetting.py:287
 msgid ""
 "competition: {}\r\n"
 "\r\n"
 msgstr ""
+"konkurado: {} \r\n"
+"\r\n"
 
 #: pycupbetting.py:288
 msgid "competition: {}"
-msgstr ""
+msgstr "konkurado: {}"
 
 #: pycupbetting.py:308
 msgid "competition: {}, Points {},{},{},{}"
-msgstr ""
+msgstr "konkurado: {}, punktoj {}, {}, {}, {}"
 
 #: pycupbetting.py:313
 msgid "cupwinner: {}"
-msgstr ""
+msgstr "gajnanto: {}"
 
 #: pycupbetting.py:315
 msgid "no cupwinner selected"
-msgstr ""
+msgstr "neniu gajnanto selektita"
 
 #: pycupbetting.py:334
 msgid "competition edit menu {}"
-msgstr ""
+msgstr "konkurado redakti menuo {}"
 
 #: pycupbetting.py:337
 msgid "competition name change"
-msgstr ""
+msgstr "konkurado namo ŝanĝo"
 
 #: pycupbetting.py:338
 msgid "competition info"
-msgstr ""
+msgstr "konkurado informoj"
 
 #: pycupbetting.py:339
 msgid "add game"
-msgstr ""
+msgstr "aldoni ludo"
 
 #: pycupbetting.py:340
 msgid "game selection"
-msgstr ""
+msgstr "ludo selektado"
 
 #: pycupbetting.py:341
 msgid "show all games"
-msgstr ""
+msgstr "montri ĉiujn ludoj"
 
 #: pycupbetting.py:342
 msgid "export all games"
-msgstr ""
+msgstr "eksporti ĉiuj ludoj"
 
 #: pycupbetting.py:353 pycupbetting.py:593
 msgid "team selection"
-msgstr ""
+msgstr "teamo selektado"
 
 #: pycupbetting.py:397
 msgid "cup winner bet editor {}"
-msgstr ""
+msgstr "gajnanto vetas redaktoro {}"
 
 #: pycupbetting.py:402
 msgid "change cup winner bet"
-msgstr ""
+msgstr "ŝanĝo gajnanto vetas"
 
 #: pycupbetting.py:404 pycupbetting.py:575
 msgid "delete this bet"
-msgstr ""
+msgstr "forviŝi ĉi vetas"
 
 #: pycupbetting.py:416
 msgid "team home selection"
-msgstr ""
+msgstr "teamo hejmo selektado"
 
 #: pycupbetting.py:419
 msgid "team away selection"
-msgstr ""
+msgstr "teamo for selektado"
 
 #: pycupbetting.py:422 pycupbetting.py:452
 msgid "result home"
-msgstr ""
+msgstr "rezulto heijmo"
 
 #: pycupbetting.py:423 pycupbetting.py:453
 msgid "result away"
-msgstr ""
+msgstr "rezulto for"
 
 #: pycupbetting.py:445 pycupbetting.py:473
 msgid "team home: {}"
-msgstr ""
+msgstr "teamo heijmo: {}"
 
 #: pycupbetting.py:447 pycupbetting.py:475
 msgid "no team home selected"
-msgstr ""
+msgstr "neniu teamo hejmo selektita"
 
 #: pycupbetting.py:449 pycupbetting.py:477
 msgid "team away: {}"
-msgstr ""
+msgstr "teamo for: {}"
 
 #: pycupbetting.py:451 pycupbetting.py:479
 msgid "no team away selected"
-msgstr ""
+msgstr "neniu teamo for selektita"
 
 #: pycupbetting.py:471
 msgid "name of the competition: {}"
-msgstr ""
+msgstr "nomo de la konkurado: {}"
 
 #: pycupbetting.py:490
 msgid "game editor"
-msgstr ""
+msgstr "ludo redaktoro"
 
 #: pycupbetting.py:493
 msgid "change game"
-msgstr ""
+msgstr "ŝanĝo ludon"
 
 #: pycupbetting.py:494 pycupbetting.py:605
 msgid "game result"
-msgstr ""
+msgstr "ludo rezulto"
 
 #: pycupbetting.py:495
 msgid "reset game result"
-msgstr ""
+msgstr "reset ludo rezulto"
 
 #: pycupbetting.py:497
 msgid "delete this game"
-msgstr ""
+msgstr "forviŝi ĉi ludo"
 
 #: pycupbetting.py:508
 msgid "bet result home"
-msgstr ""
+msgstr "vetas rezulto hejmo"
 
 #: pycupbetting.py:509
 msgid "bet result away"
-msgstr ""
+msgstr "vetas rezulto for"
 
 #: pycupbetting.py:564
 msgid "info of the game bet: {}"
-msgstr ""
+msgstr "info de la ludo vetas: {}"
 
 #: pycupbetting.py:570
 msgid "game bet editor {}"
-msgstr ""
+msgstr "ludo vetas redaktoro {}"
 
 #: pycupbetting.py:573
 msgid "change game bet"
-msgstr ""
+msgstr "ŝanĝo ludo vetas"
 
 #: pycupbetting.py:574
 msgid "gamebet info"
-msgstr ""
+msgstr "ludoj vetas informo"
 
 #: pycupbetting.py:586
 msgid "mainmenu"
-msgstr ""
+msgstr "ĉefa menuo"
 
 #: pycupbetting.py:589
 msgid "info"
-msgstr ""
+msgstr "informoj"
 
 #: pycupbetting.py:591
 msgid "team menu"
-msgstr ""
+msgstr "teamo menuo"
 
 #: pycupbetting.py:592
 msgid "add team"
-msgstr ""
+msgstr "aldoni teamo"
 
 #: pycupbetting.py:595
 msgid "user menu"
-msgstr ""
+msgstr "uzanto menuo"
 
 #: pycupbetting.py:596
 msgid "add user"
-msgstr ""
+msgstr "aldoni uzanto"
 
 #: pycupbetting.py:597
 msgid "user selection"
-msgstr ""
+msgstr "uzanto selektado"
 
 #: pycupbetting.py:599
 msgid "competition menu"
-msgstr ""
+msgstr "konkurado menuo"
 
 #: pycupbetting.py:600
 msgid "add competition"
-msgstr ""
+msgstr "aldoni konkurado"
 
 #: pycupbetting.py:601
 msgid "competition selection"
-msgstr ""
+msgstr "konkurado selektado"
 
 #: pycupbetting.py:603
 msgid "show all betting"
-msgstr ""
+msgstr "montri ĉiujn vetado"
 
 #: pycupbetting.py:604
 msgid "all betting export (csv)"
-msgstr ""
+msgstr "eksporti ĉiuj vetado (csv)"
 
 #: pycupbetting.py:612
 msgid "exit"
-msgstr ""
+msgstr "eliro"
 
