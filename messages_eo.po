@@ -17,7 +17,7 @@ msgstr ""
 
 #: pycupbetting.py:54
 msgid "selection"
-msgstr ""
+msgstr "selektado"
 
 #: pycupbetting.py:55 pycupbetting.py:207 pycupbetting.py:248
 #: pycupbetting.py:335 pycupbetting.py:399 pycupbetting.py:491
