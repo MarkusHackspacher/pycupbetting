@@ -77,6 +77,16 @@ def translation_de():
     _ = lang.gettext
 
 
+def translation_eo():
+    """
+    set the language
+    are more language could be a in parameter
+    """
+    global _
+    lang = gettext.translation("pycupbetting", "locale", languages=['eo'])
+    _ = lang.gettext
+
+
 def info():
     """
     show info text
@@ -617,6 +627,7 @@ def main():
 if __name__ == "__main__":
     languagemenu = Menu("language")
     languagemenu.append("Deutsch", translation_de)
+    languagemenu.append("Esperanto", translation_eo)
     languagemenu.finish(text="english")
     languagemenu.run(once=True)
     main()
