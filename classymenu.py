@@ -58,9 +58,9 @@ def make_some_foo_func(s):
         print(s)
     return func
 
-hello, python, nothing, special = list(make_some_foo_func(s) for s in
-        ("Hello World!", "Python rocks!", "Nothing to do yet...",
-         "Wow! So special we must put it into a subsubmenu...")
+hello, python, nothing, special = list(make_some_foo_func(s) for s in (
+    "Hello World!", "Python rocks!", "Nothing to do yet...",
+    "Wow! So special we must put it into a subsubmenu...")
     )
 
 
@@ -90,9 +90,9 @@ class Menu:
         self.title = title
         self.items = []
         self.context = self
-        
+
         self.textchoice = 'Your choice is ?:'
-        # Your choice is ?: Ihre Wahl?: 
+        # Your choice is ?: Ihre Wahl?:
         self.texterror = 'please only enter numbers between 1 and {}'
 
     def __repr__(self):
@@ -102,10 +102,10 @@ class Menu:
         head = ("", "-" * len(self.title), "{}".format(self.title),
                 "-" * len(self.title))
         entries = ("{:3} {} {}".format(
-                        index, "+" if isinstance(entry[1], Menu) else " ",
-                        entry[0]
-                    ).ljust(12)
-                    for index, entry in enumerate(self, 1)
+            index, "+" if isinstance(entry[1], Menu) else " ",
+            entry[0]
+            ).ljust(12)
+            for index, entry in enumerate(self, 1)
         )
         if len(self.context.items) < 10:
             return "\n".join(chain(head, entries))
@@ -212,7 +212,7 @@ def main():
     another_sub = Menu("Another Submenü")
     another_sub.append("Noch mehr Action", nothing)
     # wait a second, we do not need that... we have `menu.finish()`!
-    #another_sub.append("Back", menu)
+    # another_sub.append("Back", menu)
 
     menu.append_submenu(sub)
     menu.append_submenu(another_sub)

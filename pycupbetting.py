@@ -60,19 +60,19 @@ class selection_menu():
         self.select.textchoice = _('Your choice is ?:')
         self.select.texterror = _('please only enter numbers between 1 and {}')
 
-    def printdata(self):        
+    def printdata(self):
         """
         prepare the datatable
         """
         for entry in self.datatable:
             get_id = functools.partial(self.get_id, entry.id)
-            self.select.append(entry.name , get_id)
+            self.select.append(entry.name, get_id)
         self.select.finish(text=_("back"))
         self.select.run(once=True)
 
     def get_id(self, number):
         """
-        assign database table id 
+        assign database table id
         @type number: int
         @param number: number of item
         """
@@ -127,7 +127,7 @@ def inputpro(in_data, text):
     @param in_data: default worth
     @type text: string
     @param text: query text
-    
+
     @rtype: string
     @return: input worth
     """
@@ -145,7 +145,7 @@ def inputint(in_data, text):
     @param in_data: default worth
     @type text: string
     @param text: query text
-    
+
     @rtype: int
     @return: input worth
     """
@@ -162,6 +162,7 @@ def inputint(in_data, text):
             return out_data
         except (ValueError):
             print(_('Please enter a number'))
+
 
 def all_betting(user_id=None, competition_id=None, export=False):
     """
