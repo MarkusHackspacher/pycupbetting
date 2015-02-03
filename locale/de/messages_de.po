@@ -54,6 +54,10 @@ msgstr ""
 "        dann Benutzer und die Tipps hinzufügen\n"
 "        Spielergebniss eintragen und das Ergebniss auswerten"
 
+#: pycupbetting.py:164
+msgid "Please enter a number"
+msgstr "Eine Zahl eingeben"
+
 #: pycupbetting.py:115
 msgid ""
 "cupwinner: {}\r\n"

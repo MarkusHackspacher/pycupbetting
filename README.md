@@ -39,11 +39,11 @@ Start ```python3 pycupbetting.py``` to run the program.
 
 translation
 -----------
-For the translation use fro make a messages.pot file
+For the translation use to make a messages.pot file
 ```pygettext3 pycupbetting.py```
-rename the file in messages.po and translate it.
-To make a computer use file:
-```msgfmt messages.po -o locale/de/LC_MESSAGES/pycupbetting.mo```
+rename the file in messages_xx.po and translate it.
+To make a computer useed file, example for german:
+```msgfmt locale/de/messages_de.po -o locale/de/LC_MESSAGES/pycupbetting.mo```
 
 license
 -------
