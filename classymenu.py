@@ -3,6 +3,7 @@
 #
 #  Copyright (C) 2012  Christian Hausknecht
 #  2014 Markus Hackspacher, add once parameter in menu run
+#  2015 Markus Hackspacher, more the ten entries use tabulator
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -100,13 +101,18 @@ class Menu:
     def __str__(self):
         head = ("", "-" * len(self.title), "{}".format(self.title),
                 "-" * len(self.title))
-        entries = ("{} {} {}".format(
+        entries = ("{:3} {} {}".format(
                         index, "+" if isinstance(entry[1], Menu) else " ",
                         entry[0]
-                    )
+                    ).ljust(12)
                     for index, entry in enumerate(self, 1)
         )
-        return "\n".join(chain(head, entries))
+        if len(self.context.items) < 10:
+            return "\n".join(chain(head, entries))
+        else:
+            headtext = "\n".join(head)
+            entrietext = "\t".join(entries)
+            return "{}\n{}".format(headtext, entrietext)
 
     def __getitem__(self, key):
         """

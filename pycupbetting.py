@@ -4,7 +4,7 @@
 """
 pycupbetting
 
-Copyright (C) <2014> Markus Hackspacher
+Copyright (C) <2014-2015> Markus Hackspacher
 
 This file is part of pycupbetting.
 
@@ -50,21 +50,40 @@ class selection_menu():
     show the selection menu and return the id of table
     """
     def __init__(self, datatable):
+        """
+        @type datatable: datatable
+        @param datatable: datatable from the database
+        """
+        self.datatable = datatable
         self.selection_id = 0
-        select = Menu(_("selection"))
-        select.textchoice = _('Your choice is ?:')
-        select.texterror = _('please only enter numbers between 1 and {}')
-        for entry in datatable:
-            get_id = functools.partial(self.get_id, entry.id)
-            select.append(entry.name, get_id)
-        select.finish(text=_("back"))
-        select.run(once=True)
+        self.select = Menu(_("selection"))
+        self.select.textchoice = _('Your choice is ?:')
+        self.select.texterror = _('please only enter numbers between 1 and {}')
 
-    def __int__(self):
-        return self.selection_id
+    def printdata(self):        
+        """
+        prepare the datatable
+        """
+        for entry in self.datatable:
+            get_id = functools.partial(self.get_id, entry.id)
+            self.select.append(entry.name , get_id)
+        self.select.finish(text=_("back"))
+        self.select.run(once=True)
 
     def get_id(self, number):
+        """
+        assign database table id 
+        @type number: int
+        @param number: number of item
+        """
         self.selection_id = number
+
+    def __int__(self):
+        """
+        print data table and give id back
+        """
+        self.printdata()
+        return self.selection_id
 
 
 def translation_de():
@@ -100,15 +119,49 @@ def info():
         add game results and enjoy'''))
 
 
-def inputpro(in_valve, text):
+def inputpro(in_data, text):
     """
-    Input prozedure
-    """
-    out_valve = input("{} [{}]:".format(text, in_valve))
-    if out_valve == '':
-        out_valve = in_valve
-    return out_valve
+    Input procedure for string
 
+    @type in_data: string
+    @param in_data: default worth
+    @type text: string
+    @param text: query text
+    
+    @rtype: string
+    @return: input worth
+    """
+    out_data = input("{} [{}]:".format(text, in_data))
+    if out_data == '':
+        out_data = in_data
+    return out_data
+
+
+def inputint(in_data, text):
+    """
+    Input procedure for integer
+
+    @type in_data: int
+    @param in_data: default worth
+    @type text: string
+    @param text: query text
+    
+    @rtype: int
+    @return: input worth
+    """
+    if in_data:
+        questiontext = "{} [{}]:".format(text, in_data)
+    else:
+        questiontext = "{}:".format(text)
+    while True:
+        try:
+            data = input(questiontext)
+            if data == '' and in_data:
+                return in_data
+            out_data = int(data)
+            return out_data
+        except (ValueError):
+            print(_('Please enter a number'))
 
 def all_betting(user_id=None, competition_id=None, export=False):
     """
@@ -181,7 +234,8 @@ def edit_user(user):
     """
     change of data of table user
 
-    :param user: data
+    @type user: user
+    @param user: data of the user
     """
     user.name = inputpro(user.name, _('short user name'))
     user.fullname = inputpro(user.fullname, _('full name'))
@@ -232,7 +286,8 @@ def edit_team(team):
     """
     change of data of table team
 
-    :param team: data
+    @type team: team
+    @param team: data
     """
     team.name = inputpro(team.name, _('name of the team'))
     return team
@@ -267,17 +322,18 @@ def edit_competition(competition):
     """
     change of data of table competition
 
-    :param competition: data
+    @type competition: competition
+    @param competition: data
     """
     competition.name = inputpro(competition.name, _('name of competition'))
-    competition.rule_right_winner = int(inputpro(
-        competition.rule_right_winner, _('points for right winner')))
-    competition.rule_right_goaldif = int(inputpro(
-        competition.rule_right_goaldif, _('points for right goaldif')))
-    competition.rule_right_result = int(inputpro(
-        competition.rule_right_result, _('points for right result')))
-    competition.rule_cup_winner = int(inputpro(
-        competition.rule_cup_winner, _('point for right cup winner')))
+    competition.rule_right_winner = inputint(
+        competition.rule_right_winner, _('points for right winner'))
+    competition.rule_right_goaldif = inputint(
+        competition.rule_right_goaldif, _('points for right goaldif'))
+    competition.rule_right_result = inputint(
+        competition.rule_right_result, _('points for right result'))
+    competition.rule_cup_winner = inputint(
+        competition.rule_cup_winner, _('point for right cup winner'))
     print(_('cup winner selection'))
     competition.cup_winner_id = int(selection_menu(
         session.query(model.Team).all()))
@@ -291,6 +347,10 @@ def new_competition():
 def all_games_competition(competition, export):
     """
     print all games of competition
+    @type competition: competition
+    @param competition: data
+    @type export: True/False
+    @param export: write data in a file
     """
     if export:
         f = open('games.txt', 'w')
@@ -358,7 +418,8 @@ def edit_cup_winner_bet(cup_winner_bet):
     """
     change of data of table cup_winner_bet
 
-    :param cup_winner_bet: data
+    @type cup_winner_bet: cup_winner_bet
+    @param cup_winner_bet: data
     """
     print(_('team selection'))
     cup_winner_bet.team_id = int(selection_menu(
@@ -368,8 +429,8 @@ def edit_cup_winner_bet(cup_winner_bet):
 
 def new_cup_winner_bet(user_id, competition_id=None):
     """
-    :param user_id: data:
-    :param competition_id: data
+    @param user_id: data:
+    @param competition_id: data
     """
     if not competition_id:
         competition_id = int(selection_menu(session.query(
@@ -523,7 +584,7 @@ def edit_game_bet(game_bet):
 
 def all_game_bet(user_id=None, competition_id=None):
     """
-    :param user_id: data:
+    :param user_id: data
     :param competition_id: data
     """
     if not user_id:
