@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 #
 #  Copyright (C) 2012  Christian Hausknecht
@@ -178,10 +179,10 @@ class Menu:
         Core method to handle a menu. This invokes a loop that handles all
         menu tasks as long as the main menu is exited by the user.
         """
-        menushow = True
-        while menushow:
+        self.menushow = True
+        while self.menushow:
             if once:
-                menushow = False
+                self.menushow = False
             print(self.context)
             choice = self.get_user_input()
             _, command = self.context[choice]

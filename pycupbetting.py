@@ -402,11 +402,17 @@ def select_competition():
                                                      competition, True)
     info_competition_sel = functools.partial(info_competition, competition)
 
+    def delete_competition():
+        session.delete(competition)
+        compselect.menushow = False
+        return
+
     compselect = Menu(_("competition edit menu {}").format(competition.name))
     compselect.textchoice = _('Your choice is ?:')
     compselect.texterror = _('please only enter numbers between 1 and {}')
     compselect.append(_("competition name change"), editor_competition)
     compselect.append(_("competition info"), info_competition_sel)
+    compselect.append(_("delete this competition "), delete_competition)
     compselect.append(_("add game"), new_game_competition)
     compselect.append(_("game selection"), select_game_competition)
     compselect.append(_("show all games"), print_all_games_competition)
@@ -442,11 +448,6 @@ def new_cup_winner_bet(user_id, competition_id=None):
         user_id=user_id, competition_id=competition_id)))
 
 
-def delete_cup_winner_bet(cup_winner_bet):
-    session.delete(cup_winner_bet)
-    return
-
-
 def select_cup_winner_bet(user_id, competition_id=None):
     print (user_id)
     if not competition_id:
@@ -463,8 +464,10 @@ def select_cup_winner_bet(user_id, competition_id=None):
         id=memberid).first()
     editor_cup_winner_bet = functools.partial(edit_cup_winner_bet,
                                               cup_winner_bet)
-    delete_cup_winner_bet_sel = functools.partial(
-        delete_cup_winner_bet, cup_winner_bet)
+    def delete_cup_winner_bet():
+        session.delete(cup_winner_bet)
+        cup_winner_betselect.menushow = False
+        return
 
     cup_winner_betselect = Menu(_("cup winner bet editor {}").format(
         cup_winner_bet.teams.name))
@@ -473,8 +476,7 @@ def select_cup_winner_bet(user_id, competition_id=None):
         'please only enter numbers between 1 and {}')
     cup_winner_betselect.append(_("change cup winner bet"),
                                 editor_cup_winner_bet)
-    cup_winner_betselect.append(_("delete this bet"),
-                                delete_cup_winner_bet_sel)
+    cup_winner_betselect.append(_("delete this bet"), delete_cup_winner_bet)
     cup_winner_betselect.finish(text=_("back"))
     cup_winner_betselect.run()
 
@@ -552,6 +554,7 @@ def select_game(competition_id):
 
     def delete_game():
         session.delete(game)
+        gameselect.menushow = False
         return
 
     def edit_game_result_reset():
@@ -637,6 +640,7 @@ def select_game_bet(user_id=None, game_id=None):
 
     def delete_game_bet():
         session.delete(game_bet)
+        game_betselect.menushow = False
         return
 
     game_betselect = Menu(_("game bet editor {}").format(game_bet.name))

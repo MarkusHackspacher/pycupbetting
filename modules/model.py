@@ -149,9 +149,13 @@ class Game(Base):
             team_away_name = self.team_away.name
         except AttributeError:
             team_away_name = "no team away selected"
+        try:
+            competition_name = self.competition.name
+        except AttributeError:
+            competition_name = "no competition selected"
 
         return "{}: {}:{} {}:{}". \
-            format(self.competition.name, team_home_name,
+            format(competition_name, team_home_name,
                    team_away_name, self.result_home, self.result_away)
 
 
