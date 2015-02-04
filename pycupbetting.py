@@ -403,8 +403,12 @@ def select_competition():
     info_competition_sel = functools.partial(info_competition, competition)
 
     def delete_competition():
-        session.delete(competition)
-        compselect.menushow = False
+        if competition.cup_winner_bets == [] and competition.games == []:
+            print(_("competition {} is deleted").format(competition.name))
+            session.delete(competition)
+            compselect.menushow = False
+        else:
+            print(_("entry in this competition, cannot delete"))
         return
 
     compselect = Menu(_("competition edit menu {}").format(competition.name))
@@ -464,6 +468,7 @@ def select_cup_winner_bet(user_id, competition_id=None):
         id=memberid).first()
     editor_cup_winner_bet = functools.partial(edit_cup_winner_bet,
                                               cup_winner_bet)
+
     def delete_cup_winner_bet():
         session.delete(cup_winner_bet)
         cup_winner_betselect.menushow = False
