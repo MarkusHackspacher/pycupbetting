@@ -14,6 +14,13 @@ msgstr ""
 "Content-Transfer-Encoding: ENCODING\n"
 "Generated-By: pygettext.py 1.5\n"
 
+
+#: pycupbetting.py:52 pycupbetting.py:327 pycupbetting.py:379
+#: pycupbetting.py:485 pycupbetting.py:546 pycupbetting.py:639
+#: pycupbetting.py:718
+msgid "back"
+msgstr "Zurück"
+
 #: pycupbetting.py:52
 msgid "selection"
 msgstr "Auswahlmenü"
@@ -29,12 +36,6 @@ msgstr "Ihre Wahl?:"
 #: pycupbetting.py:553 pycupbetting.py:569
 msgid "please only enter numbers between 1 and {}"
 msgstr "Bitte nur Zahlen aus dem Bereich 1..{} eingeben"
-
-#: pycupbetting.py:58 pycupbetting.py:208 pycupbetting.py:241
-#: pycupbetting.py:329 pycupbetting.py:387 pycupbetting.py:479
-#: pycupbetting.py:557
-msgid "back"
-msgstr "Zurück"
 
 #: pycupbetting.py:82
 msgid ""
@@ -57,6 +58,10 @@ msgstr ""
 #: pycupbetting.py:164
 msgid "Please enter a number"
 msgstr "Eine Zahl eingeben"
+
+#: pycupbetting.py:188
+msgid "competition already exist"
+msgstr "Wettbewerb exestiert bereits"
 
 #: pycupbetting.py:115
 msgid ""
@@ -147,6 +152,26 @@ msgstr "Teamname"
 msgid "name of the team: {}"
 msgstr "Teamname: {}"
 
+#: pycupbetting.py:348
+msgid "winner of competitions: {}"
+msgstr "Gewinner des Wettbewerbes: {}"
+
+#: pycupbetting.py:350
+msgid "bet of winner at competitions: {}"
+msgstr "Wette auf den Gewinner: {}"
+
+#: pycupbetting.py:352
+msgid "bet of games: {}"
+msgstr "Spielwetten: {}"
+
+#: pycupbetting.py:366
+msgid "team {} is deleted"
+msgstr "{} ist gelöscht"
+
+#: pycupbetting.py:370
+msgid "entry in this team, cannot delete"
+msgstr "Einträge vorhanden, kann nicht gelöscht werden"
+
 #: pycupbetting.py:129
 msgid "team editor {}"
 msgstr "Teameditormenü {}"
@@ -158,6 +183,10 @@ msgstr "Teamnamen ändern"
 #: pycupbetting.py:131
 msgid "team info"
 msgstr "Teaminfo"
+
+#: pycupbetting.py:378
+msgid "delete team"
+msgstr "Mannschaft gelöscht"
 
 #: pycupbetting.py:137
 msgid "name of competition"
@@ -183,6 +212,10 @@ msgstr "Punkte für den richtigen Pokalsieger"
 msgid "cup winner selection"
 msgstr "Pokalsieger Auswahl"
 
+#: pycupbetting.py:401
+msgid "None"
+msgstr "Keinen"
+
 #: pycupbetting.py:260
 msgid ""
 "competition: {}\r\n"
@@ -207,6 +240,14 @@ msgstr "Pokalsieger: {}"
 msgid "no cupwinner selected"
 msgstr "kein Pokalsieger gewählt"
 
+#: pycupbetting.py:468
+msgid "competition {} is deleted"
+msgstr "Wettbewerb {} gelöscht"
+
+#: pycupbetting.py:472
+msgid "entry in this competition, cannot delete"
+msgstr "Einträge vorhanden, kann nicht gelöscht werden"
+
 #: pycupbetting.py:170
 msgid "competition edit menu {}"
 msgstr "Wettbewerbeditor {}"
@@ -218,6 +259,10 @@ msgstr "Wettbewerbsname ändern"
 #: pycupbetting.py:172
 msgid "competition info"
 msgstr "Wettbewerbinfo"
+
+#: pycupbetting.py:480
+msgid "delete this competition "
+msgstr "Wettbewerb gelöscht"
 
 #: pycupbetting.py:298
 msgid "add game"
@@ -378,6 +423,14 @@ msgstr "Alle Tipps anzeigen"
 #: pycupbetting.py:569
 msgid "all betting export (csv)"
 msgstr "Alle Tipps exportieren (csv)"
+
+#: pycupbetting.py:747
+msgid "edit game result"
+msgstr "Spielergebniss eintragen"
+
+#: pycupbetting.py:748
+msgid "add competition from json"
+msgstr "Wettbewerb importieren (json)"
 
 #: pycupbetting.py:213
 msgid "exit"
