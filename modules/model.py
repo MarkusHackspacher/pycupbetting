@@ -55,6 +55,9 @@ class Team(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String)
 
+    team_bets = relationship("Game", primaryjoin="Game.team_home_id==Team.id"
+                             " or Game.team_away_id==Team.id",
+                             order_by="Game.id", viewonly=True)
     cup_winner_bets = relationship("Cup_winner_bet",
                                    order_by="Cup_winner_bet.id",
                                    backref="teams")
@@ -62,8 +65,10 @@ class Team(Base):
                                 backref="teams")
 
     def __repr__(self):
-        return "<Team(name='{}', cup_winner_bets='{}', competitions='{}'". \
-            format(self.name, self.cup_winner_bets, self.competitions)
+        return "<Team(name='{}', cup_winner_bets='{}', competitions='{}'" \
+            " team_bets='{}'". \
+            format(self.name, self.cup_winner_bets, self.competitions,
+            self.team_bets)
 
 
 class Competition(Base):

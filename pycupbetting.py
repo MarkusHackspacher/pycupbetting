@@ -22,14 +22,14 @@ You should have received a copy of the GNU General Public License
 along with pycupbetting.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from modules import model
-from sqlalchemy import orm
-from sqlalchemy import create_engine
+from sqlalchemy import orm, literal,  create_engine
 import functools
+import json
+import gettext
 
+from modules import model
 from classymenu import Menu
 
-import gettext
 _ = gettext.gettext
 
 # Create an engine and create all the tables we need
@@ -49,12 +49,18 @@ class selection_menu():
     """
     show the selection menu and return the id of table
     """
-    def __init__(self, datatable):
+    def __init__(self, datatable, finishtext=_("back")):
         """
+        initialisation, datatable is from the database with .name and .id field
+        with the variable finishtext change the test at the end
+        of the selection, maybe 'None' for no choise 
         @type datatable: datatable
         @param datatable: datatable from the database
+        @type finishtext: string
+        @param finishtext: text of the finish
         """
         self.datatable = datatable
+        self.finishtext = finishtext
         self.selection_id = 0
         self.select = Menu(_("selection"))
         self.select.textchoice = _('Your choice is ?:')
@@ -67,7 +73,7 @@ class selection_menu():
         for entry in self.datatable:
             get_id = functools.partial(self.get_id, entry.id)
             self.select.append(entry.name, get_id)
-        self.select.finish(text=_("back"))
+        self.select.finish(text=self.finishtext)
         self.select.run(once=True)
 
     def get_id(self, number):
@@ -88,8 +94,7 @@ class selection_menu():
 
 def translation_de():
     """
-    set the language
-    are more language could be a in parameter
+    set the german language
     """
     global _
     lang = gettext.translation("pycupbetting", "locale", languages=['de'])
@@ -99,7 +104,6 @@ def translation_de():
 def translation_eo():
     """
     set the language
-    are more language could be a in parameter
     """
     global _
     lang = gettext.translation("pycupbetting", "locale", languages=['eo'])
@@ -163,6 +167,47 @@ def inputint(in_data, text):
         except (ValueError):
             print(_('Please enter a number'))
 
+
+def add_json():
+    from pprint import pprint
+    import glob
+    jsonfiles = glob.glob('*.json')
+    print (list(enumerate(jsonfiles)))
+    filenr = input()
+    if not filenr:
+        return 
+    json_data = open(jsonfiles[int(filenr)])
+
+    data = json.load(json_data)
+    print(data['competition'])
+    pprint(data)
+    json_data.close()
+    q = session.query(model.Competition).filter(
+        model.Competition.name==data['competition'])
+    if session.query(literal(True)).filter(q.exists()).scalar():
+        print(_('competition already exist'))
+        return
+    session.add(model.Competition(
+        name=data['competition'],
+        rule_right_winner=data['rule_right_winner'],
+        rule_right_goaldif=data['rule_right_goaldif'],
+        rule_right_result=data['rule_right_result'],
+        rule_cup_winner=data['rule_cup_winner']))
+    competition_id=session.query(model.Competition).filter_by(
+                                 name=data['competition']).one().id
+    for group in data['groups']:
+        team_id = []
+        for team in group['teams']:
+            q = session.query(model.Team).filter(model.Team.name==team)
+            if not session.query(literal(True)).filter(q.exists()).scalar():
+                session.add(model.Team(name=team))
+            team_id.append(session.query(model.Team).filter_by(
+                name=team).one().id)
+        for pairing in group['pairings']:
+            session.add(model.Game(
+                competition_id=competition_id,
+                team_home_id=team_id[pairing[0]],
+                team_away_id=team_id[pairing[1]]))        
 
 def all_betting(user_id=None, competition_id=None, export=False):
     """
@@ -300,6 +345,12 @@ def new_team():
 
 def info_team(team):
     print (_("name of the team: {}").format(team.name))
+    print (_("winner of competitions: {}").format(
+        "".join(_.name for _ in team.competitions)))
+    print (_("bet of winner at competitions: {}").format(
+        "".join(_.name for _ in team.cup_winner_bets)))
+    print (_("bet of games: {}").format(
+        "".join(_.name for _ in team.team_bets)))
 
 
 def select_team():
@@ -309,12 +360,22 @@ def select_team():
     team = session.query(model.Team).filter_by(id=teamid).first()
     editor_team = functools.partial(edit_team, team)
     info_team_sel = functools.partial(info_team, team)
+    def delete_team():
+        if (team.cup_winner_bets == [] and team.competitions == []
+                and team.team_bets == []):
+            print(_("team {} is deleted").format(team.name))
+            session.delete(team)
+            teamselect.menushow = False
+        else:
+            print(_("entry in this team, cannot delete"))
+        return
 
     teamselect = Menu(_("team editor {}").format(team.name))
     teamselect.textchoice = _('Your choice is ?:')
     teamselect.texterror = _('please only enter numbers between 1 and {}')
     teamselect.append(_("change team name"), editor_team)
     teamselect.append(_("team info"), info_team_sel)
+    teamselect.append(_("delete team"), delete_team)
     teamselect.finish(text=_("back"))
     teamselect.run()
 
@@ -337,7 +398,7 @@ def edit_competition(competition):
         competition.rule_cup_winner, _('point for right cup winner'))
     print(_('cup winner selection'))
     competition.cup_winner_id = int(selection_menu(
-        session.query(model.Team).all()))
+        session.query(model.Team).all(), finishtext=_('None')))
     return competition
 
 
@@ -683,7 +744,8 @@ def main():
 
     menu.append(_("show all betting"), all_betting)
     menu.append(_("all betting export (csv)"), all_betting_export)
-    menu.append(_("game result"), edit_game_result)
+    menu.append(_("edit game result"), edit_game_result)
+    menu.append(_("add competition from json"), add_json)
     menu.append_submenu(teamsub)
     menu.append_submenu(usersub)
     menu.append_submenu(competitionsub)
