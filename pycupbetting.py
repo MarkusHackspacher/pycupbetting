@@ -26,6 +26,7 @@ from sqlalchemy import orm, literal,  create_engine
 import functools
 import json
 import gettext
+import glob
 
 from modules import model
 from classymenu import Menu
@@ -169,18 +170,18 @@ def inputint(in_data, text):
 
 
 def add_json():
-    from pprint import pprint
-    import glob
     jsonfiles = glob.glob('*.json')
-    print (list(enumerate(jsonfiles)))
-    filenr = input()
-    if not filenr:
-        return 
+    for filelist in enumerate(jsonfiles):
+        print(_("Enter {} for {}".format(filelist[0],filelist[1])))
+    try:
+        filenr = int(input())
+    except:
+        print(_('Enter a number'))
+        return
     json_data = open(jsonfiles[int(filenr)])
 
     data = json.load(json_data)
     print(data['competition'])
-    pprint(data)
     json_data.close()
     q = session.query(model.Competition).filter(
         model.Competition.name==data['competition'])
@@ -414,10 +415,8 @@ def all_games_competition(competition, export):
     @type export: True/False
     @param export: write data in a file
     """
-    if export:
-        f = open('games.txt', 'w')
-        f.write(_("competition: {}\r\n\r\n").format(competition.name))
-    print (_("competition: {}").format(competition.name))
+    print (_("competition: {}").format(competition.name))               
+    gamelist = dict(competition=competition.name, username='', games=[])
     for game in competition.games:
         try:
             team_home_name = game.team_home.name
@@ -428,12 +427,14 @@ def all_games_competition(competition, export):
         except AttributeError:
             team_away_name = "no team away selected"
 
-        each_game = ('{} : {}'.format(team_home_name, team_away_name))
-        print (each_game)
-        if export:
-            f.write(each_game + '\r\n')
+        print('{} : {}'.format(team_home_name, team_away_name))
+        gamelist['games'].append(dict(game_a=team_home_name,
+                                      game_b=team_away_name,
+                                      tip_a=0,
+                                      tip_b=0))
     if export:
-        f.close()
+        with open("games_json.txt", "w") as f:
+            f.write(json.dumps(gamelist, indent=4, sort_keys=True))
 
 
 def info_competition(competition):
