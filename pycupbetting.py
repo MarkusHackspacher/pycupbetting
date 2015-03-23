@@ -433,8 +433,8 @@ def all_games_competition(competition, export):
                                       tip_a=0,
                                       tip_b=0))
     if export:
-        with open("games_json.txt", "w") as f:
-            f.write(json.dumps(gamelist, indent=4, sort_keys=True))
+        with open("games_json.txt", "w" , encoding='utf8') as f:
+            f.write(json.dumps(gamelist, indent=4, sort_keys=True, ensure_ascii=False))
 
 
 def info_competition(competition):
