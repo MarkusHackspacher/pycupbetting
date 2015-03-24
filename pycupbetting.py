@@ -54,7 +54,7 @@ class selection_menu():
         """
         initialisation, datatable is from the database with .name and .id field
         with the variable finishtext change the test at the end
-        of the selection, maybe 'None' for no choise 
+        of the selection, maybe 'None' for no choise
         @type datatable: datatable
         @param datatable: datatable from the database
         @type finishtext: string
@@ -172,7 +172,7 @@ def inputint(in_data, text):
 def add_json():
     jsonfiles = glob.glob('*.json')
     for filelist in enumerate(jsonfiles):
-        print(_("Enter {} for {}".format(filelist[0],filelist[1])))
+        print(_("Enter {} for {}").format(filelist[0], filelist[1]))
     try:
         filenr = int(input())
     except:
@@ -184,7 +184,7 @@ def add_json():
     print(data['competition'])
     json_data.close()
     q = session.query(model.Competition).filter(
-        model.Competition.name==data['competition'])
+        model.Competition.name == data['competition'])
     if session.query(literal(True)).filter(q.exists()).scalar():
         print(_('competition already exist'))
         return
@@ -194,12 +194,12 @@ def add_json():
         rule_right_goaldif=data['rule_right_goaldif'],
         rule_right_result=data['rule_right_result'],
         rule_cup_winner=data['rule_cup_winner']))
-    competition_id=session.query(model.Competition).filter_by(
-                                 name=data['competition']).one().id
+    competition_id = session.query(model.Competition).filter_by(
+        name=data['competition']).one().id
     for group in data['groups']:
         team_id = []
         for team in group['teams']:
-            q = session.query(model.Team).filter(model.Team.name==team)
+            q = session.query(model.Team).filter(model.Team.name == team)
             if not session.query(literal(True)).filter(q.exists()).scalar():
                 session.add(model.Team(name=team))
             team_id.append(session.query(model.Team).filter_by(
@@ -208,7 +208,8 @@ def add_json():
             session.add(model.Game(
                 competition_id=competition_id,
                 team_home_id=team_id[pairing[0]],
-                team_away_id=team_id[pairing[1]]))        
+                team_away_id=team_id[pairing[1]]))
+
 
 def all_betting(user_id=None, competition_id=None, export=False):
     """
@@ -361,6 +362,7 @@ def select_team():
     team = session.query(model.Team).filter_by(id=teamid).first()
     editor_team = functools.partial(edit_team, team)
     info_team_sel = functools.partial(info_team, team)
+
     def delete_team():
         if (team.cup_winner_bets == [] and team.competitions == []
                 and team.team_bets == []):
@@ -415,7 +417,7 @@ def all_games_competition(competition, export):
     @type export: True/False
     @param export: write data in a file
     """
-    print (_("competition: {}").format(competition.name))               
+    print (_("competition: {}").format(competition.name))
     gamelist = dict(competition=competition.name, username='', games=[])
     for game in competition.games:
         try:
@@ -433,8 +435,9 @@ def all_games_competition(competition, export):
                                       tip_a=0,
                                       tip_b=0))
     if export:
-        with open("games_json.txt", "w" , encoding='utf8') as f:
-            f.write(json.dumps(gamelist, indent=4, sort_keys=True, ensure_ascii=False))
+        with open("games_json.txt", "w", encoding='utf8') as f:
+            f.write(json.dumps(gamelist, indent=4, sort_keys=True,
+                               ensure_ascii=False))
 
 
 def info_competition(competition):
@@ -478,7 +481,7 @@ def select_competition():
     compselect.texterror = _('please only enter numbers between 1 and {}')
     compselect.append(_("competition name change"), editor_competition)
     compselect.append(_("competition info"), info_competition_sel)
-    compselect.append(_("delete this competition "), delete_competition)
+    compselect.append(_("delete this competition"), delete_competition)
     compselect.append(_("add game"), new_game_competition)
     compselect.append(_("game selection"), select_game_competition)
     compselect.append(_("show all games"), print_all_games_competition)
