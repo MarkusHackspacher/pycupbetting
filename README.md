@@ -32,7 +32,7 @@ For the translation use to make a messages.pot file
 pygettext3 pycupbetting.py
 ```
 rename the file in messages_xx.po and translate it.
-To make a computer useed file, example for german:
+To converts to a binary GNU catalog (.mo file) use msgfmt. Example for german:
 ```
 msgfmt locale/de/messages_de.po -o locale/de/LC_MESSAGES/pycupbetting.mo
 ```

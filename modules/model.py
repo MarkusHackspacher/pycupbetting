@@ -68,7 +68,7 @@ class Team(Base):
         return "<Team(name='{}', cup_winner_bets='{}', competitions='{}'" \
             " team_bets='{}'". \
             format(self.name, self.cup_winner_bets, self.competitions,
-            self.team_bets)
+                   self.team_bets)
 
 
 class Competition(Base):
