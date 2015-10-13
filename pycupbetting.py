@@ -55,6 +55,7 @@ class selection_menu():
         initialisation, datatable is from the database with .name and .id field
         with the variable finishtext change the test at the end
         of the selection, maybe 'None' for no choise
+
         @type datatable: datatable
         @param datatable: datatable from the database
         @type finishtext: string
@@ -229,13 +230,13 @@ def all_betting(user_id=None, competition_id=None, export=False):
     if export:
         f = open('all.csv', 'w')
     for game in comp.games:
-        each_game = (_('game {} ').format(game.name))
+        each_game = _('game {} ').format(game.name)
         print (each_game)
         if export:
             f.write(each_game + _(','))
         for bet in game.game_bets:
-            each_bet = (_('bet: {}:{} point:{}').format(
-                bet.bet_home, bet.bet_away, bet.point))
+            each_bet = _('bet: {}:{} point:{}').format(
+                bet.bet_home, bet.bet_away, bet.point)
             if not user_id:
                 print (bet.users.name, each_bet)
                 if export:
@@ -247,13 +248,13 @@ def all_betting(user_id=None, competition_id=None, export=False):
                     f.write(each_bet + '\r\n')
         if export:
             f.write('\r\n')
-    print (_("competition: {} {}").format(
+    print(_("competition: {} {}").format(
         comp.name, text_winner))
     if export:
         f.write(text_winner + _(','))
     for cup_winner in comp.cup_winner_bets:
-        each_cup_winner = (_('cup winner: {} point:{}').format(
-            cup_winner.teams.name, cup_winner.point) + _(','))
+        each_cup_winner = _('cup winner: {} point:{}').format(
+            cup_winner.teams.name, cup_winner.point) + _(',')
         if not user_id:
             print (cup_winner.users.name, each_cup_winner,)
             if export:
@@ -267,9 +268,9 @@ def all_betting(user_id=None, competition_id=None, export=False):
         f.write('\r\n')
         f.write(_(','))
     for cup_winner in comp.cup_winner_bets:
-        each_cup_winner = (_('all points:{}').format(
-            sum(x.point for x in cup_winner.users.game_bets)
-            + cup_winner.point) + _(','))
+        each_cup_winner = _('all points:{}').format(
+            sum(x.point for x in cup_winner.users.game_bets) +
+            cup_winner.point) + _(',')
         print (each_cup_winner)
         if export:
             f.write(_(',') + each_cup_winner)
@@ -346,12 +347,12 @@ def new_team():
 
 
 def info_team(team):
-    print (_("name of the team: {}").format(team.name))
-    print (_("winner of competitions: {}").format(
+    print(_("name of the team: {}").format(team.name))
+    print(_("winner of competitions: {}").format(
         "".join(_.name for _ in team.competitions)))
-    print (_("bet of winner at competitions: {}").format(
+    print(_("bet of winner at competitions: {}").format(
         "".join(_.name for _ in team.cup_winner_bets)))
-    print (_("bet of games: {}").format(
+    print(_("bet of games: {}").format(
         "".join(_.name for _ in team.team_bets)))
 
 
@@ -412,6 +413,7 @@ def new_competition():
 def all_games_competition(competition, export):
     """
     print all games of competition
+
     @type competition: competition
     @param competition: data
     @type export: True/False
@@ -441,14 +443,14 @@ def all_games_competition(competition, export):
 
 
 def info_competition(competition):
-    print (_("competition: {}, Points {},{},{},{}").
+    print(_("competition: {}, Points {},{},{},{}").
            format(competition.name,
            competition.rule_right_winner, competition.rule_right_goaldif,
            competition.rule_right_result, competition.rule_cup_winner,))
     try:
-        print (_("cupwinner: {}").format(competition.teams.name))
+        print(_("cupwinner: {}").format(competition.teams.name))
     except AttributeError:
-        print (_("no cupwinner selected"))
+        print(_("no cupwinner selected"))
 
 
 def select_competition():
@@ -586,13 +588,13 @@ def edit_game_result(competition_id=None, game_id=None):
         return
     game = session.query(model.Game).filter_by(id=game_id).first()
     try:
-        print (_("team home: {}").format(game.team_home.name))
+        print(_("team home: {}").format(game.team_home.name))
     except AttributeError:
-        print (_("no team home selected"))
+        print(_("no team home selected"))
     try:
-        print (_("team away: {}").format(game.team_away.name))
+        print(_("team away: {}").format(game.team_away.name))
     except AttributeError:
-        print (_("no team away selected"))
+        print(_("no team away selected"))
     game.result_home = inputpro(game.result_home, _('result home'))
     game.result_away = inputpro(game.result_away, _('result away'))
     return game
@@ -614,13 +616,13 @@ def select_game(competition_id):
     def info_game():
         print (_("name of the competition: {}").format(game.competition.name))
         try:
-            print (_("team home: {}").format(game.team_home.name))
+            print(_("team home: {}").format(game.team_home.name))
         except AttributeError:
-            print (_("no team home selected"))
+            print(_("no team home selected"))
         try:
-            print (_("team away: {}").format(game.team_away.name))
+            print(_("team away: {}").format(game.team_away.name))
         except AttributeError:
-            print (_("no team away selected"))
+            print(_("no team away selected"))
 
     def delete_game():
         session.delete(game)
@@ -673,16 +675,16 @@ def all_game_bet(user_id=None, competition_id=None):
         return
     for games in session.query(model.Game).filter_by(
             competition_id=competition_id).all():
-        print (games.name)
+        print(games.name)
         game_bets = session.query(model.Game_bet).filter_by(
             user_id=user_id).filter_by(game_id=games.id).all()
         if game_bets:
-            print ('you have bet')
+            print('you have bet')
             for game_bet in game_bets:
                 print (game_bet.name)
                 edit_game_bet(game_bet)
         else:
-            print ('not bet')
+            print('not bet')
             session.add(edit_game_bet(model.Game_bet(user_id=user_id,
                                                      game_id=games.id)))
 
@@ -706,7 +708,7 @@ def select_game_bet(user_id=None, game_id=None):
     editor_game_bet = functools.partial(edit_game_bet, game_bet)
 
     def info_game_bet():
-        print (_("info of the game bet: {}").format(game_bet.name))
+        print(_("info of the game bet: {}").format(game_bet.name))
 
     def delete_game_bet():
         session.delete(game_bet)
