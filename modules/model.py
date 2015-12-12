@@ -93,7 +93,7 @@ class Competition(Base):
             format(self.name, self.teams.name, self.cup_winner_bets)
 
 
-class Cup_winner_bet(Base):
+class CupWinnerBet(Base):
     """characteristics of the cup winner bet table"""
     __tablename__ = 'cup_winner_bet'
     id = Column(Integer, primary_key=True)
@@ -164,7 +164,7 @@ class Game(Base):
                    team_away_name, self.result_home, self.result_away)
 
 
-class Game_bet(Base):
+class GameBet(Base):
     """characteristics of the game bet table"""
     __tablename__ = 'game_bet'
     id = Column(Integer, primary_key=True)

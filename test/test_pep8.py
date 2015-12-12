@@ -6,7 +6,7 @@
 
 # This file is part of pycupbetting.
 
-# pyLottoSimu is free software: you can redistribute it and/or modify
+# pycupbetting is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
@@ -17,13 +17,16 @@
 # GNU Lesser General Public License for more details.
 
 # You should have received a copy of the GNU General Public License
-# along with pyLottoSimu.  If not, see <http://www.gnu.org/licenses/>.
+# along with pycupbetting.  If not, see <http://www.gnu.org/licenses/>.
 
 import unittest
 import pep8
 
 
 class TestCodeFormat(unittest.TestCase):
+    """
+    Test of the code format
+    """
 
     def test_pep8_conformance(self):
         """Test that we conform to PEP8."""

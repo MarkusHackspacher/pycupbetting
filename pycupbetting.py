@@ -46,7 +46,7 @@ sm = orm.sessionmaker(bind=engine,
 session = orm.scoped_session(sm)
 
 
-class selection_menu():
+class SelectionMenu(object):
     """
     show the selection menu and return the id of table
     """
@@ -217,7 +217,7 @@ def all_betting(user_id=None, competition_id=None, export=False):
     print all games of competition
     """
     if not competition_id:
-        competition_id = int(selection_menu(session.query(
+        competition_id = int(SelectionMenu(session.query(
             model.Competition).all()))
     if competition_id == 0:
         return
@@ -302,7 +302,7 @@ def info_user(user):
 
 
 def select_user():
-    userid = int(selection_menu(session.query(model.User).all()))
+    userid = int(SelectionMenu(session.query(model.User).all()))
     if userid == 0:
         return
     user = session.query(model.User).filter_by(id=userid).first()
@@ -357,7 +357,7 @@ def info_team(team):
 
 
 def select_team():
-    teamid = int(selection_menu(session.query(model.Team).all()))
+    teamid = int(SelectionMenu(session.query(model.Team).all()))
     if teamid == 0:
         return
     team = session.query(model.Team).filter_by(id=teamid).first()
@@ -401,7 +401,7 @@ def edit_competition(competition):
     competition.rule_cup_winner = inputint(
         competition.rule_cup_winner, _('point for right cup winner'))
     print(_('cup winner selection'))
-    competition.cup_winner_id = int(selection_menu(
+    competition.cup_winner_id = int(SelectionMenu(
         session.query(model.Team).all(), finishtext=_('None')))
     return competition
 
@@ -454,7 +454,7 @@ def info_competition(competition):
 
 
 def select_competition():
-    competitionid = int(selection_menu(session.query(
+    competitionid = int(SelectionMenu(session.query(
         model.Competition).all()))
     if competitionid == 0:
         return
@@ -500,7 +500,7 @@ def edit_cup_winner_bet(cup_winner_bet):
     @param cup_winner_bet: data
     """
     print(_('team selection'))
-    cup_winner_bet.team_id = int(selection_menu(
+    cup_winner_bet.team_id = int(SelectionMenu(
         session.query(model.Team).all()))
     return cup_winner_bet
 
@@ -511,27 +511,27 @@ def new_cup_winner_bet(user_id, competition_id=None):
     @param competition_id: data
     """
     if not competition_id:
-        competition_id = int(selection_menu(session.query(
+        competition_id = int(SelectionMenu(session.query(
             model.Competition).all()))
     if competition_id == 0:
         return
-    session.add(edit_cup_winner_bet(model.Cup_winner_bet(
+    session.add(edit_cup_winner_bet(model.CupWinnerBet(
         user_id=user_id, competition_id=competition_id)))
 
 
 def select_cup_winner_bet(user_id, competition_id=None):
     print(user_id)
     if not competition_id:
-        competition_id = int(selection_menu(session.query(
+        competition_id = int(SelectionMenu(session.query(
             model.Competition).all()))
     if competition_id == 0:
         return
-    memberid = int(selection_menu(session.query(
-        model.Cup_winner_bet).filter_by(
+    memberid = int(SelectionMenu(session.query(
+        model.CupWinnerBet).filter_by(
             user_id=user_id).filter_by(competition_id=competition_id).all()))
     if memberid == 0:
         return
-    cup_winner_bet = session.query(model.Cup_winner_bet).filter_by(
+    cup_winner_bet = session.query(model.CupWinnerBet).filter_by(
         id=memberid).first()
     editor_cup_winner_bet = functools.partial(edit_cup_winner_bet,
                                               cup_winner_bet)
@@ -560,10 +560,10 @@ def edit_game(game):
     :param game: data
     """
     print(_('team home selection'))
-    game.team_home_id = int(selection_menu(
+    game.team_home_id = int(SelectionMenu(
         session.query(model.Team).all()))
     print(_('team away selection'))
-    game.team_away_id = int(selection_menu(
+    game.team_away_id = int(SelectionMenu(
         session.query(model.Team).all()))
     game.result_home = inputpro(game.result_home, _('result home'))
     game.result_away = inputpro(game.result_away, _('result away'))
@@ -577,12 +577,12 @@ def edit_game_result(competition_id=None, game_id=None):
     :param game: data
     """
     if not competition_id and not game_id:
-        competition_id = int(selection_menu(session.query(
+        competition_id = int(SelectionMenu(session.query(
             model.Competition).all()))
     if competition_id == 0:
         return
     if not game_id:
-        game_id = int(selection_menu(session.query(model.Game).filter_by(
+        game_id = int(SelectionMenu(session.query(model.Game).filter_by(
             competition_id=competition_id).all()))
     if game_id == 0:
         return
@@ -605,7 +605,7 @@ def new_game(competition_id):
 
 
 def select_game(competition_id):
-    memberid = int(selection_menu(session.query(model.Game).filter_by(
+    memberid = int(SelectionMenu(session.query(model.Game).filter_by(
         competition_id=competition_id).all()))
     if memberid == 0:
         return
@@ -664,19 +664,19 @@ def all_game_bet(user_id=None, competition_id=None):
     :param competition_id: data
     """
     if not user_id:
-        user_id = int(selection_menu(session.query(
+        user_id = int(SelectionMenu(session.query(
             model.User).all()))
     if user_id == 0:
         return
     if not competition_id:
-        competition_id = int(selection_menu(session.query(
+        competition_id = int(SelectionMenu(session.query(
             model.Competition).all()))
     if competition_id == 0:
         return
     for games in session.query(model.Game).filter_by(
             competition_id=competition_id).all():
         print(games.name)
-        game_bets = session.query(model.Game_bet).filter_by(
+        game_bets = session.query(model.GameBet).filter_by(
             user_id=user_id).filter_by(game_id=games.id).all()
         if game_bets:
             print('you have bet')
@@ -685,26 +685,26 @@ def all_game_bet(user_id=None, competition_id=None):
                 edit_game_bet(game_bet)
         else:
             print('not bet')
-            session.add(edit_game_bet(model.Game_bet(user_id=user_id,
-                                                     game_id=games.id)))
+            session.add(edit_game_bet(model.GameBet(user_id=user_id,
+                                                    game_id=games.id)))
 
 
 def select_game_bet(user_id=None, game_id=None):
     if not user_id:
-        user_id = int(selection_menu(session.query(
+        user_id = int(SelectionMenu(session.query(
             model.User).all()))
     if user_id == 0:
         return
     if not game_id:
-        game_id = int(selection_menu(session.query(
+        game_id = int(SelectionMenu(session.query(
             model.Game).all()))
     if game_id == 0:
         return
-    memberid = int(selection_menu(session.query(model.Game_bet).filter_by(
+    memberid = int(SelectionMenu(session.query(model.GameBet).filter_by(
         user_id=user_id).filter_by(game_id=game_id).all()))
     if memberid == 0:
         return
-    game_bet = session.query(model.Game_bet).filter_by(id=memberid).first()
+    game_bet = session.query(model.GameBet).filter_by(id=memberid).first()
     editor_game_bet = functools.partial(edit_game_bet, game_bet)
 
     def info_game_bet():

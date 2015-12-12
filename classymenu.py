@@ -55,7 +55,16 @@ from itertools import chain
 
 
 def make_some_foo_func(s):
+    """
+
+    @param s:
+    @return:
+    """
     def func():
+        """
+
+        @return:
+        """
         print(s)
     return func
 
@@ -65,7 +74,7 @@ hello, python, nothing, special = list(make_some_foo_func(s) for s in (
     )
 
 
-class Menu:
+class Menu(object):
     """
     Class that represents and handles a complete menu system all in once.
 
@@ -88,6 +97,11 @@ class Menu:
     """
 
     def __init__(self, title):
+        """
+
+        @param title:
+        @return:
+        """
         self.title = title
         self.items = []
         self.context = self
@@ -97,9 +111,17 @@ class Menu:
         self.texterror = 'please only enter numbers between 1 and {}'
 
     def __repr__(self):
+        """
+
+        @return:
+        """
         return "Menu({})".format(self.title)
 
     def __str__(self):
+        """
+
+        @return:
+        """
         head = ("", "-" * len(self.title), "{}".format(self.title),
                 "-" * len(self.title))
         entries = ("{:3} {} {}".format(
