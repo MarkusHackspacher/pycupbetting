@@ -35,8 +35,8 @@ _ = gettext.gettext
 
 # Create an engine and create all the tables we need
 engine = create_engine('sqlite:///dbcupbetting.sqlite', echo=False)
-model.Base.metadata.bind = engine
-model.Base.metadata.create_all(engine)
+model.base.metadata.bind = engine
+model.base.metadata.create_all(engine)
 
 # Set up the session
 sm = orm.sessionmaker(bind=engine,

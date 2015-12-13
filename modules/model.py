@@ -27,10 +27,10 @@ from sqlalchemy.orm import relationship, backref
 # http://docs.sqlalchemy.org/en/rel_0_9/orm/tutorial.html
 from sqlalchemy.ext.declarative import declarative_base
 
-Base = declarative_base()
+base = declarative_base()
 
 
-class User(Base):
+class User(base):
     """characteristics of the user table"""
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
@@ -49,7 +49,7 @@ class User(Base):
             self.name, self.fullname, self.email)
 
 
-class Team(Base):
+class Team(base):
     """characteristics of the team table"""
     __tablename__ = 'teams'
     id = Column(Integer, primary_key=True)
@@ -71,7 +71,7 @@ class Team(Base):
                    self.team_bets)
 
 
-class Competition(Base):
+class Competition(base):
     """characteristics of the competition table"""
     __tablename__ = 'competition'
     id = Column(Integer, primary_key=True)
@@ -93,7 +93,7 @@ class Competition(Base):
             format(self.name, self.teams.name, self.cup_winner_bets)
 
 
-class CupWinnerBet(Base):
+class CupWinnerBet(base):
     """characteristics of the cup winner bet table"""
     __tablename__ = 'cup_winner_bet'
     id = Column(Integer, primary_key=True)
@@ -119,7 +119,7 @@ class CupWinnerBet(Base):
         return points
 
 
-class Game(Base):
+class Game(base):
     """characteristics of the games table"""
     __tablename__ = 'games'
     id = Column(Integer, primary_key=True)
@@ -164,7 +164,7 @@ class Game(Base):
                    team_away_name, self.result_home, self.result_away)
 
 
-class GameBet(Base):
+class GameBet(base):
     """characteristics of the game bet table"""
     __tablename__ = 'game_bet'
     id = Column(Integer, primary_key=True)
