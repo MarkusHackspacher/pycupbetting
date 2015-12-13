@@ -175,15 +175,13 @@ def add_json():
     for filelist in enumerate(jsonfiles):
         print(_("Enter {} for {}").format(filelist[0], filelist[1]))
     try:
-         filenr = int(input())
+        filenr = int(input())
     except ValueError:
         print(_('Enter a number'))
         return
-    json_data = open(jsonfiles[filenr])
-
-    data = json.load(json_data)
+    with open(jsonfiles[filenr], "r") as json_data:
+        data = json.load(json_data)
     print(data['competition'])
-    json_data.close()
     q = session.query(model.Competition).filter(
         model.Competition.name == data['competition'])
     if session.query(literal(True)).filter(q.exists()).scalar():

@@ -38,10 +38,10 @@ class User(base):
     fullname = Column(String)
     email = Column(String)
 
-    cup_winner_bets = relationship("Cup_winner_bet",
-                                   order_by="Cup_winner_bet.id",
+    cup_winner_bets = relationship("CupWinnerBet",
+                                   order_by="CupWinnerBet.id",
                                    backref="users")
-    game_bets = relationship("Game_bet", order_by="Game_bet.id",
+    game_bets = relationship("GameBet", order_by="GameBet.id",
                              backref="users")
 
     def __repr__(self):
@@ -58,15 +58,15 @@ class Team(base):
     team_bets = relationship("Game", primaryjoin="Game.team_home_id==Team.id"
                              " or Game.team_away_id==Team.id",
                              order_by="Game.id", viewonly=True)
-    cup_winner_bets = relationship("Cup_winner_bet",
-                                   order_by="Cup_winner_bet.id",
+    cup_winner_bets = relationship("CupWinnerBet",
+                                   order_by="CupWinnerBet.id",
                                    backref="teams")
     competitions = relationship("Competition", order_by="Competition.id",
                                 backref="teams")
 
     def __repr__(self):
-        return "<Team(name='{}', cup_winner_bets='{}', competitions='{}'" \
-            " team_bets='{}'". \
+        return "<Team(name='{0}', CupWinnerBet='{1}', competitions='{2}'" \
+            " team_bets='{3}'". \
             format(self.name, self.cup_winner_bets, self.competitions,
                    self.team_bets)
 
@@ -82,8 +82,8 @@ class Competition(base):
     rule_right_result = Column(Integer)
     rule_cup_winner = Column(Integer)
 
-    cup_winner_bets = relationship("Cup_winner_bet",
-                                   order_by="Cup_winner_bet.id",
+    cup_winner_bets = relationship("CupWinnerBet",
+                                   order_by="CupWinnerBet.id",
                                    backref="competition")
     games = relationship("Game", order_by="Game.id", backref="competition")
 
@@ -95,15 +95,16 @@ class Competition(base):
 
 class CupWinnerBet(base):
     """characteristics of the cup winner bet table"""
-    __tablename__ = 'cup_winner_bet'
+    __tablename__ = 'CupWinnerBet'
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('users.id'))
     competition_id = Column(Integer, ForeignKey('competition.id'))
     team_id = Column(Integer, ForeignKey('teams.id'))
 
     def __repr__(self):
-        return "<Cup_winner_bet(Username='{0}', competition='{1}', team='{2}')>".\
-            format(self.users.name, self.competition.name, self.teams.name)
+        return "<CupWinnerBet(Username='{0}', competition='{1}'," \
+               " team='{2}')>".\
+               format(self.users.name, self.competition.name, self.teams.name)
 
     @property
     def name(self):
@@ -130,7 +131,7 @@ class Game(base):
     result_away = Column(Integer)
     start_date = Column(Date)
 
-    game_bets = relationship("Game_bet", order_by="Game_bet.id",
+    game_bets = relationship("GameBet", order_by="GameBet.id",
                              backref="games")
     team_home = relationship("Team",
                              primaryjoin="Team.id==Game.team_home_id")
@@ -138,8 +139,8 @@ class Game(base):
                              primaryjoin="Team.id==Game.team_away_id")
 
     def __repr__(self):
-        return "<Game(competition='{}', game='{}:{}', result='{}:{}'," \
-               " bet ='{}'". \
+        return "<Game(competition='{0}', game='{1}:{2}', result='{3}:{4}'," \
+               " bet ='{5}'". \
             format(self.competition.name, self.team_home.name,
                    self.team_away.name, self.result_home, self.result_away,
                    self.game_bets)
@@ -174,7 +175,7 @@ class GameBet(base):
     bet_away = Column(Integer)
 
     def __repr__(self):
-        return "<Game_bet(name='{0}', competition='{1}', game='{2}:{3}'," \
+        return "<GameBet(name='{0}', competition='{1}', game='{2}:{3}'," \
                "result='{4}:{5}', bet='{6}:{7}'". \
                format(self.users.name,
                       self.games.competition.name,
@@ -189,8 +190,8 @@ class GameBet(base):
     def name(self):
         """return the game name and result of the game bet"""
         return "{0}:{1} {2}:{3}". format(self.games.team_home.name,
-                                     self.games.team_away.name,
-                                     self.bet_home, self.bet_away)
+                                         self.games.team_away.name,
+                                         self.bet_home, self.bet_away)
 
     @property
     def point(self):
