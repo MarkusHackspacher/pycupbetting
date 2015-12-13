@@ -124,7 +124,7 @@ class Menu(object):
         """
         head = ("", "-" * len(self.title), "{}".format(self.title),
                 "-" * len(self.title))
-        entries = ("{:3} {} {}".format(
+        entries = ("{0:3} {1} {2}".format(
             index, "+" if isinstance(entry[1], Menu) else " ",
             entry[0]
             ).ljust(12)
@@ -183,7 +183,7 @@ class Menu(object):
                 if isinstance(command, Menu):
                     stack.append((command, menu))
             if menu is not self:
-                menu.append("{} -> {}".format(text, parent.title), parent)
+                menu.append("{0} -> {1}".format(text, parent.title), parent)
 
     def get_user_input(self):
         while True:

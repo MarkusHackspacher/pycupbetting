@@ -88,8 +88,8 @@ class Competition(base):
     games = relationship("Game", order_by="Game.id", backref="competition")
 
     def __repr__(self):
-        return "<Competition(name='{}', cup_winner_name='{}'" \
-            " cup_winner_bets='{}'". \
+        return "<Competition(name='{0}', cup_winner_name='{1}'" \
+            " cup_winner_bets='{2}'". \
             format(self.name, self.teams.name, self.cup_winner_bets)
 
 
@@ -102,12 +102,12 @@ class CupWinnerBet(base):
     team_id = Column(Integer, ForeignKey('teams.id'))
 
     def __repr__(self):
-        return "<Cup_winner_bet(Username='{}', competition='{}', team='{}')>".\
+        return "<Cup_winner_bet(Username='{0}', competition='{1}', team='{2}')>".\
             format(self.users.name, self.competition.name, self.teams.name)
 
     @property
     def name(self):
-        return "{} {} {}". \
+        return "{0} {1} {2}". \
             format(self.users.name, self.competition.name, self.teams.name)
 
     @property
@@ -159,7 +159,7 @@ class Game(base):
         except AttributeError:
             competition_name = "no competition selected"
 
-        return "{}: {}:{} {}:{}". \
+        return "{0}: {1}:{2} {3}:{4}". \
             format(competition_name, team_home_name,
                    team_away_name, self.result_home, self.result_away)
 
@@ -174,8 +174,8 @@ class GameBet(base):
     bet_away = Column(Integer)
 
     def __repr__(self):
-        return "<Game_bet(name='{}', competition='{}', game='{}:{}'," \
-               "result='{}:{}', bet='{}:{}'". \
+        return "<Game_bet(name='{0}', competition='{1}', game='{2}:{3}'," \
+               "result='{4}:{5}', bet='{6}:{7}'". \
                format(self.users.name,
                       self.games.competition.name,
                       self.games.team_home.name,
@@ -188,7 +188,7 @@ class GameBet(base):
     @property
     def name(self):
         """return the game name and result of the game bet"""
-        return "{}:{} {}:{}". format(self.games.team_home.name,
+        return "{0}:{1} {2}:{3}". format(self.games.team_home.name,
                                      self.games.team_away.name,
                                      self.bet_home, self.bet_away)
 

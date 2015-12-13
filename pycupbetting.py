@@ -137,7 +137,7 @@ def inputpro(in_data, text):
     @rtype: string
     @return: input worth
     """
-    out_data = input("{} [{}]:".format(text, in_data))
+    out_data = input("{0} [{1}]:".format(text, in_data))
     if out_data == '':
         out_data = in_data
     return out_data
@@ -156,7 +156,7 @@ def inputint(in_data, text):
     @return: input worth
     """
     if in_data:
-        questiontext = "{} [{}]:".format(text, in_data)
+        questiontext = "{0} [{1}]:".format(text, in_data)
     else:
         questiontext = "{}:".format(text)
     while True:
@@ -175,11 +175,11 @@ def add_json():
     for filelist in enumerate(jsonfiles):
         print(_("Enter {} for {}").format(filelist[0], filelist[1]))
     try:
-        filenr = int(input())
-    except:
+         filenr = int(input())
+    except ValueError:
         print(_('Enter a number'))
         return
-    json_data = open(jsonfiles[int(filenr)])
+    json_data = open(jsonfiles[filenr])
 
     data = json.load(json_data)
     print(data['competition'])
@@ -431,7 +431,7 @@ def all_games_competition(competition, export):
         except AttributeError:
             team_away_name = "no team away selected"
 
-        print('{} : {}'.format(team_home_name, team_away_name))
+        print('{0} : {1}'.format(team_home_name, team_away_name))
         gamelist['games'].append(dict(game_a=team_home_name,
                                       game_b=team_away_name,
                                       tip_a=0,
@@ -443,7 +443,7 @@ def all_games_competition(competition, export):
 
 
 def info_competition(competition):
-    print(_("competition: {}, Points {},{},{},{}").
+    print(_("competition: {0}, Points {1},{2},{3},{4}").
           format(competition.name,
           competition.rule_right_winner, competition.rule_right_goaldif,
           competition.rule_right_result, competition.rule_cup_winner,))
