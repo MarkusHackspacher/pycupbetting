@@ -34,6 +34,7 @@ class TestCodeFormat(unittest.TestCase):
         result = pep8style.check_files(['pycupbetting.py',
                                         'classymenu.py',
                                         'test/test_pep8.py',
+                                        'test/test_model.py',
                                         'modules/model.py',
                                         ])
         self.assertEqual(result.total_errors, 0,

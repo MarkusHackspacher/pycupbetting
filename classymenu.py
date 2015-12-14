@@ -97,7 +97,7 @@ class Menu(object):
     """
 
     def __init__(self, title):
-        """
+        """initial
 
         @param title:
         @return:
@@ -111,17 +111,9 @@ class Menu(object):
         self.texterror = 'please only enter numbers between 1 and {}'
 
     def __repr__(self):
-        """
-
-        @return:
-        """
         return "Menu({})".format(self.title)
 
     def __str__(self):
-        """
-
-        @return:
-        """
         head = ("", "-" * len(self.title), "{}".format(self.title),
                 "-" * len(self.title))
         entries = ("{0:3} {1} {2}".format(
@@ -186,6 +178,10 @@ class Menu(object):
                 menu.append("{0} -> {1}".format(text, parent.title), parent)
 
     def get_user_input(self):
+        """wait for the choice
+
+        @return:
+        """
         while True:
             try:
                 choice = int(input(self.textchoice)) - 1
@@ -217,6 +213,10 @@ class Menu(object):
 
 
 def main():
+    """demonstration menu
+
+    @return:
+    """
     # We build up some demonstration menu as in the other menu systems.
     # Now we can use classes to create menu objects...
     menu = Menu("Hauptmenü")

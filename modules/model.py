@@ -45,7 +45,7 @@ class User(base):
                              backref="users")
 
     def __repr__(self):
-        return "<User(name='%s', fullname='%s', email='%s')>" % (
+        return "<User(name='{0}', fullname='{1}', email='{2}')>".format(
             self.name, self.fullname, self.email)
 
 
@@ -108,12 +108,17 @@ class CupWinnerBet(base):
 
     @property
     def name(self):
+        """return CupWinnerBet
+
+        @return:
+        """
         return "{0} {1} {2}". \
             format(self.users.name, self.competition.name, self.teams.name)
 
     @property
     def point(self):
-        """Cup_winner_bet: right cup_winner"""
+        """CupWinnerBet: points for the right cup winner
+        """
         points = 0
         if self.competition.cup_winner_id == self.team_id:
                 points = self.games.competition.rule_cup_winner
@@ -121,7 +126,8 @@ class CupWinnerBet(base):
 
 
 class Game(base):
-    """characteristics of the games table"""
+    """characteristics of the games table
+    """
     __tablename__ = 'games'
     id = Column(Integer, primary_key=True)
     competition_id = Column(Integer, ForeignKey('competition.id'))
@@ -147,6 +153,10 @@ class Game(base):
 
     @property
     def name(self):
+        """return the game
+
+        @return:
+        """
         try:
             team_home_name = self.team_home.name
         except AttributeError:
@@ -166,7 +176,8 @@ class Game(base):
 
 
 class GameBet(base):
-    """characteristics of the game bet table"""
+    """characteristics of the game bet table
+    """
     __tablename__ = 'game_bet'
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('users.id'))
@@ -188,7 +199,8 @@ class GameBet(base):
 
     @property
     def name(self):
-        """return the game name and result of the game bet"""
+        """return the game name and result of the game bet
+        """
         return "{0}:{1} {2}:{3}". format(self.games.team_home.name,
                                          self.games.team_away.name,
                                          self.bet_home, self.bet_away)

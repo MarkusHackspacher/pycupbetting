@@ -171,6 +171,10 @@ def inputint(in_data, text):
 
 
 def add_json():
+    """add a json table with cup games
+
+    @return:
+    """
     jsonfiles = glob.glob('*.json')
     for filelist in enumerate(jsonfiles):
         print(_("Enter {} for {}").format(filelist[0], filelist[1]))
@@ -291,15 +295,28 @@ def edit_user(user):
 
 
 def new_user():
+    """add a new user
+
+    @return:
+    """
     session.add(edit_user(model.User()))
 
 
 def info_user(user):
+    """return info of a user
+
+    @param user:
+    @return:
+    """
     print(_("user: {} full name: {} email: {}").
           format(user.name, user.fullname, user.email, ))
 
 
 def select_user():
+    """select a user
+
+    @return:
+    """
     userid = int(SelectionMenu(session.query(model.User).all()))
     if userid == 0:
         return
@@ -341,10 +358,19 @@ def edit_team(team):
 
 
 def new_team():
+    """add a new team
+
+    @return:
+    """
     session.add(edit_team(model.Team()))
 
 
 def info_team(team):
+    """return info of a team
+
+    @param team:
+    @return:
+    """
     print(_("name of the team: {}").format(team.name))
     print(_("winner of competitions: {}").format(
         "".join(_.name for _ in team.competitions)))
@@ -355,6 +381,10 @@ def info_team(team):
 
 
 def select_team():
+    """select a team
+
+    @return:
+    """
     teamid = int(SelectionMenu(session.query(model.Team).all()))
     if teamid == 0:
         return
@@ -405,6 +435,10 @@ def edit_competition(competition):
 
 
 def new_competition():
+    """new competition
+
+    @return:
+    """
     session.add(edit_competition(model.Competition()))
 
 
@@ -441,6 +475,11 @@ def all_games_competition(competition, export):
 
 
 def info_competition(competition):
+    """info competition
+
+    @param competition:
+    @return:
+    """
     print(_("competition: {0}, Points {1},{2},{3},{4}").
           format(competition.name,
           competition.rule_right_winner, competition.rule_right_goaldif,
@@ -452,6 +491,10 @@ def info_competition(competition):
 
 
 def select_competition():
+    """select competition
+
+    @return:
+    """
     competitionid = int(SelectionMenu(session.query(
         model.Competition).all()))
     if competitionid == 0:
@@ -468,6 +511,10 @@ def select_competition():
     info_competition_sel = functools.partial(info_competition, competition)
 
     def delete_competition():
+        """delete competition
+
+        @return:
+        """
         if competition.cup_winner_bets == [] and competition.games == []:
             print(_("competition {} is deleted").format(competition.name))
             session.delete(competition)
@@ -504,7 +551,8 @@ def edit_cup_winner_bet(cup_winner_bet):
 
 
 def new_cup_winner_bet(user_id, competition_id=None):
-    """
+    """add a new cup winner bet
+
     @param user_id: data:
     @param competition_id: data
     """
@@ -518,6 +566,12 @@ def new_cup_winner_bet(user_id, competition_id=None):
 
 
 def select_cup_winner_bet(user_id, competition_id=None):
+    """select cup winner bet
+
+    @param user_id:
+    @param competition_id:
+    @return:
+    """
     print(user_id)
     if not competition_id:
         competition_id = int(SelectionMenu(session.query(
