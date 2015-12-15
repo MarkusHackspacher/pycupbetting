@@ -52,3 +52,41 @@ class TestCodeFormat(unittest.TestCase):
         self.assertEqual(our_user.name, 'ed')
         self.assertEqual(our_user.fullname, 'Ed Jones')
         self.assertEqual(our_user.email, 'ed@mail')
+
+    def test_team_model(self):
+        """Test the user model
+        """
+        teamlist = ['Germany', 'Brasil', 'Italy', 'Spain']
+        for te in teamlist:
+            self.session.add(model.Team(name=te))
+        our_team = self.session.query(model.Team).filter_by(
+                name='Germany').first()
+        self.assertEqual(our_team.name, 'Germany')
+        self.assertEqual(our_team.team_bets, [])
+        self.assertEqual(our_team.cup_winner_bets, [])
+        self.assertEqual(our_team.competitions, [])
+        teams = self.session.query(model.Team).all()
+        self.assertEqual(teams[2].name, 'Italy')
+        self.assertEqual(teams[3].name, 'Spain')
+
+    def test_competition_model(self):
+        """Test the Competition model
+        """
+        testcompetition = model.Competition(name='World Cup',
+                                            cup_winner_id=2,
+                                            rule_right_winner=1,
+                                            rule_right_goaldif=2,
+                                            rule_right_result=3,
+                                            rule_cup_winner=10)
+        self.session.add(testcompetition)
+        our_competition = self.session.query(model.Competition).first()
+        self.assertEqual(our_competition.name, 'World Cup')
+        self.assertEqual(our_competition.cup_winner_id, 2)
+        self.assertEqual(our_competition.rule_right_winner, 1)
+        self.assertEqual(our_competition.rule_right_goaldif, 2)
+        self.assertEqual(our_competition.rule_right_result, 3)
+        self.assertEqual(our_competition.rule_cup_winner, 10)
+        self.test_team_model()
+        our_competition = self.session.query(model.Competition).first()
+        self.assertEqual(our_competition.name, 'World Cup')
+        self.assertEqual(our_competition.teams.name, 'Brasil')

@@ -653,10 +653,20 @@ def edit_game_result(competition_id=None, game_id=None):
 
 
 def new_game(competition_id):
+    """add new game
+
+    @param competition_id:
+    @return:
+    """
     session.add(edit_game(model.Game(competition_id=competition_id)))
 
 
 def select_game(competition_id):
+    """select a game
+
+    @param competition_id:
+    @return:
+    """
     memberid = int(SelectionMenu(session.query(model.Game).filter_by(
         competition_id=competition_id).all()))
     if memberid == 0:
@@ -677,11 +687,19 @@ def select_game(competition_id):
             print(_("no team away selected"))
 
     def delete_game():
+        """delete a game
+
+        @return:
+        """
         session.delete(game)
         gameselect.menushow = False
         return
 
     def edit_game_result_reset():
+        """edit game result reset
+
+        @return:
+        """
         game.result_home = None
         game.result_away = None
         return
@@ -742,6 +760,12 @@ def all_game_bet(user_id=None, competition_id=None):
 
 
 def select_game_bet(user_id=None, game_id=None):
+    """select game bet
+
+    @param user_id:
+    @param game_id:
+    @return:
+    """
     if not user_id:
         user_id = int(SelectionMenu(session.query(
             model.User).all()))
@@ -760,9 +784,17 @@ def select_game_bet(user_id=None, game_id=None):
     editor_game_bet = functools.partial(edit_game_bet, game_bet)
 
     def info_game_bet():
+        """info game bet
+
+        @return:
+        """
         print(_("info of the game bet: {}").format(game_bet.name))
 
     def delete_game_bet():
+        """delete game bet
+
+        @return:
+        """
         session.delete(game_bet)
         game_betselect.menushow = False
         return
