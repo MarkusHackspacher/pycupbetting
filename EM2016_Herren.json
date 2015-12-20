@@ -1,0 +1,58 @@
+{
+    "competition": "UEFA-Fußball-Europameisterschaft 2016",
+    "rule_right_winner": 1,
+    "rule_right_goaldif": 2,
+    "rule_right_result": 3,
+    "rule_cup_winner": 5,
+    "groups": [
+        {"teams": 
+         [ "Frankreich",
+            "Rumänien",
+            "Albanien",
+            "Schweiz"
+         ],
+         "pairings": [[0,1],[2,3],[0,2],[1,3],[3,0],[1,2]]
+        },
+        {"teams":  [
+            "England",
+            "Russland",
+            "Wales",
+            "Slowakei"
+         ],
+         "pairings": [[0,1],[2,3],[0,2],[1,3],[3,0],[1,2]]
+        },
+        {"teams":  [
+            "Deutschland",
+            "Ukraine",
+            "Polen",
+            "Nordirland"
+         ],
+         "pairings": [[0,1],[2,3],[0,2],[1,3],[3,0],[1,2]]
+        },
+        {"teams":  [
+            "Spanien",
+            "Tschechien",
+            "Türkei",
+            "Kroatien"
+         ],
+         "pairings": [[0,1],[2,3],[0,2],[1,3],[3,0],[1,2]]
+        },
+        {"teams":  [
+            "Belgien",
+            "Italien",
+            "Irland",
+            "Schweden"
+         ],
+         "pairings": [[0,1],[2,3],[0,2],[1,3],[3,0],[1,2]]
+        },
+        {"teams":  [
+            "Portugal",
+            "Island",
+            "Österreich",
+            "Ungarn"
+         ],
+         "pairings": [[0,1],[2,3],[0,2],[1,3],[3,0],[1,2]]
+        }
+        ]
+        
+    }

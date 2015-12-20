@@ -16,7 +16,7 @@
         {"teams":  [
             "Argentinien",
             "Panama",
-            "CAF 3",
+            "Argentinien",
             "Österreich"
          ],
          "pairings": [[0,1],[2,3],[0,2],[1,3],[3,0],[1,2]]
@@ -25,20 +25,20 @@
             "Katar",
             "Kolumbien",
             "Portugal",
-            "CAF 4"
+            "Senegal"
          ],
          "pairings": [[0,1],[2,3],[0,2],[1,3],[3,0],[1,2]]
         },
         {"teams":  [
             "Mexiko",
-            "CAF 2",
+            "Mali",
             "Uruguay",
             "Serbien"
          ],
          "pairings": [[0,1],[2,3],[0,2],[1,3],[3,0],[1,2]]
         },
         {"teams":  [
-            "CAF 1",
+            "Nigeria",
             "Brasilien",
             "Nordkorea",
             "Ungarn"
