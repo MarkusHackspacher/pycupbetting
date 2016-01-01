@@ -90,3 +90,73 @@ class TestCodeFormat(unittest.TestCase):
         our_competition = self.session.query(model.Competition).first()
         self.assertEqual(our_competition.name, 'World Cup')
         self.assertEqual(our_competition.teams.name, 'Brasil')
+
+    def test_cupwinnerbet_model(self):
+        """Test the CupWinnerBet model
+        """
+        self.test_competition_model()
+        self.test_user_model()
+        ed_winner = model.CupWinnerBet(competition_id=1, team_id=1, user_id=1)
+        self.session.add(ed_winner)
+        our_cupwinnerbet = self.session.query(model.CupWinnerBet).first()
+        self.assertEqual(our_cupwinnerbet.name, 'ed World Cup Germany')
+        self.assertEqual(our_cupwinnerbet.teams.name, 'Germany')
+        self.assertEqual(our_cupwinnerbet.point, 0)
+
+    def test_game_model(self):
+        """Test the Game model
+        """
+        self.test_competition_model()
+        gametest = model.Game(
+                competition_id=1, team_home_id=2, team_away_id=3,
+                result_home=2, result_away=2)
+        self.session.add(gametest)
+        gametest = model.Game(competition_id=1, team_home_id=2, team_away_id=1,
+                              result_home=1, result_away=2)
+        self.session.add(gametest)
+        our_game = self.session.query(model.Game).first()
+        self.assertEqual(our_game.name, 'World Cup: Brasil:Italy 2:2')
+        self.assertEqual(our_game.start_date, None)
+
+    def test_gamebet_model(self):
+        """Test the GameBet model
+        """
+        self.test_user_model()
+        self.test_game_model()
+        gamebettest = model.GameBet(user_id=1, game_id=1,
+                                    bet_home=1, bet_away=1)
+        self.session.add(gamebettest)
+        gamebettest = model.GameBet(user_id=1, game_id=2,
+                                    bet_home=1, bet_away=2)
+        self.session.add(gamebettest)
+        gamebettest = model.GameBet(user_id=1, game_id=2,
+                                    bet_home=2, bet_away=2)
+        self.session.add(gamebettest)
+        gamebettest = model.GameBet(user_id=1, game_id=2,
+                                    bet_home=2, bet_away=1)
+        self.session.add(gamebettest)
+        gamebettest = model.GameBet(user_id=1, game_id=2,
+                                    bet_home=2, bet_away=5)
+        self.session.add(gamebettest)
+
+        our_user = self.session.query(model.User).filter_by(name='ed').first()
+        self.assertEqual(our_user.name, 'ed')
+        self.assertEqual(our_user.id, 1)
+        self.assertEqual(our_user.game_bets[0].name, 'Brasil:Italy 1:1')
+        self.assertEqual(our_user.game_bets[0].point, 2)
+        self.assertEqual(our_user.game_bets[1].name, 'Brasil:Germany 1:2')
+        self.assertEqual(our_user.game_bets[1].point, 3)
+        self.assertEqual(our_user.game_bets[2].point, 0)
+        self.assertEqual(our_user.game_bets[3].point, 0)
+        self.assertEqual(our_user.game_bets[4].point, 1)
+        self.assertEqual(sum(x.point for x in our_user.game_bets), 6)
+        with self.assertRaises(IndexError):
+            our_user.game_bets[5].name
+
+        our_bet = self.session.query(model.GameBet).all()
+        self.assertEqual(our_bet[0].point, 2)
+        self.assertEqual(our_bet[1].point, 3)
+        self.assertEqual(our_bet[2].point, 0)
+        self.assertEqual(our_bet[3].point, 0)
+        self.assertEqual(our_bet[4].point, 1)
+        self.assertEqual(sum(x.point for x in our_bet), 6)
