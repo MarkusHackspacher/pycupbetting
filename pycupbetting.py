@@ -56,10 +56,10 @@ class SelectionMenu(object):
         with the variable finishtext change the test at the end
         of the selection, maybe 'None' for no choise
 
-        @type datatable: datatable
-        @param datatable: datatable from the database
-        @type finishtext: string
-        @param finishtext: text of the finish
+        :type datatable: datatable
+        :param datatable: datatable from the database
+        :type finishtext: string
+        :param finishtext: text of the finish
         """
         self.datatable = datatable
         self.finishtext = finishtext
@@ -81,8 +81,8 @@ class SelectionMenu(object):
     def get_id(self, number):
         """
         assign database table id
-        @type number: int
-        @param number: number of item
+        :type number: int
+        :param number: number of item
         """
         self.selection_id = number
 
@@ -129,13 +129,13 @@ def inputpro(in_data, text):
     """
     Input procedure for string
 
-    @type in_data: string
-    @param in_data: default worth
-    @type text: string
-    @param text: query text
+    :type in_data: string
+    :param in_data: default worth
+    :type text: string
+    :param text: query text
 
-    @rtype: string
-    @return: input worth
+    :rtype: string
+    :return: input worth
     """
     out_data = input("{0} [{1}]:".format(text, in_data))
     if out_data == '':
@@ -147,13 +147,13 @@ def inputint(in_data, text):
     """
     Input procedure for integer
 
-    @type in_data: int
-    @param in_data: default worth
-    @type text: string
-    @param text: query text
+    :type in_data: int
+    :param in_data: default worth
+    :type text: string
+    :param text: query text
 
-    @rtype: int
-    @return: input worth
+    :rtype: int
+    :return: input worth
     """
     if in_data:
         questiontext = "{0} [{1}]:".format(text, in_data)
@@ -173,7 +173,7 @@ def inputint(in_data, text):
 def add_json():
     """add a json table with cup games
 
-    @return:
+    :return:
     """
     jsonfiles = glob.glob('*.json')
     for filelist in enumerate(jsonfiles):
@@ -285,8 +285,8 @@ def edit_user(user):
     """
     change of data of table user
 
-    @type user: user
-    @param user: data of the user
+    :type user: user
+    :param user: data of the user
     """
     user.name = inputpro(user.name, _('short user name'))
     user.fullname = inputpro(user.fullname, _('full name'))
@@ -297,7 +297,7 @@ def edit_user(user):
 def new_user():
     """add a new user
 
-    @return:
+    :return:
     """
     session.add(edit_user(model.User()))
 
@@ -305,8 +305,8 @@ def new_user():
 def info_user(user):
     """return info of a user
 
-    @param user:
-    @return:
+    :param user:
+    :return:
     """
     print(_("user: {} full name: {} email: {}").
           format(user.name, user.fullname, user.email, ))
@@ -315,7 +315,7 @@ def info_user(user):
 def select_user():
     """select a user
 
-    @return:
+    :return:
     """
     userid = int(SelectionMenu(session.query(model.User).all()))
     if userid == 0:
@@ -350,8 +350,8 @@ def edit_team(team):
     """
     change of data of table team
 
-    @type team: team
-    @param team: data
+    :type team: team
+    :param team: data
     """
     team.name = inputpro(team.name, _('name of the team'))
     return team
@@ -360,7 +360,7 @@ def edit_team(team):
 def new_team():
     """add a new team
 
-    @return:
+    :return:
     """
     session.add(edit_team(model.Team()))
 
@@ -368,8 +368,8 @@ def new_team():
 def info_team(team):
     """return info of a team
 
-    @param team:
-    @return:
+    :param team:
+    :return:
     """
     print(_("name of the team: {}").format(team.name))
     print(_("winner of competitions: {}").format(
@@ -383,7 +383,7 @@ def info_team(team):
 def select_team():
     """select a team
 
-    @return:
+    :return:
     """
     teamid = int(SelectionMenu(session.query(model.Team).all()))
     if teamid == 0:
@@ -416,8 +416,8 @@ def edit_competition(competition):
     """
     change of data of table competition
 
-    @type competition: competition
-    @param competition: data
+    :type competition: competition
+    :param competition: data
     """
     competition.name = inputpro(competition.name, _('name of competition'))
     competition.rule_right_winner = inputint(
@@ -437,7 +437,7 @@ def edit_competition(competition):
 def new_competition():
     """new competition
 
-    @return:
+    :return:
     """
     session.add(edit_competition(model.Competition()))
 
@@ -446,10 +446,10 @@ def all_games_competition(competition, export):
     """
     print all games of competition
 
-    @type competition: competition
-    @param competition: data
-    @type export: True/False
-    @param export: write data in a file
+    :type competition: competition
+    :param competition: data
+    :type export: True/False
+    :param export: write data in a file
     """
     print(_("competition: {}").format(competition.name))
     gamelist = dict(competition=competition.name, username='', games=[])
@@ -477,8 +477,8 @@ def all_games_competition(competition, export):
 def info_competition(competition):
     """info competition
 
-    @param competition:
-    @return:
+    :param competition:
+    :return:
     """
     print(_("competition: {0}, Points {1},{2},{3},{4}").
           format(competition.name,
@@ -493,7 +493,7 @@ def info_competition(competition):
 def select_competition():
     """select competition
 
-    @return:
+    :return:
     """
     competitionid = int(SelectionMenu(session.query(
         model.Competition).all()))
@@ -513,7 +513,7 @@ def select_competition():
     def delete_competition():
         """delete competition
 
-        @return:
+        :return:
         """
         if competition.cup_winner_bets == [] and competition.games == []:
             print(_("competition {} is deleted").format(competition.name))
@@ -541,8 +541,8 @@ def edit_cup_winner_bet(cup_winner_bet):
     """
     change of data of table cup_winner_bet
 
-    @type cup_winner_bet: cup_winner_bet
-    @param cup_winner_bet: data
+    :type cup_winner_bet: cup_winner_bet
+    :param cup_winner_bet: data
     """
     print(_('team selection'))
     cup_winner_bet.team_id = int(SelectionMenu(
@@ -553,8 +553,8 @@ def edit_cup_winner_bet(cup_winner_bet):
 def new_cup_winner_bet(user_id, competition_id=None):
     """add a new cup winner bet
 
-    @param user_id: data:
-    @param competition_id: data
+    :param user_id: data:
+    :param competition_id: data
     """
     if not competition_id:
         competition_id = int(SelectionMenu(session.query(
@@ -568,9 +568,9 @@ def new_cup_winner_bet(user_id, competition_id=None):
 def select_cup_winner_bet(user_id, competition_id=None):
     """select cup winner bet
 
-    @param user_id:
-    @param competition_id:
-    @return:
+    :param user_id:
+    :param competition_id:
+    :return:
     """
     print(user_id)
     if not competition_id:
@@ -655,8 +655,8 @@ def edit_game_result(competition_id=None, game_id=None):
 def new_game(competition_id):
     """add new game
 
-    @param competition_id:
-    @return:
+    :param competition_id:
+    :return:
     """
     session.add(edit_game(model.Game(competition_id=competition_id)))
 
@@ -664,8 +664,8 @@ def new_game(competition_id):
 def select_game(competition_id):
     """select a game
 
-    @param competition_id:
-    @return:
+    :param competition_id:
+    :return:
     """
     memberid = int(SelectionMenu(session.query(model.Game).filter_by(
         competition_id=competition_id).all()))
@@ -689,7 +689,7 @@ def select_game(competition_id):
     def delete_game():
         """delete a game
 
-        @return:
+        :return:
         """
         session.delete(game)
         gameselect.menushow = False
@@ -698,7 +698,7 @@ def select_game(competition_id):
     def edit_game_result_reset():
         """edit game result reset
 
-        @return:
+        :return:
         """
         game.result_home = None
         game.result_away = None
@@ -762,9 +762,9 @@ def all_game_bet(user_id=None, competition_id=None):
 def select_game_bet(user_id=None, game_id=None):
     """select game bet
 
-    @param user_id:
-    @param game_id:
-    @return:
+    :param user_id:
+    :param game_id:
+    :return:
     """
     if not user_id:
         user_id = int(SelectionMenu(session.query(
@@ -786,14 +786,14 @@ def select_game_bet(user_id=None, game_id=None):
     def info_game_bet():
         """info game bet
 
-        @return:
+        :return:
         """
         print(_("info of the game bet: {}").format(game_bet.name))
 
     def delete_game_bet():
         """delete game bet
 
-        @return:
+        :return:
         """
         session.delete(game_bet)
         game_betselect.menushow = False
