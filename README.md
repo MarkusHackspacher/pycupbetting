@@ -5,8 +5,6 @@ pycupbetting
 (https://gitter.im/MarkusHackspacher/pycupbetting?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://drone.io/github.com/MarkusHackspacher/pycupbetting/status.png)]
 (https://drone.io/github.com/MarkusHackspacher/pycupbetting/latest)
-[![Code Issues](https://www.quantifiedcode.com/api/v1/project/1b3112731fca4597acd93133eefaf30d/badge.svg)]
-(https://www.quantifiedcode.com/app/project/1b3112731fca4597acd93133eefaf30d)
 
 The idea is the preliminary round and the winner to tap. 
 I would like to realize with the python programming language. 
