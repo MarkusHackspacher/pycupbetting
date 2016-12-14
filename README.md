@@ -26,10 +26,12 @@ installation and start
 The program requires [Python 3.x](http://www.python.org/download/)
 and [sqlalchemy](http://www.sqlalchemy.org/).
 Install at first Python and
+
 ```
 easy_install SQLAlchemy
 ```
-or 
+or
+
 ```
 pip install SQLAlchemy
 ```
