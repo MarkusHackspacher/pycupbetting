@@ -34,13 +34,13 @@ or
 pip install SQLAlchemy
 ```
 Then you copied the source code of the program on your computer,
-either [download](https://github.com/MarkusHackspacher/pycupbetting) the zip file of the project or download with the version control system::
+either [download](https://github.com/MarkusHackspacher/pycupbetting) the zip file of the project or download with the version control system:
 
 ```
 # git clone https://github.com/MarkusHackspacher/pycupbetting.git
 ```
 
-change the directory and run::
+change the directory and run:
 
 ```
 cd pycupbetting
