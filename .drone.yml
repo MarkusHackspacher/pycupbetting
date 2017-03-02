@@ -1,3 +1,5 @@
+pip install -r requirements.txt --use-mirrors
+nosetests test/
 notify:
   gitter:
     webhook: https://webhooks.gitter.im/e/736edd346018a25dac43
