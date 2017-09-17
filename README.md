@@ -2,7 +2,6 @@ pycupbetting
 ============
 
 [![Join the chat at https://gitter.im/MarkusHackspacher/pycupbetting](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/MarkusHackspacher/pycupbetting?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Build Status](https://drone.io/github.com/MarkusHackspacher/pycupbetting/status.png)](https://drone.io/github.com/MarkusHackspacher/pycupbetting/latest)
 
 The idea is the preliminary round and the winner to tap. 
 I would like to realize with the python programming language. 
