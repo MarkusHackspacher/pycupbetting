@@ -1,0 +1,74 @@
+{
+    "competition": "UEFA-Fußball-Weltmeisterschaft 2022",
+    "rule_right_winner": 1,
+    "rule_right_goaldif": 2,
+    "rule_right_result": 3,
+    "rule_cup_winner": 5,
+    "groups": [
+        {"teams": 
+         [ "Katar",
+            "Ecuador",
+            "Senegal",
+            "Niederlande"
+         ],
+         "pairings": [[0,1],[2,3],[0,2],[3,1],[3,0],[1,2]]
+        },
+        {"teams":  [
+            "England",
+            "Iran",
+            "USA",
+            "Wales"
+         ],
+         "pairings": [[0,1],[2,3],[3,1],[0,2],[1,2],[3,0]]
+        },
+        {"teams":  [
+            "Argentinien",
+            "Saudi-Arabien",
+            "Mexiko",
+            "Polen"
+         ],
+         "pairings": [[0,1],[2,3],[0,2],[3,1],[3,0],[1,2]]
+        },
+        {"teams":  [
+            "Frankreich",
+            "Australien",
+            "Dänemark",
+            "Tunesien"
+         ],
+         "pairings": [[0,1],[2,3],[0,2],[3,1],[3,0],[1,2]]
+        },
+        {"teams":  [
+            "Spanien",
+            "Costa Rica",
+            "Deutschland",
+            "Japan"
+         ],
+         "pairings": [[0,1],[2,3],[0,2],[3,1],[3,0],[1,2]]
+        },
+        {"teams":  [
+            "Belgien",
+            "Kanada",
+            "Marokko",
+            "Kroatien"
+         ],
+         "pairings": [[0,1],[2,3],[0,2],[3,1],[3,0],[1,2]]
+        }
+        {"teams":  [
+            "Brasilien",
+            "Serbien",
+            "Schweiz",
+            "Kamerun"
+         ],
+         "pairings": [[0,1],[2,3],[0,2],[3,1],[3,0],[1,2]]
+        }
+        {"teams":  [
+            "Portugal",
+            "Ghana",
+            "Uruguay",
+            "Südkorea"
+         ],
+         "pairings": [[0,1],[2,3],[0,2],[3,1],[3,0],[1,2]]
+        }
+        ]
+        
+    }
