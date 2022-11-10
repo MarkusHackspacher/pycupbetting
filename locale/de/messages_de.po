@@ -59,6 +59,10 @@ msgstr ""
 msgid "Please enter a number"
 msgstr "Eine Zahl eingeben"
 
+#: pycupbetting.py:180
+msgid "Enter {} for {}"
+msgstr "Eingabe {} für {}"
+
 #: pycupbetting.py:188
 msgid "competition already exist"
 msgstr "Wettbewerb exestiert bereits"
@@ -98,7 +102,7 @@ msgstr "alle Punkte:{} "
 
 #: pycupbetting.py:78
 msgid "short user name"
-msgstr "Benutzerkürzel"
+msgstr "Benutzername"
 
 #: pycupbetting.py:79
 msgid "full name"
@@ -110,7 +114,7 @@ msgstr "Email"
 
 #: pycupbetting.py:98
 msgid "user: {} full name: {} email: {}"
-msgstr "Benutzerkürzel: {} Voller Name: {} Email: {}"
+msgstr "Benutzername: {} Voller Name: {} Email: {}"
 
 #: pycupbetting.py:101
 msgid "user editor"

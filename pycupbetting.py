@@ -4,7 +4,7 @@
 """
 pycupbetting
 
-Copyright (C) <2014-2015> Markus Hackspacher
+Copyright (C) <2014-2022> Markus Hackspacher
 
 This file is part of pycupbetting.
 
@@ -452,7 +452,7 @@ def all_games_competition(competition, export):
     :param export: write data in a file
     """
     print(_("competition: {}").format(competition.name))
-    gamelist = dict(competition=competition.name, username='', games=[])
+    gamelist = dict(competition=competition.name, Name='', Email='', Winnerbet='', games=[])
     for game in competition.games:
         try:
             team_home_name = game.team_home.name
@@ -466,8 +466,8 @@ def all_games_competition(competition, export):
         print('{0} : {1}'.format(team_home_name, team_away_name))
         gamelist['games'].append(dict(game_a=team_home_name,
                                       game_b=team_away_name,
-                                      tip_a=0,
-                                      tip_b=0))
+                                      tip_a='None',
+                                      tip_b='None'))
     if export:
         with open("games_json.txt", "w", encoding='utf8') as f:
             f.write(json.dumps(gamelist, indent=4, sort_keys=True,
