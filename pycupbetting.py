@@ -169,6 +169,69 @@ def inputint(in_data, text):
         except (ValueError):
             print(_('Please enter a number'))
 
+def importJsonUserBet():
+    """add a json table with user bet games
+    
+    the file table: competition=competition.name,
+    Name='', Email='', Winnerbet='', games
+    games{game_a,game_b,tip_a='None',tip_b='None'))
+    :return:
+    """
+    jsonfiles = glob.glob('*.txt')
+    for filelist in enumerate(jsonfiles):
+        print(_("Enter {} for {}").format(filelist[0], filelist[1]))
+    try:
+        filenr = int(input())
+    except ValueError:
+        print(_('Enter a number'))
+        return
+    with open(jsonfiles[filenr], "r") as json_data:
+        data = json.load(json_data)
+
+    q = session.query(model.User).filter(
+        model.User.name == data['Name'])
+    if session.query(literal(True)).filter(q.exists()).scalar():
+        print(_('{} already exist').format(data['Name']))
+    else:
+        session.add(model.User(
+            name=data['Name'],
+            fullname=data['Name'],
+            email=data['Email']))
+    q = session.query(model.Competition).filter(
+        model.Competition.name == data['competition'])
+    if not data['competition'] or not session.query(literal(True)).filter(q.exists()).scalar():
+        competition_id = int(SelectionMenu(session.query(
+            model.Competition).all()))
+        if competition_id == 0:
+            return
+    else:        
+        competition_id = session.query(model.Competition).filter_by(
+            name=data['competition']).one().id        
+    user_id = session.query(model.User).filter_by(
+        name=data['Name']).one().id
+    for bets in data['games']:
+        team_home_id=
+        team_away_id=
+        game_id=session.query(model.Game).filter_by(
+            competition_id=competition_id).filter_by(
+            model.Game.team_home==bets['game_a']).filter_by(
+            model.Game.team_away==bets['game_a']).one().id
+
+        session.add(edit_game_bet(model.GameBet(user_id=user_id,
+                                                game_id=games_id,
+                                                bet_home=bets['tip_a'],
+                                                bet_away=bets['tip_b'])))
+
+"""
+    for games in session.query(model.Game).filter_by(
+            competition_id=competition_id).all():
+        print(games.name)
+        if games.team_home.name == AND 
+        game_bets = session.query(model.GameBet).filter_by(
+            user_id=user_id).filter_by(game_id=games.id).all()
+        return
+"""
+
 
 def add_json():
     """add a json table with cup games
