@@ -28,9 +28,12 @@ Install at first Python and
 easy_install SQLAlchemy
 ```
 or
-
 ```
 pip install SQLAlchemy
+```
+Windows:
+```
+py -m pip install SQLAlchemy
 ```
 Then you copied the source code of the program on your computer,
 either [download](https://github.com/MarkusHackspacher/pycupbetting) the zip file of the project or download with the version control system:
@@ -38,12 +41,14 @@ either [download](https://github.com/MarkusHackspacher/pycupbetting) the zip fil
 ```
 # git clone https://github.com/MarkusHackspacher/pycupbetting.git
 ```
-
-change the directory and run:
-
+change the directory with:
 ```
 cd pycupbetting
 python3 pycupbetting.py
+```
+Windows:
+```
+py pycupbetting.py
 ```
 to run the program.
 
