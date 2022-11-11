@@ -219,23 +219,29 @@ def importJsonUserBet():
             team_home_id=team_home_id).filter_by(
             team_away_id=team_away_id).one().id
 
-        session.add(model.GameBet(user_id=user_id,
+        q = session.query(model.GameBet).filter(
+            model.GameBet.user_id == user_id).filter(
+            model.GameBet.game_id == game_id)
+        if session.query(literal(True)).filter(q.exists()).scalar():
+            print(_('{} already exist').format(game_id))
+        else:
+            session.add(model.GameBet(user_id=user_id,
                                   game_id=game_id,
                                   bet_home=bets['tip_a'],
                                   bet_away=bets['tip_b']))
     Winnerbet_id = session.query(model.Team).filter_by(
         name=data['Winnerbet']).one().id
 
-"""
-    for games in session.query(model.Game).filter_by(
-            competition_id=competition_id).all():
-        print(games.name)
-        if games.team_home.name == AND 
-        game_bets = session.query(model.GameBet).filter_by(
-            user_id=user_id).filter_by(game_id=games.id).all()
-        return
-"""
 
+    q = session.query(model.CupWinnerBet).filter(
+        model.CupWinnerBet.user_id == user_id).filter(
+        model.CupWinnerBet.competition_id == competition_id)
+    if session.query(literal(True)).filter(q.exists()).scalar():
+        print(_('{} already exist').format(competition_id))
+    else:
+        session.add(model.CupWinnerBet(user_id=user_id,
+                                       competition_id=competition_id,
+                                       team_id=Winnerbet_id))
 
 def add_json():
     """add a json table with cup games
