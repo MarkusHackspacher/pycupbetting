@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2022-11-10 23:00+0100\n"
+"POT-Creation-Date: 2022-11-11 22:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,9 +15,9 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
-#: pycupbetting.py:53 pycupbetting.py:345 pycupbetting.py:411
-#: pycupbetting.py:536 pycupbetting.py:604 pycupbetting.py:715
-#: pycupbetting.py:808
+#: pycupbetting.py:53 pycupbetting.py:412 pycupbetting.py:478
+#: pycupbetting.py:611 pycupbetting.py:679 pycupbetting.py:790
+#: pycupbetting.py:883
 msgid "back"
 msgstr ""
 
@@ -25,15 +25,15 @@ msgstr ""
 msgid "selection"
 msgstr ""
 
-#: pycupbetting.py:68 pycupbetting.py:335 pycupbetting.py:406
-#: pycupbetting.py:527 pycupbetting.py:598 pycupbetting.py:708
-#: pycupbetting.py:803 pycupbetting.py:819
+#: pycupbetting.py:68 pycupbetting.py:402 pycupbetting.py:473
+#: pycupbetting.py:602 pycupbetting.py:673 pycupbetting.py:783
+#: pycupbetting.py:878 pycupbetting.py:894
 msgid "Your choice is ?:"
 msgstr ""
 
-#: pycupbetting.py:69 pycupbetting.py:336 pycupbetting.py:407
-#: pycupbetting.py:528 pycupbetting.py:599 pycupbetting.py:709
-#: pycupbetting.py:804 pycupbetting.py:820
+#: pycupbetting.py:69 pycupbetting.py:403 pycupbetting.py:474
+#: pycupbetting.py:603 pycupbetting.py:674 pycupbetting.py:784
+#: pycupbetting.py:879 pycupbetting.py:895
 msgid "please only enter numbers between 1 and {}"
 msgstr ""
 
@@ -52,379 +52,395 @@ msgstr ""
 msgid "Please enter a number"
 msgstr ""
 
-#: pycupbetting.py:180
+#: pycupbetting.py:182 pycupbetting.py:247
 msgid "Enter {} for {}"
 msgstr ""
 
-#: pycupbetting.py:184
+#: pycupbetting.py:186 pycupbetting.py:251
 msgid "Enter a number"
 msgstr ""
 
-#: pycupbetting.py:192
+#: pycupbetting.py:194
+msgid "{} already exist"
+msgstr ""
+
+#: pycupbetting.py:259
 msgid "competition already exist"
 msgstr ""
 
-#: pycupbetting.py:231
+#: pycupbetting.py:298
 msgid ""
 "cupwinner: {}\r\n"
 "\r\n"
 msgstr ""
 
-#: pycupbetting.py:235
+#: pycupbetting.py:302
 msgid "game {} "
 msgstr ""
 
-#: pycupbetting.py:238 pycupbetting.py:245 pycupbetting.py:256
-#: pycupbetting.py:259 pycupbetting.py:263 pycupbetting.py:268
-#: pycupbetting.py:271 pycupbetting.py:275 pycupbetting.py:278
+#: pycupbetting.py:305 pycupbetting.py:312 pycupbetting.py:323
+#: pycupbetting.py:326 pycupbetting.py:330 pycupbetting.py:335
+#: pycupbetting.py:338 pycupbetting.py:342 pycupbetting.py:345
 msgid ","
 msgstr ""
 
-#: pycupbetting.py:240
+#: pycupbetting.py:307
 msgid "bet: {}:{} point:{}"
 msgstr ""
 
-#: pycupbetting.py:253
+#: pycupbetting.py:320
 msgid "competition: {} {}"
 msgstr ""
 
-#: pycupbetting.py:258
+#: pycupbetting.py:325
 msgid "cup winner: {} point:{}"
 msgstr ""
 
-#: pycupbetting.py:273
+#: pycupbetting.py:340
 msgid "all points:{}"
 msgstr ""
 
-#: pycupbetting.py:291
+#: pycupbetting.py:358
 msgid "short user name"
 msgstr ""
 
-#: pycupbetting.py:292
+#: pycupbetting.py:359
 msgid "full name"
 msgstr ""
 
-#: pycupbetting.py:293
+#: pycupbetting.py:360
 msgid "email"
 msgstr ""
 
-#: pycupbetting.py:311
+#: pycupbetting.py:378
 msgid "user: {} full name: {} email: {}"
 msgstr ""
 
-#: pycupbetting.py:334
+#: pycupbetting.py:401
 msgid "user editor"
 msgstr ""
 
-#: pycupbetting.py:337
+#: pycupbetting.py:404
 msgid "change user name"
 msgstr ""
 
-#: pycupbetting.py:338
+#: pycupbetting.py:405
 msgid "user info"
 msgstr ""
 
-#: pycupbetting.py:339
+#: pycupbetting.py:406
 msgid "user bettings"
 msgstr ""
 
-#: pycupbetting.py:340
+#: pycupbetting.py:407
 msgid "add new cup winner bet"
 msgstr ""
 
-#: pycupbetting.py:341
+#: pycupbetting.py:408
 msgid "cup winner bet selection"
 msgstr ""
 
-#: pycupbetting.py:343
+#: pycupbetting.py:410
 msgid "edit all game bets"
 msgstr ""
 
-#: pycupbetting.py:344
+#: pycupbetting.py:411
 msgid "game bet selection"
 msgstr ""
 
-#: pycupbetting.py:356
+#: pycupbetting.py:423
 msgid "name of the team"
 msgstr ""
 
-#: pycupbetting.py:374
+#: pycupbetting.py:441
 msgid "name of the team: {}"
 msgstr ""
 
-#: pycupbetting.py:375
+#: pycupbetting.py:442
 msgid "winner of competitions: {}"
 msgstr ""
 
-#: pycupbetting.py:377
+#: pycupbetting.py:444
 msgid "bet of winner at competitions: {}"
 msgstr ""
 
-#: pycupbetting.py:379
+#: pycupbetting.py:446
 msgid "bet of games: {}"
 msgstr ""
 
-#: pycupbetting.py:398
+#: pycupbetting.py:465
 msgid "team {} is deleted"
 msgstr ""
 
-#: pycupbetting.py:402
+#: pycupbetting.py:469
 msgid "entry in this team, cannot delete"
 msgstr ""
 
-#: pycupbetting.py:405
+#: pycupbetting.py:472
 msgid "team editor {}"
 msgstr ""
 
-#: pycupbetting.py:408
+#: pycupbetting.py:475
 msgid "change team name"
 msgstr ""
 
-#: pycupbetting.py:409 pycupbetting.py:713
+#: pycupbetting.py:476 pycupbetting.py:788
 msgid "team info"
 msgstr ""
 
-#: pycupbetting.py:410
+#: pycupbetting.py:477
 msgid "delete team"
 msgstr ""
 
-#: pycupbetting.py:422
+#: pycupbetting.py:489
 msgid "name of competition"
 msgstr ""
 
-#: pycupbetting.py:424
+#: pycupbetting.py:491
 msgid "points for right winner"
 msgstr ""
 
-#: pycupbetting.py:426
+#: pycupbetting.py:493
 msgid "points for right goaldif"
 msgstr ""
 
-#: pycupbetting.py:428
+#: pycupbetting.py:495
 msgid "points for right result"
 msgstr ""
 
-#: pycupbetting.py:430
+#: pycupbetting.py:497
 msgid "point for right cup winner"
 msgstr ""
 
-#: pycupbetting.py:431
+#: pycupbetting.py:498
 msgid "cup winner selection"
 msgstr ""
 
-#: pycupbetting.py:433
+#: pycupbetting.py:500
 msgid "None"
 msgstr ""
 
-#: pycupbetting.py:454
+#: pycupbetting.py:529
 msgid "competition: {}"
 msgstr ""
 
-#: pycupbetting.py:483
+#: pycupbetting.py:558
 msgid "competition: {0}, Points {1},{2},{3},{4}"
 msgstr ""
 
-#: pycupbetting.py:488
+#: pycupbetting.py:563
 msgid "cupwinner: {}"
 msgstr ""
 
-#: pycupbetting.py:490
+#: pycupbetting.py:565
 msgid "no cupwinner selected"
 msgstr ""
 
-#: pycupbetting.py:519
+#: pycupbetting.py:594
 msgid "competition {} is deleted"
 msgstr ""
 
-#: pycupbetting.py:523
+#: pycupbetting.py:598
 msgid "entry in this competition, cannot delete"
 msgstr ""
 
-#: pycupbetting.py:526
+#: pycupbetting.py:601
 msgid "competition edit menu {}"
 msgstr ""
 
-#: pycupbetting.py:529
+#: pycupbetting.py:604
 msgid "competition name change"
 msgstr ""
 
-#: pycupbetting.py:530
+#: pycupbetting.py:605
 msgid "competition info"
 msgstr ""
 
-#: pycupbetting.py:531
+#: pycupbetting.py:606
 msgid "delete this competition"
 msgstr ""
 
-#: pycupbetting.py:532
+#: pycupbetting.py:607
 msgid "add game"
 msgstr ""
 
-#: pycupbetting.py:533
+#: pycupbetting.py:608
 msgid "game selection"
 msgstr ""
 
-#: pycupbetting.py:534
+#: pycupbetting.py:609
 msgid "show all games"
 msgstr ""
 
-#: pycupbetting.py:535
+#: pycupbetting.py:610
 msgid "export all games"
 msgstr ""
 
-#: pycupbetting.py:547 pycupbetting.py:825
+#: pycupbetting.py:622 pycupbetting.py:900
 msgid "team selection"
 msgstr ""
 
-#: pycupbetting.py:596
+#: pycupbetting.py:671
 msgid "cup winner bet editor {}"
 msgstr ""
 
-#: pycupbetting.py:601
+#: pycupbetting.py:676
 msgid "change cup winner bet"
 msgstr ""
 
-#: pycupbetting.py:603 pycupbetting.py:807
+#: pycupbetting.py:678 pycupbetting.py:882
 msgid "delete this bet"
 msgstr ""
 
-#: pycupbetting.py:614
+#: pycupbetting.py:689
 msgid "team home selection"
 msgstr ""
 
-#: pycupbetting.py:617
+#: pycupbetting.py:692
 msgid "team away selection"
 msgstr ""
 
-#: pycupbetting.py:620 pycupbetting.py:650
+#: pycupbetting.py:695 pycupbetting.py:725
 msgid "result home"
 msgstr ""
 
-#: pycupbetting.py:621 pycupbetting.py:651
+#: pycupbetting.py:696 pycupbetting.py:726
 msgid "result away"
 msgstr ""
 
-#: pycupbetting.py:643 pycupbetting.py:681
+#: pycupbetting.py:718 pycupbetting.py:756
 msgid "team home: {}"
 msgstr ""
 
-#: pycupbetting.py:645 pycupbetting.py:683
+#: pycupbetting.py:720 pycupbetting.py:758
 msgid "no team home selected"
 msgstr ""
 
-#: pycupbetting.py:647 pycupbetting.py:685
+#: pycupbetting.py:722 pycupbetting.py:760
 msgid "team away: {}"
 msgstr ""
 
-#: pycupbetting.py:649 pycupbetting.py:687
+#: pycupbetting.py:724 pycupbetting.py:762
 msgid "no team away selected"
 msgstr ""
 
-#: pycupbetting.py:679
+#: pycupbetting.py:754
 msgid "name of the competition: {}"
 msgstr ""
 
-#: pycupbetting.py:707
+#: pycupbetting.py:782
 msgid "game editor"
 msgstr ""
 
-#: pycupbetting.py:710
+#: pycupbetting.py:785
 msgid "change game"
 msgstr ""
 
-#: pycupbetting.py:711
+#: pycupbetting.py:786
 msgid "game result"
 msgstr ""
 
-#: pycupbetting.py:712
+#: pycupbetting.py:787
 msgid "reset game result"
 msgstr ""
 
-#: pycupbetting.py:714
+#: pycupbetting.py:789
 msgid "delete this game"
 msgstr ""
 
-#: pycupbetting.py:725
+#: pycupbetting.py:800
 msgid "bet result home"
 msgstr ""
 
-#: pycupbetting.py:726
+#: pycupbetting.py:801
 msgid "bet result away"
 msgstr ""
 
-#: pycupbetting.py:791
+#: pycupbetting.py:866
 msgid "info of the game bet: {}"
 msgstr ""
 
-#: pycupbetting.py:802
+#: pycupbetting.py:877
 msgid "game bet editor {}"
 msgstr ""
 
-#: pycupbetting.py:805
+#: pycupbetting.py:880
 msgid "change game bet"
 msgstr ""
 
-#: pycupbetting.py:806
+#: pycupbetting.py:881
 msgid "gamebet info"
 msgstr ""
 
-#: pycupbetting.py:818
+#: pycupbetting.py:893
 msgid "mainmenu"
 msgstr ""
 
-#: pycupbetting.py:821
+#: pycupbetting.py:896
 msgid "info"
 msgstr ""
 
-#: pycupbetting.py:823
+#: pycupbetting.py:898
 msgid "team menu"
 msgstr ""
 
-#: pycupbetting.py:824
+#: pycupbetting.py:899
 msgid "add team"
 msgstr ""
 
-#: pycupbetting.py:827
+#: pycupbetting.py:902
 msgid "user menu"
 msgstr ""
 
-#: pycupbetting.py:828
+#: pycupbetting.py:903
 msgid "add user"
 msgstr ""
 
-#: pycupbetting.py:829
+#: pycupbetting.py:904
 msgid "user selection"
 msgstr ""
 
-#: pycupbetting.py:831
+#: pycupbetting.py:906
 msgid "competition menu"
 msgstr ""
 
-#: pycupbetting.py:832
+#: pycupbetting.py:907
 msgid "add competition"
 msgstr ""
 
-#: pycupbetting.py:833
+#: pycupbetting.py:908
 msgid "competition selection"
 msgstr ""
 
-#: pycupbetting.py:835
-msgid "show all betting"
+#: pycupbetting.py:910
+msgid "import/export menu"
 msgstr ""
 
-#: pycupbetting.py:836
+#: pycupbetting.py:911
 msgid "all betting export (csv)"
 msgstr ""
 
-#: pycupbetting.py:837
-msgid "edit game result"
+#: pycupbetting.py:914
+msgid "export all games for bets"
 msgstr ""
 
-#: pycupbetting.py:838
+#: pycupbetting.py:915
 msgid "add competition from json"
 msgstr ""
 
-#: pycupbetting.py:845
+#: pycupbetting.py:916
+msgid "add user bets from json"
+msgstr ""
+
+#: pycupbetting.py:918
+msgid "show all betting"
+msgstr ""
+
+#: pycupbetting.py:919
+msgid "edit game result"
+msgstr ""
+
+#: pycupbetting.py:927
 msgid "exit"
 msgstr ""
 

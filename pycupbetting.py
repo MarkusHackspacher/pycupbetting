@@ -210,17 +210,21 @@ def importJsonUserBet():
     user_id = session.query(model.User).filter_by(
         name=data['Name']).one().id
     for bets in data['games']:
-        team_home_id=
-        team_away_id=
+        team_home_id = session.query(model.Team).filter_by(
+            name=bets['game_a']).one().id
+        team_away_id = session.query(model.Team).filter_by(
+            name=bets['game_b']).one().id
         game_id=session.query(model.Game).filter_by(
             competition_id=competition_id).filter_by(
-            model.Game.team_home==bets['game_a']).filter_by(
-            model.Game.team_away==bets['game_a']).one().id
+            team_home_id=team_home_id).filter_by(
+            team_away_id=team_away_id).one().id
 
-        session.add(edit_game_bet(model.GameBet(user_id=user_id,
-                                                game_id=games_id,
-                                                bet_home=bets['tip_a'],
-                                                bet_away=bets['tip_b'])))
+        session.add(model.GameBet(user_id=user_id,
+                                  game_id=game_id,
+                                  bet_home=bets['tip_a'],
+                                  bet_away=bets['tip_b']))
+    Winnerbet_id = session.query(model.Team).filter_by(
+        name=data['Winnerbet']).one().id
 
 """
     for games in session.query(model.Game).filter_by(
@@ -514,6 +518,14 @@ def all_games_competition(competition, export):
     :type export: True/False
     :param export: write data in a file
     """
+    if not competition:
+        competition_id = int(SelectionMenu(session.query(
+            model.Competition).all()))
+        if competition_id == 0:
+            return
+        competition = session.query(model.Competition).filter_by(
+            id=competition_id).first()
+
     print(_("competition: {}").format(competition.name))
     gamelist = dict(competition=competition.name, Name='', Email='', Winnerbet='', games=[])
     for game in competition.games:
@@ -895,13 +907,20 @@ def main():
     competitionsub.append(_("add competition"), new_competition)
     competitionsub.append(_("competition selection"), select_competition)
 
+    importsub = Menu(_("import/export menu"))
+    importsub.append(_("all betting export (csv)"), all_betting_export)
+    export_all_games_competition = functools.partial(all_games_competition,
+                                                     None, True)
+    importsub.append(_("export all games for bets"), export_all_games_competition)
+    importsub.append(_("add competition from json"), add_json)
+    importsub.append(_("add user bets from json"), importJsonUserBet)
+
     menu.append(_("show all betting"), all_betting)
-    menu.append(_("all betting export (csv)"), all_betting_export)
     menu.append(_("edit game result"), edit_game_result)
-    menu.append(_("add competition from json"), add_json)
     menu.append_submenu(teamsub)
     menu.append_submenu(usersub)
     menu.append_submenu(competitionsub)
+    menu.append_submenu(importsub)
 
     # create 'Exit'-entries automatically - nice to have this :-)
     # saves a lot of typing... :-)))
