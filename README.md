@@ -20,9 +20,9 @@ The data are stored in a database, preferably SQLite.
 installation and start
 ----------------------
 
-The program requires [Python 3.x](http://www.python.org/download/)
+The [pycupbetting](https://github.com/MarkusHackspacher/pycupbetting) requires [Python 3.x](http://www.python.org/download/)
 and [sqlalchemy](http://www.sqlalchemy.org/).
-Install at first Python and
+Download und install Python and
 
 ```
 easy_install SQLAlchemy
@@ -36,7 +36,7 @@ Windows:
 py -m pip install SQLAlchemy
 ```
 Then you copied the source code of the program on your computer,
-either [download](https://github.com/MarkusHackspacher/pycupbetting) the zip file of the project or download with the version control system:
+either [download](https://github.com/MarkusHackspacher/pycupbetting/archive/refs/heads/master.zip) the zip file of the project or download with the version control system:
 
 ```
 # git clone https://github.com/MarkusHackspacher/pycupbetting.git
