@@ -2,7 +2,7 @@
 
 # pycupbetting
 
-# Copyright (C) <2015> Markus Hackspacher
+# Copyright (C) <2015,2022> Markus Hackspacher
 
 # This file is part of pycupbetting.
 
@@ -22,7 +22,7 @@
 import unittest
 from sqlalchemy import orm
 from sqlalchemy import create_engine
-from modules import model
+from .modules import model
 
 
 class TestCodeFormat(unittest.TestCase):
