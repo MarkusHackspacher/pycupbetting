@@ -22,7 +22,7 @@
 import unittest
 from sqlalchemy import orm
 from sqlalchemy import create_engine
-from ...modules import model
+from modules import model
 
 
 class TestCodeFormat(unittest.TestCase):
