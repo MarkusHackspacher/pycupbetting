@@ -29,7 +29,7 @@ import gettext
 import glob
 
 from modules import model
-from classymenu import Menu
+from modules.classymenu import Menu
 
 _ = gettext.gettext
 
@@ -169,9 +169,10 @@ def inputint(in_data, text):
         except (ValueError):
             print(_('Please enter a number'))
 
+
 def importJsonUserBet():
     """add a json table with user bet games
-    
+
     the file table: competition=competition.name,
     Name='', Email='', Winnerbet='', games
     games{game_a,game_b,tip_a='None',tip_b='None'))
@@ -204,9 +205,9 @@ def importJsonUserBet():
             model.Competition).all()))
         if competition_id == 0:
             return
-    else:        
+    else:
         competition_id = session.query(model.Competition).filter_by(
-            name=data['competition']).one().id        
+            name=data['competition']).one().id
     user_id = session.query(model.User).filter_by(
         name=data['Name']).one().id
     for bets in data['games']:
@@ -214,7 +215,7 @@ def importJsonUserBet():
             name=bets['game_a']).one().id
         team_away_id = session.query(model.Team).filter_by(
             name=bets['game_b']).one().id
-        game_id=session.query(model.Game).filter_by(
+        game_id = session.query(model.Game).filter_by(
             competition_id=competition_id).filter_by(
             team_home_id=team_home_id).filter_by(
             team_away_id=team_away_id).one().id
@@ -226,12 +227,11 @@ def importJsonUserBet():
             print(_('{} already exist').format(game_id))
         else:
             session.add(model.GameBet(user_id=user_id,
-                                  game_id=game_id,
-                                  bet_home=bets['tip_a'],
-                                  bet_away=bets['tip_b']))
+                                      game_id=game_id,
+                                      bet_home=bets['tip_a'],
+                                      bet_away=bets['tip_b']))
     Winnerbet_id = session.query(model.Team).filter_by(
         name=data['Winnerbet']).one().id
-
 
     q = session.query(model.CupWinnerBet).filter(
         model.CupWinnerBet.user_id == user_id).filter(
@@ -242,6 +242,7 @@ def importJsonUserBet():
         session.add(model.CupWinnerBet(user_id=user_id,
                                        competition_id=competition_id,
                                        team_id=Winnerbet_id))
+
 
 def add_json():
     """add a json table with cup games
@@ -934,6 +935,7 @@ def main():
 
     # shake it!
     menu.run()
+
 
 if __name__ == "__main__":
     languagemenu = Menu("language")

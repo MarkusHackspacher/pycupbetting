@@ -22,7 +22,7 @@ along with pycupbetting.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from sqlalchemy import Column, Integer, String, Date, ForeignKey
-from sqlalchemy.orm import relationship, backref
+from sqlalchemy.orm import relationship
 
 # http://docs.sqlalchemy.org/en/rel_0_9/orm/tutorial.html
 from sqlalchemy.ext.declarative import declarative_base
@@ -121,7 +121,7 @@ class CupWinnerBet(base):
         """
         points = 0
         if self.competition.cup_winner_id == self.team_id:
-                points = self.games.competition.rule_cup_winner
+            points = self.games.competition.rule_cup_winner
         return points
 
 
