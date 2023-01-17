@@ -109,14 +109,15 @@ class TestCodeFormat(unittest.TestCase):
         self.test_competition_model()
         gametest = model.Game(
                 competition_id=1, team_home_id=2, team_away_id=3,
-                result_home=2, result_away=2)
+                result_home=2, result_away=2, , start_date='2023-01-02T15:00')
         self.session.add(gametest)
         gametest = model.Game(competition_id=1, team_home_id=2, team_away_id=1,
                               result_home=1, result_away=2)
         self.session.add(gametest)
         our_game = self.session.query(model.Game).first()
         self.assertEqual(our_game.name, 'World Cup: Brasil:Italy 2:2')
-        self.assertEqual(our_game.start_date, None)
+        self.assertTrue(our_game.start_date, 'No Date and Time')
+        self.assertEqual(our_game.start_date, '2023-01-02T15:00')
 
     def test_gamebet_model(self):
         """Test the GameBet model
