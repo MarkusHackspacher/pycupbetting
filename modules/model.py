@@ -24,15 +24,12 @@ along with pycupbetting.  If not, see <http://www.gnu.org/licenses/>.
 from datetime import datetime
 
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import registry, relationship
 
-# http://docs.sqlalchemy.org/en/rel_0_9/orm/tutorial.html
-from sqlalchemy.ext.declarative import declarative_base
+mapper_registry = registry()
+Base = mapper_registry.generate_base()
 
-base = declarative_base()
-
-
-class User(base):
+class User(Base):
     """characteristics of the user table"""
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
@@ -51,7 +48,7 @@ class User(base):
             self.name, self.fullname, self.email)
 
 
-class Team(base):
+class Team(Base):
     """characteristics of the team table"""
     __tablename__ = 'teams'
     id = Column(Integer, primary_key=True)
@@ -73,7 +70,7 @@ class Team(base):
                    self.team_bets)
 
 
-class Competition(base):
+class Competition(Base):
     """characteristics of the competition table"""
     __tablename__ = 'competition'
     id = Column(Integer, primary_key=True)
@@ -95,7 +92,7 @@ class Competition(base):
             format(self.name, self.teams.name, self.cup_winner_bets)
 
 
-class CupWinnerBet(base):
+class CupWinnerBet(Base):
     """characteristics of the cup winner bet table"""
     __tablename__ = 'CupWinnerBet'
     id = Column(Integer, primary_key=True)
@@ -127,7 +124,7 @@ class CupWinnerBet(base):
         return points
 
 
-class Game(base):
+class Game(Base):
     """characteristics of the games table
     """
     __tablename__ = 'games'
@@ -177,7 +174,7 @@ class Game(base):
                    team_away_name, self.result_home, self.result_away)
 
 
-class GameBet(base):
+class GameBet(Base):
     """characteristics of the game bet table
     """
     __tablename__ = 'game_bet'
