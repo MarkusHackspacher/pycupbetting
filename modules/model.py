@@ -3,7 +3,7 @@
 """
 pycupbetting
 
-Copyright (C) <2014> Markus Hackspacher
+Copyright (C) <2014,2023> Markus Hackspacher
 
 This file is part of pycupbetting.
 
@@ -21,7 +21,9 @@ You should have received a copy of the GNU General Public License
 along with pycupbetting.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from sqlalchemy import Column, Integer, String, Date, ForeignKey
+from datetime import datetime
+
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 
 # http://docs.sqlalchemy.org/en/rel_0_9/orm/tutorial.html
@@ -135,7 +137,7 @@ class Game(base):
     team_away_id = Column(Integer, ForeignKey('teams.id'))
     result_home = Column(Integer)
     result_away = Column(Integer)
-    start_date = Column(Date)
+    start_date = Column(DateTime, default=datetime.utcnow)
 
     game_bets = relationship("GameBet", order_by="GameBet.id",
                              backref="games")
