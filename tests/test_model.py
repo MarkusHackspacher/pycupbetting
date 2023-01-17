@@ -19,6 +19,8 @@
 # You should have received a copy of the GNU General Public License
 # along with pycupbetting.  If not, see <http://www.gnu.org/licenses/>.
 
+from datetime import datetime
+
 import unittest
 from sqlalchemy import orm
 from sqlalchemy import create_engine
@@ -109,7 +111,7 @@ class TestCodeFormat(unittest.TestCase):
         self.test_competition_model()
         gametest = model.Game(
                 competition_id=1, team_home_id=2, team_away_id=3,
-                result_home=2, result_away=2, start_date='2023-01-02T15:00')
+                result_home=2, result_away=2, start_date=datetime(2023, 1, 2, 15, 30))
         self.session.add(gametest)
         gametest = model.Game(competition_id=1, team_home_id=2, team_away_id=1,
                               result_home=1, result_away=2)
@@ -117,7 +119,7 @@ class TestCodeFormat(unittest.TestCase):
         our_game = self.session.query(model.Game).first()
         self.assertEqual(our_game.name, 'World Cup: Brasil:Italy 2:2')
         self.assertTrue(our_game.start_date, 'No Date and Time')
-        self.assertEqual(our_game.start_date, '2023-01-02T15:00')
+        self.assertEqual(our_game.start_date, '2023-01-02T15:30')
 
     def test_gamebet_model(self):
         """Test the GameBet model
