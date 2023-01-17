@@ -36,8 +36,8 @@ _ = gettext.gettext
 
 # Create an engine and create all the tables we need
 engine = create_engine('sqlite:///dbcupbetting.sqlite', echo=False)
-model.base.metadata.bind = engine
-model.base.metadata.create_all(engine)
+model.Base.metadata.bind = engine
+model.Base.metadata.create_all(engine)
 
 # Set up the session
 sm = orm.sessionmaker(bind=engine,
@@ -551,11 +551,10 @@ def all_games_competition(competition, export):
         except AttributeError:
             team_away_name = "no team away selected"
 
-        
         print('{0} : {1}'.format(team_home_name, team_away_name))
         gamelist['games'].append(dict(game_a=team_home_name,
                                       game_b=team_away_name,
-                                      date=game.start_date.strftime('%Y-%m-%dT%H:%M'),    
+                                      date=game.start_date.strftime('%Y-%m-%dT%H:%M'),
                                       tip_a='None',
                                       tip_b='None'))
     if export:
