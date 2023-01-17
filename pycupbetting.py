@@ -4,7 +4,7 @@
 """
 pycupbetting
 
-Copyright (C) <2014-2022> Markus Hackspacher
+Copyright (C) <2014-2023> Markus Hackspacher
 
 This file is part of pycupbetting.
 
@@ -22,6 +22,7 @@ You should have received a copy of the GNU General Public License
 along with pycupbetting.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from datetime import datetime
 from sqlalchemy import orm, literal,  create_engine
 import functools
 import json
@@ -282,10 +283,15 @@ def add_json():
             team_id.append(session.query(model.Team).filter_by(
                 name=team).one().id)
         for pairing in group['pairings']:
+            try:
+                starttime = pairing[2]
+            except IndexError:
+                starttime = datetime.now()
             session.add(model.Game(
                 competition_id=competition_id,
                 team_home_id=team_id[pairing[0]],
-                team_away_id=team_id[pairing[1]]))
+                team_away_id=team_id[pairing[1]],
+                start_date=starttime))
 
 
 def all_betting(user_id=None, competition_id=None, export=False):
@@ -545,9 +551,11 @@ def all_games_competition(competition, export):
         except AttributeError:
             team_away_name = "no team away selected"
 
+        
         print('{0} : {1}'.format(team_home_name, team_away_name))
         gamelist['games'].append(dict(game_a=team_home_name,
                                       game_b=team_away_name,
+                                      date=game.start_date.strftime('%Y-%m-%dT%H:%M'),    
                                       tip_a='None',
                                       tip_b='None'))
     if export:
@@ -614,7 +622,7 @@ def select_competition():
     compselect.append(_("add game"), new_game_competition)
     compselect.append(_("game selection"), select_game_competition)
     compselect.append(_("show all games"), print_all_games_competition)
-    compselect.append(_("export all games"), export_all_games_competition)
+    compselect.append(_("export all games for bets"), export_all_games_competition)
     compselect.finish(text=_("back"))
     compselect.run()
 
