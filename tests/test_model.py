@@ -109,7 +109,7 @@ class TestCodeFormat(unittest.TestCase):
         self.test_competition_model()
         gametest = model.Game(
                 competition_id=1, team_home_id=2, team_away_id=3,
-                result_home=2, result_away=2, , start_date='2023-01-02T15:00')
+                result_home=2, result_away=2, start_date='2023-01-02T15:00')
         self.session.add(gametest)
         gametest = model.Game(competition_id=1, team_home_id=2, team_away_id=1,
                               result_home=1, result_away=2)
