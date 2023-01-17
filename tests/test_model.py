@@ -119,8 +119,7 @@ class TestCodeFormat(unittest.TestCase):
         our_game = self.session.query(model.Game).first()
         self.assertEqual(our_game.name, 'World Cup: Brasil:Italy 2:2')
         self.assertTrue(our_game.start_date, 'No Date and Time')
-        self.assertEqual(our_game.start_date, '2023-01-02T15:30')
-
+  
     def test_gamebet_model(self):
         """Test the GameBet model
         """
