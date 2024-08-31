@@ -3,7 +3,7 @@
 """
 pycupbetting
 
-Copyright (C) <2014,2023> Markus Hackspacher
+Copyright (C) <2014,2023,2024> Markus Hackspacher
 
 This file is part of pycupbetting.
 
@@ -28,6 +28,7 @@ from sqlalchemy.orm import registry, relationship
 
 mapper_registry = registry()
 Base = mapper_registry.generate_base()
+
 
 class User(Base):
     """characteristics of the user table"""

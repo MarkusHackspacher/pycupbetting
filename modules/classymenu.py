@@ -45,7 +45,6 @@
     .. moduleauthor:: Christian Hausknecht <christian.hausknecht@gmx.de>
 """
 
-import sys
 from itertools import chain
 
 #
@@ -67,6 +66,7 @@ def make_some_foo_func(s):
         """
         print(s)
     return func
+
 
 hello, python, nothing, special = list(make_some_foo_func(s) for s in (
     "Hello World!", "Python rocks!", "Nothing to do yet...",
@@ -251,6 +251,7 @@ def main():
     lastmenu.append("Like it", hello)
     lastmenu.append("Python", python)
     lastmenu.run(once=True)
+
 
 if __name__ == "__main__":
     main()
